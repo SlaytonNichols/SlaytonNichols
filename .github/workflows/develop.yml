@@ -34,34 +34,37 @@ jobs:
         uses: gittools/actions/gitversion/setup@v0.9.2
         with:
           versionSpec: "5.2.x"
-      - name: Use GitVersion        
+      - name: GitVersion Build and Atifact        
         uses: gittools/actions/gitversion/execute@v0.9.2
-      - name: Build project
+      - uses: actions/upload-artifact@v2      
         id: build
         run: |
           GitVersion
           dotnet build ".\Blogifier\Blogifier.sln" --configuration Release
           dotnet publish ".\Blogifier\Blogifier.sln" -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/blog'
+        with:
+          name: blog
+          path: /blog
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: '${{ env.CommitDate }}-${{ env.SemVer }}'
-          release_name: '${{ env.CommitDate }}-${{ env.SemVer }}'
+          tag_name: '${{ steps.build.outputs.commitDate }}-${{ steps.build.outputs.semVer }}'
+          release_name: '${{ steps.build.outputs.commitDate }}-${{ steps.build.outputs.semVer }}'
           draft: false
           prerelease: true
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/blog"
-          asset_name: blog
-          asset_content_type: application/zip
+      # - name: Upload Release Asset
+      #   id: upload-release-asset
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+      #     asset_path: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/blog"
+      #     asset_name: blog
+      #     asset_content_type: application/zip
 
         # Deploy to Azure Web apps
       - name: "Run Azure webapp deploy action using publish profile credentials"
