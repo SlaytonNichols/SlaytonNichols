@@ -7,7 +7,7 @@ name: Deploy Test
 on:
   release:
     push:
-      - tags: "v*"
+      tags: "v*"
     release:
     types: [prerelease]
 env:
