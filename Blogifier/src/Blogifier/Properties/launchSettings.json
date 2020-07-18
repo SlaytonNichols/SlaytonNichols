@@ -13,7 +13,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "TEST_CONNECTION_STRING": ""
+        "TEST_CONNECTION_STRING": " "
       }
     },
     "Blogifier": {
