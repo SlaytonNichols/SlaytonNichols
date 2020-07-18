@@ -5,9 +5,8 @@ name: Deploy Test
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  release:
-  push:
-     types: [created, published, prereleased] 
+  release:  
+    types: [prereleased] 
 env:
   AZURE_WEBAPP_NAME: test-slaytonnichols # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: "." # set this to the path to your web app project, defaults to the repository root
@@ -22,13 +21,15 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout 
     - uses: actions/checkout@v2
+    - name: Download Artifact
     - uses: actions/download-artifact@v2
       with:
         name: blog
         path: ./blog
           # Deploy to Azure Web apps
-    - name: "Run Azure webapp deploy action using publish profile credentials"
+    - name: Deploy
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
