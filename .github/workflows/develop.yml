@@ -17,7 +17,7 @@ env:
 
 jobs:
   release:
-    name: Create Release
+    name: Build and Release
     runs-on: windows-latest
     steps:
       # Setup .NET Core SDK
@@ -43,7 +43,7 @@ jobs:
           dotnet build ".\Blogifier\Blogifier.sln" --configuration Release
           dotnet publish ".\Blogifier\Blogifier.sln" -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/blog'
       - name: Artifact
-      - uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: blog
           path: /blog
