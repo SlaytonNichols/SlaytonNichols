@@ -25,8 +25,7 @@ jobs:
         uses: actions/setup-dotnet@v1         
       - name: Checkout code
         uses: actions/checkout@v2
-        # Checkout the repo
-      - uses: actions/checkout@develop
+        # Checkout the repo      
       - name: Checkout
         uses: actions/checkout@v2
       - name: Fetch all history for all tags and branches
