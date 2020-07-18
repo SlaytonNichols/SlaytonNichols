@@ -1,4 +1,4 @@
-name: .NET Core Build and Release
+name: .NET Core Build and Release Develop
 
 on:
   push:
@@ -23,9 +23,6 @@ jobs:
       # Setup .NET Core SDK
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
-      - name: Checkout code
-        uses: actions/checkout@v2
-        # Checkout the repo
       - name: Checkout
         uses: actions/checkout@v2
       - name: Fetch all history for all tags and branches
@@ -47,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: blog
-          path: /blog
+          path: ./blog
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
