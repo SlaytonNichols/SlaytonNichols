@@ -54,4 +54,4 @@ jobs:
           tag_name: "${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
           release_name: "${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
           draft: false
-          prerelease: true
+          prerelease: false
