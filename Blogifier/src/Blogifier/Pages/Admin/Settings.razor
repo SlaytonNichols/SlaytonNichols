@@ -1,0 +1,162 @@
+﻿@page "/admin/settings"
+
+@using Microsoft.AspNetCore.Components.Authorization
+@inject IJsonStringLocalizer<Settings> Localizer
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@{
+    var authState = AuthenticationStateProvider.GetAuthenticationStateAsync().Result;
+    if (authState == null || !authState.User.Identity.IsAuthenticated)
+    {
+        try { NavigationManager.NavigateTo("account/login?returnUrl=/admin"); } catch { }
+    }
+}
+
+<div class="container-fluid">
+
+    <div class="row bf-row">
+        <div class="col-lg-2 col-md col-sm bf-col"></div>
+        <div class="col-lg-8 col-md-12 col-sm-12 bf-col">
+
+            <ul class="nav nav-tabs" id="newsletter-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">@Localizer["settings"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="social-tab" data-toggle="tab" href="#social" role="tab" aria-controls="social" aria-selected="false">Social</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="scripts-tab" data-toggle="tab" href="#scripts" role="tab" aria-controls="scripts" aria-selected="false">Scripts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Info</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane tab-subscription fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <EditForm Model="@Model" OnValidSubmit="HandleValidSubmit">
+                                <DataAnnotationsValidator />
+                                <ValidationSummary />
+                                <fieldset>
+                                    <div>
+                                        <label>@Localizer["title"]</label>
+                                        <input type="text" @bind="Model.Title" name="title" />
+                                    </div>
+                                    <div>
+                                        <label>@Localizer["description"]</label>
+                                        <input type="text" @bind="Model.Description" name="description" />
+                                    </div>
+                                    <div>
+                                        <label>@Localizer["items-per-page"]</label>
+                                        <input type="text" @bind="Model.ItemsPerPage" name="pageitems" />
+                                    </div>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" @bind="Model.IncludeFeatured" class="custom-control-input" id="switch1">
+                                        <label class="custom-control-label" for="switch1">@Localizer["include-featured"]</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <label>@Localizer["logo"]</label>
+                                        <input type="text" class="form-control txt-upload" @bind="Model.Logo" name="logo" id="logo" readonly="" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppLogo');" type="button"> @Localizer["select"]</button>
+                                        </span>
+                                    </div>
+                                    <div class="input-group">
+                                        <label>@Localizer["cover"]</label>
+                                        <input type="text" class="form-control txt-upload" @bind="Model.Cover" name="cover" id="cover" readonly="" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppCover');" type="button"> @Localizer["select"]</button>
+                                        </span>
+                                    </div>
+                                    <div class="input-group">
+                                        <label>@Localizer["language"]</label>
+                                        <select @bind="Model.Culture">
+                                            @if (Cultures != null)
+                                            {
+                                                @foreach (var culture in Cultures)
+                                                {
+                                                    <option value="@culture.Value">@culture.Text</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>&nbsp;</label>
+                                        <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
+                                    </div>
+                                </fieldset>
+                            </EditForm>
+                        </div>
+                    </div>
+
+                </div>                
+                <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
+                    <SocialAdmin Level="blog" />
+                </div>
+                <div class="tab-pane fade" id="scripts" role="tabpanel" aria-labelledby="scripts-tab">
+                    <div class="card">
+                        <div class="card-body">
+                            <EditForm Model="@Model" OnValidSubmit="HandleValidSubmit">
+                                <DataAnnotationsValidator />
+                                <ValidationSummary />
+                                <fieldset>
+                                    <div class="alert alert-info" role="alert">
+                                        <a href="https://github.com/blogifierdotnet/Blogifier/blob/master/docs/ScriptIncludes.md" target="_blank">
+                                            <i class="fa fa-info-circle"></i>
+                                        </a>
+                                        @Localizer["include-scripts"]
+                                    </div>
+                                    <div class="input-group">
+                                        <textarea class="form-control txt-area" rows="4" @bind="Model.HeaderScript" name="headerScript" placeholder="Header script" />
+                                    </div>
+                                    <div class="input-group">
+                                        <textarea class="form-control txt-area" rows="10" @bind="Model.FooterScript" name="footerScrip" placeholder="Footer script" />
+                                    </div>
+                                    <div>
+                                        <label>&nbsp;</label>
+                                        <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
+                                    </div>
+                                </fieldset>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td><label>Blogifier</label></td>
+                                        <td>v.@BlazorVersion</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Blogifier.Core</label></td>
+                                        <td>v.@AppSettings.Version</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Database</label></td>
+                                        <td>@DbProviderName</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Root</label></td>
+                                        <td>@AppSettings.ContentRootPath</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>OS</label></td>
+                                        <td>@AppSettings.OSDescription</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-2 col-md col-sm bf-col"></div>
+    </div>
+</div>
