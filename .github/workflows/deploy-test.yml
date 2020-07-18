@@ -5,10 +5,9 @@ name: Deploy Test
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  release:
-    push:
-      tags: "v*"
-    release:
+  push:
+    tags: "v*"
+  release:         
     types: [prerelease]
 env:
   AZURE_WEBAPP_NAME: test-slaytonnichols # set this to your application's name
