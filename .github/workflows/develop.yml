@@ -60,10 +60,11 @@ jobs:
           asset_path: ./
           asset_name: "blog.zip"
           asset_content_type: application/zip
-      - name: Artifact
+      - name: Create Download Asset
+        run: |
+          echo "${{ steps.upload-release-asset.outputs.browser_download_url }}" >> blog-asset-download.txt
+      - name: Artifact Download Asset
         uses: actions/upload-artifact@v2
         with:
           name: blog-asset-download
           path: ./blog-asset-download.txt
-        run: |
-          echo "${{ steps.upload-release-asset.outputs.browser_download_url }}" >> blog-asset-download.txt
