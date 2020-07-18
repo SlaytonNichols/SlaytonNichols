@@ -42,7 +42,7 @@ jobs:
         run: |
           GitVersion
           dotnet build ".\Blogifier\Blogifier.sln" --configuration Release
-          dotnet publish ".\Blogifier\Blogifier.sln" -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/blog /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }}'
+          dotnet publish ".\Blogifier\Blogifier.sln" -c Release /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }} -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/blog'
       - name: Artifact
         uses: actions/upload-artifact@v2
         with:
