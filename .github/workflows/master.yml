@@ -50,8 +50,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{steps.build.outputs.commitDate}}-${{steps.build.outputs.semVer}}
-          release_name: ${{steps.build.outputs.commitDate}}-${{steps.build.outputs.semVer}}
+          tag_name: ${{ env.GitVersion_CommitDate }}-${{ GitVersion_SemVer }}
+          release_name: ${{ env.CommitDate }}-${{ GitVersion_SemVer }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
