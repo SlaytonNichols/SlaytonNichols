@@ -39,8 +39,8 @@ jobs:
         id: build
         run: |
           GitVersion
-          dotnet build ".\Blogifier\Blogifier.sln" --configuration Release
-          dotnet publish ".\Blogifier\Blogifier.sln" -c Release --no-restore /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }} -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/blog'
+          dotnet build ".\Blogifier\Blogifier.sln" --configuration Release --no-restore
+          dotnet publish ".\Blogifier\Blogifier.sln" -c Release --no-restore /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }} -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/blog.zip'
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -58,8 +58,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./blog
-          asset_name: my-artifact.zip
+          asset_path: blog.zip
+          asset_name: blog.zip
           asset_content_type: application/zip
       - name: Create Download Asset
         run: |
