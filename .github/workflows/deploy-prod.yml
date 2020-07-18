@@ -26,15 +26,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download Artifact
+        id: url-artifact
         uses: actions/download-artifact@v2
         with:
           name: blog-asset-download
-          path: ./
+          path: ./blog-asset-download.txt
+      - name: Read URL
+        run: |
+            echo "::set-output name=URL::${cat ./blog-asset-download.txt}"
       # Deploy to Azure Web apps
       - name: Deploy
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
-          package: "./blog"
+          package: ./blog
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
