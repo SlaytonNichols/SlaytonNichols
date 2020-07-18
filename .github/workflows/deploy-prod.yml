@@ -22,16 +22,15 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Download Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: blog
-          path:
-            ./blog
-            # Deploy to Azure Web apps
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+        - name: Checkout
+          uses: actions/checkout@v2
+        - name: Download Artifact
+          uses: actions/download-artifact@v2
+          with:
+            name: blog-asset-download
+            path: ./        
+      # Deploy to Azure Web apps
       - name: "Run Azure webapp deploy action using publish profile credentials"
         uses: azure/webapps-deploy@v2
         with:

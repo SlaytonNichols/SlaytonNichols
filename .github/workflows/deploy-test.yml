@@ -7,8 +7,8 @@ name: Deploy Test
 on:
   push:
     tags: "v*"
-  release:         
-    types: [prerelease]
+  release:
+    types: [created]
 env:
   AZURE_WEBAPP_NAME: test-slaytonnichols # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: "." # set this to the path to your web app project, defaults to the repository root
@@ -28,10 +28,9 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         with:
-          name: blog
-          path:
-            ./blog
-            # Deploy to Azure Web apps
+          name: blog-asset-download
+          path: ./
+      # Deploy to Azure Web apps
       - name: Deploy
         uses: azure/webapps-deploy@v2
         with:
