@@ -39,7 +39,7 @@ jobs:
         id: build
         run: |
           GitVersion
-          dotnet build ".\Blogifier\Blogifier.sln" --configuration Release --no-restore
+          dotnet build ".\Blogifier\Blogifier.sln" --configuration Release
           dotnet publish ".\Blogifier\Blogifier.sln" -c Release --no-restore /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }} -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/blog.zip'
       - name: Create Release
         id: create_release
