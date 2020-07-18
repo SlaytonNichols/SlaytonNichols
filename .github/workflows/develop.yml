@@ -63,7 +63,7 @@ jobs:
       - name: Create Download Asset
         run: |
           echo "${{ steps.upload-release-asset.outputs.browser_download_url }}" >> blog-asset-download.txt
-      - name: Artifact Download Asset
+      - name: Upload Artifact Download Asset
         uses: actions/upload-artifact@v2
         with:
           name: blog-asset-download
