@@ -51,7 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
-          release_name: "${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
+          tag_name: "v${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
+          release_name: "v${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
           draft: false
-          prerelease: false
+          prerelease: true
