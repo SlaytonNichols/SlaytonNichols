@@ -26,14 +26,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download Artifact
-        id: url-artifact
+        id: download-artifact
         uses: actions/download-artifact@v2
         with:
-          name: blog-asset-download
-          path: ./blog-asset-download.txt
-      - name: Read URL
-        run: |
-            echo "::set-output name=URL::${cat ./blog-asset-download.txt}"
+          name: "Source Code.zip"
+          path: ./
       # Deploy to Azure Web apps
       - name: Deploy
         uses: azure/webapps-deploy@v2
