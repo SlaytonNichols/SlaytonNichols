@@ -29,11 +29,17 @@ jobs:
         id: download-artifact
         uses: actions/download-artifact@v2
         with:
-          name: "Source Code.zip"
-          path: ./
+          name: blog-asset-download
+          path: ./blog-asset-download.txt
       - name: Read URL
         run: |
           echo "::set-output name=URL::${cat ./blog-asset-download.txt}"
+      - name: Download Artifact
+        id: download-artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: blog.zip
+          path: ./blog      
       # Deploy to Azure Web apps
       - name: Deploy
         uses: azure/webapps-deploy@v2
