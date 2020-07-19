@@ -34,7 +34,7 @@ jobs:
           dotnet build ".\Blogifier\Blogifier.sln" --configuration Release
           dotnet publish ".\Blogifier\Blogifier.sln" -c Release --no-restore /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }} -o './blog'
       - name: Export Version Information
-      - run: |
+        run: |
           export VERSION="v${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
           echo "::set-env name=RELEASE_VERSION::$VERSION"
       - name: Create Release
