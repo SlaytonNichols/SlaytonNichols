@@ -6,9 +6,10 @@ name: Deploy Test
 # events but only for the master branch
 on:
   push:
+    branch: develop
     tags: "v*"
   release:
-    types: [created]
+    types: [publish]
 env:
   AZURE_WEBAPP_NAME: test-slaytonnichols # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: "." # set this to the path to your web app project, defaults to the repository root
@@ -25,8 +26,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Download Artifact
-        id: download-artifact
+      - name: Download Url Artifact
+        id: download-url-artifact
         uses: actions/download-artifact@v2
         with:
           name: blog-asset-download
@@ -38,7 +39,7 @@ jobs:
         id: download-artifact
         uses: actions/download-artifact@v2
         with:
-          name: blog
+          name: "blog-v${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
           path: ./blog.zip      
       # Deploy to Azure Web apps
       - name: Deploy
