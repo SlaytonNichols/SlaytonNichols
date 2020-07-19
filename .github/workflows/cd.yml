@@ -33,14 +33,18 @@ jobs:
           GitVersion
           dotnet build ".\Blogifier\Blogifier.sln" --configuration Release
           dotnet publish ".\Blogifier\Blogifier.sln" -c Release --no-restore /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }} -o './blog'
+      - name: Export Version Information
+      - run: |
+        export VERSION="v${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
+        echo "::set-env name=VERSION::$VERSION"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
         with:
-          tag_name: "v${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
-          release_name: "v${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
+          tag_name: "v${{ env.VERSION}}"
+          release_name: "v${{ env.VERSION}}"
           draft: false
           prerelease: false
   deploy-staging:
@@ -52,7 +56,7 @@ jobs:
         id: download-artifact
         uses: actions/download-artifact@v2
         with:
-          name: "blog-v${{ env.commitDate }}-${{ env.semVer }}"
+          name: "blog-v${{ env.VERSION}}"
           path: ./blog.zip
       # Deploy to Azure Web apps
       - name: Deploy
@@ -70,7 +74,7 @@ jobs:
         id: download-artifact
         uses: actions/download-artifact@v2
         with:
-          name: "blog-v${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
+          name: "blog-v${{ env.VERSION}}"
           path: ./blog.zip
       - name: Deploy
         uses: azure/webapps-deploy@v2
