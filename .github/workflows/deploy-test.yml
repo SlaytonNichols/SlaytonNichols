@@ -38,8 +38,8 @@ jobs:
         id: download-artifact
         uses: actions/download-artifact@v2
         with:
-          name: blog.zip
-          path: ./blog      
+          name: blog
+          path: ./blog.zip      
       # Deploy to Azure Web apps
       - name: Deploy
         uses: azure/webapps-deploy@v2
