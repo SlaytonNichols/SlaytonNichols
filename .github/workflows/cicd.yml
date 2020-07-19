@@ -83,29 +83,29 @@ jobs:
           app-name: test-slaytonnichols # Replace with your app name
           publish-profile: ${{ secrets.TEST_AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
           package: ./blog
-# For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
-deploy-master:
-  if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-  needs: build
-  # The type of runner that the job will run on    
-  runs-on: windows-latest
+  # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
+  deploy-master:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: build
+    # The type of runner that the job will run on    
+    runs-on: windows-latest
 
-  # Steps represent a sequence of tasks that will be executed as part of the job
-  steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Download Artifact
-      id: download-artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: "blog-v${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
-        path: ./blog.zip
-    # Deploy to Azure Web apps
-    - name: Deploy
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: slaytonnichols # Replace with your app name
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
-        package: ./blog
-# For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download Artifact
+        id: download-artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: "blog-v${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
+          path: ./blog.zip
+      # Deploy to Azure Web apps
+      - name: Deploy
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: slaytonnichols # Replace with your app name
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
+          package: ./blog
+  # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
