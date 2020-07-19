@@ -58,7 +58,6 @@ jobs:
       #     asset_path: '.'
       #     asset_name: "blog-v${{ steps.gitversion.outputs.commitDate }}-${{ steps.gitversion.outputs.semVer }}"
       #     asset_content_type: application/zip
-  # This workflow contains a single job called "build"
   deploy-staging:
     if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
     needs: build
