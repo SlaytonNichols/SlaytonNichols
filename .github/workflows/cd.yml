@@ -1,13 +1,10 @@
-name: .NET Core Build, Release, Deploy
+name: Build and Deploy
 
 on:
   push:
     branches:
       - staging
       - master
-# env:
-  # DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-  # DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
   build:
