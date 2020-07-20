@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - staging
+      - develop
       - master
 
 jobs:
@@ -50,13 +50,13 @@ jobs:
           release_name: "${{ env.RELEASE_VERSION }}"
           draft: false
           prerelease: false
-  deploy-staging:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
+  deploy-develop:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     needs: build
     runs-on: windows-latest
     steps:            
       - name: Download Artifact
-        id: staging-version
+        id: develop-version
         uses: actions/download-artifact@v2
         with:
           name: artifact
