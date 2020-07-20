@@ -15,7 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Fetch all history for all tags and branches
-        run: git fetch --prune --unshallow
+        run: |
+          git fetch --prune --unshallow
+          git config remote.origin.url https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.2
         with:
