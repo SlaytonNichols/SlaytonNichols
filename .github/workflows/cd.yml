@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: version
-          path: ./version.txt
+          path: ./
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
