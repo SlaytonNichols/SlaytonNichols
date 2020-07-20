@@ -1,1 +1,1 @@
-![Build and Deploy](https://github.com/SlaytonNichols/SlaytonNichols/workflows/Build%20and%20Deploy/badge.svg?branch=staging)
+![Build and Deploy](https://github.com/SlaytonNichols/SlaytonNichols/workflows/Build%20and%20Deploy/badge.svg)
