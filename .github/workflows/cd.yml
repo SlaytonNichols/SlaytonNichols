@@ -36,8 +36,8 @@ jobs:
       - name: Build
         id: build
         run: |          
-          dotnet build ".\Blogifier\Blogifier.sln" --configuration Release /p:AssemblyVersion=${{  }} /p:FileVersion=${{  }} /p:InformationalVersion=${{  }}
-          dotnet publish ".\Blogifier\Blogifier.sln" -c Release /p:AssemblyVersion=${{  }} /p:FileVersion=${{  }} /p:InformationalVersion=${{  }} -o './blog'
+          dotnet build ".\Blogifier\Blogifier.sln" --configuration Release /p:AssemblyVersion=${{ env.RELEASE_VERSION }} /p:FileVersion=${{ env.RELEASE_VERSION }} /p:InformationalVersion=${{ env.RELEASE_VERSION }}
+          dotnet publish ".\Blogifier\Blogifier.sln" -c Release /p:AssemblyVersion=${{ env.RELEASE_VERSION }} /p:FileVersion=${{ env.RELEASE_VERSION }} /p:InformationalVersion=${{ env.RELEASE_VERSION }} -o './blog'
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
