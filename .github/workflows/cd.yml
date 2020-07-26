@@ -25,13 +25,10 @@ jobs:
           NUM=$(echo $TAG | sed 's@.*\.@@')
           VERSION=$(($NUM+1))
           APP_VERSION=$(date "+%Y.%-m.%-d.$VERSION")
-          COMMIT_ID=$(git rev-parse HEAD)
-          mkdir ./blog
-          echo $COMMIT_ID
-          echo $COMMIT_ID > ./blog/commitId.txt
+          COMMIT_ID=$(git rev-parse HEAD)          
+          echo $COMMIT_ID          
           echo "::set-env name=COMMIT_ID::$COMMIT_ID"
-          echo $APP_VERSION
-          echo "v$APP_VERSION" > ./blog/version.txt
+          echo $APP_VERSION          
           echo "::set-env name=RELEASE_VERSION::v$APP_VERSION" 
       - name: Build
         id: build
