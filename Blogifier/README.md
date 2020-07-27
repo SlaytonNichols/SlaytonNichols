@@ -2,4 +2,4 @@ Heavily based off the [Blogifier Solution](https://github.com/blogifierdotnet/Bl
 
 
 ## Portfolio / Blog for Slayton Nichols - Full Stack Software Developer
-More details to come
+https://nicholsslayton.com

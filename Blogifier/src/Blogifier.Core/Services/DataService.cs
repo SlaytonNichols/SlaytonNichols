@@ -11,7 +11,7 @@ namespace Blogifier.Core.Services
         INotificationRepository Notifications { get; }        
         ICustomFieldRepository CustomFields { get; }
         INewsletterRepository Newsletters { get; }        
-        IMessageRepository MessageRepository { get; }
+        IMessageRepository Message { get; }
 
         int Complete();
     }
@@ -36,7 +36,7 @@ namespace Blogifier.Core.Services
             Notifications = notificationRepository;            
             CustomFields = customFieldRepository;
             Newsletters = newsletterRepository;
-            MessageRepository = messageRepository;
+            Message = messageRepository;
         }
 
         public IPostRepository BlogPosts { get; private set; }
@@ -44,7 +44,7 @@ namespace Blogifier.Core.Services
         public INotificationRepository Notifications { get; private set; }        
         public ICustomFieldRepository CustomFields { get; private set; }
         public INewsletterRepository Newsletters { get; private set; }
-        public IMessageRepository MessageRepository { get; set; }
+        public IMessageRepository Message { get; set; }
 
 
         public int Complete()

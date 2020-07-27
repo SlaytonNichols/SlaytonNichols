@@ -10,7 +10,7 @@ namespace Blogifier.Core.Data.Repositories
     public interface IMessageRepository : IRepository<Message>
     {
         Task<List<Message>> SelectMessages();
-        Task<Message> UpsertMessages(Message message);
+        Task<Message> InsertMessage(Message message);
     }
 
     public class MessageRepository : Repository<Message>, IMessageRepository
@@ -24,7 +24,7 @@ namespace Blogifier.Core.Data.Repositories
 
         public async Task<List<Message>> SelectMessages() => await Task.FromResult(_db.Messages.ToList());
 
-        public async Task<Message> UpsertMessages(Message message)
+        public async Task<Message> InsertMessage(Message message)
         {
             await _db.AddAsync<Message>(message);
             _db.SaveChanges();

@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+<EditForm Model="@Contact" OnValidSubmit="Send">
+    <DataAnnotationsValidator />
+    <ValidationSummary />    
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <label>@Localizer["first-name"]</label>
+                    <InputText class="form-control" type="text" @bind-Value="Contact.FirstName" />
+                </div>
+                <div class="col-lg-6">
+                    <label>@Localizer["last-name"]</label>
+                    <InputText class="form-control" type="text" @bind-Value="Contact.LastName" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div>
+                    <label>@Localizer["message-subject"]</label>
+                    <InputText class="form-control" type="text" @bind-Value="Contact.MessageSubject" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div>
+                    <label>@Localizer["message-body"]</label>
+                    <InputTextArea class="form-control" type="text" @bind-Value="Contact.MessageBody" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <label>@Localizer["email-address"]</label>
+                    <InputText class="form-control" type="text" @bind-Value="Contact.EmailAddress" />
+                </div>
+                <div class="col-lg-6">
+                    <label>@Localizer["phone-number"]</label>
+                    <InputText class="form-control" type="text" @bind-Value="Contact.PhoneNumber" />
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-main">@Localizer["send"]</button>
+    
+</EditForm>
