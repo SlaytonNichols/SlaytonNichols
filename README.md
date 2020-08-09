@@ -5,11 +5,11 @@
 My name is Slayton Nichols, I grew up in a small part of Southern Appalachia that most people know as Western North Carolina/The North Georgia Mountains. I am passionate about music, development, and the outdoors. Read more [here ...](https://nicholsslayton.com/posts/introduction)
 
 ## What am I interested in?
-Technologies:                                                                                                                                                            
-C#, .NET Core, ASP.NET, HTML/CSS, SQL, jQuery, Redis, JavaScript, NodeJS, Blazor
+Technologies:                                                                                                                                                           
+C#, .NET Core, ASP.NET, HTML/CSS, jQuery, Javascript, MSSQL, Redis, Blazor, NodeJS
 
 Infrastructure/DevOps:                                                                                                                                       
-AWS, Docker, Git, PowerShell, Bash, Database Management
+AWS, Docker, PowerShell, Bash, Octopus, Appveyor, Git, Github, Github Actions
 
 Practicing Design Patterns and Areas of Expertise:                                                                                          
 OOP, MVC, MVVC, REST, CQRS, DDD, TDD, Web Application Development, API Development/Consumption
