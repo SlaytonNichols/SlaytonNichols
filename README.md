@@ -5,11 +5,14 @@
 My name is Slayton Nichols, I grew up in a small part of Southern Appalachia that most people know as Western North Carolina/The North Georgia Mountains. I am passionate about music, development, and the outdoors. Read more [here ...](https://nicholsslayton.com/posts/introduction)
 
 ## What am I interested in?
-Development Languages:  C#, .NET Core, ASP.NET, NodeJS, HTML/CSS, XML, SQL, JQuery, JavaScript, Redis
+Technologies:                                                                                                                                                           
+C#, .NET Core, ASP.NET, NodeJS, HTML/CSS, XML, SQL, JQuery, JavaScript, Redis
 
-Infrastructure/DevOps: AWS, Docker, Git, Database Management
+Infrastructure/DevOps:                                                                                                                                       
+AWS, Docker, Git, Database Management
 
-Familiar Design Patterns/Development Tools:  OOP, MVC, MVVC, REST, CQRS, Data Structures, TDD, DDD
+Practicing Design Patterns/Development Methodologies:                                                                                          
+Data Structures, OOP, MVC, MVVC, REST, CQRS, DDD, TDD
 
 
 ## What is this Repo? 
