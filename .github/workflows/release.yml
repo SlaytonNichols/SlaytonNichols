@@ -9,7 +9,7 @@ on:
   # Triggered on every successful Build action
   workflow_run:
     workflows: ["Build"]
-    branches: [main,master,blog]
+    branches: [main,master]
     types:
       - completed
   # Manual trigger for rollback to specific release or redeploy latest
