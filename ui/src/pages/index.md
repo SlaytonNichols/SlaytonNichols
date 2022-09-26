@@ -1,5 +1,5 @@
 ---
-title: Introduction
+title: Slayton Nichols
 summary: Slayton Nichols
 date: 2022-09-23
 ---
