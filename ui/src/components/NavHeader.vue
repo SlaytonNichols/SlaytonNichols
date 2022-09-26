@@ -12,13 +12,19 @@
         <nav class="relative flex flex-grow">
           <ul class="flex flex-wrap items-center justify-end w-full">
             <NavItem>
-              <NavLink :use-router="true" class="text-2xl" href="/posts">Blog</NavLink>
+              <NavLink :use-router="true" class="text-lg" href="/posts">
+                <Markdown class="m-2"/> Blog
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink :use-router="false" class="text-2xl " href="https://linkedin.com/in/slaytonnichols">LinkedIn</NavLink>
+              <NavLink :use-router="false" class="text-lg " href="https://linkedin.com/in/slaytonnichols">
+                <Linkedin class="m-2"/> Linkedin
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink :use-router="false" class="text-2xl " href="https://github.com/SlaytonNichols">Github</NavLink>
+              <NavLink :use-router="false" class="text-lg " href="https://github.com/SlaytonNichols">
+                <Github class="m-2"/> Github
+              </NavLink>
             </NavItem>
           </ul>
         </nav>
@@ -30,4 +36,7 @@
 <script setup lang="ts">
 import NavItem from "@/components/NavItem.vue";
 import NavLink from "@/components/NavLink.vue";
+import Linkedin from '~icons/logos/linkedin-icon'
+import Github from '~icons/logos/github-icon'
+import Markdown from '~icons/cib/markdown/'
 </script>

@@ -21,6 +21,6 @@ AWS, Docker, PowerShell, Bash, Octopus, Appveyor, Git, Github, Github Actions
 Practicing Design Patterns and Areas of Expertise:
 OOP, MVC, MVVC, REST, CQRS, DDD, TDD, Web Application Development, API Development/Consumption
 
-#### What is this Repo?
+#### What is this Website?
 
-At the time of writing this repo houses the one project that I am somewhat proud to display, though it is only a simple blog. My goal over the years is to curate this repository with examples, exercises, write ups of new tools with examples, experiments, and much more to come.
+This website is intended to be a cross between a resume/blog/notepad. My goal over the years is to curate the markdown blog with examples, exercises, write ups of new tools with examples, experiments, and more.
