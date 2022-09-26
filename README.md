@@ -1,4 +1,4 @@
-[![Release](https://github.com/SlaytonNichols/SlaytonNichols-alpha/actions/workflows/release.yml/badge.svg)](https://github.com/SlaytonNichols/SlaytonNichols-alpha/actions/workflows/release.yml)
+[![Release](https://github.com/SlaytonNichols/SlaytonNichols/actions/workflows/release.yml/badge.svg)](https://github.com/SlaytonNichols/SlaytonNichols/actions/workflows/release.yml)
 ![SlaytonNicholsLogo](https://user-images.githubusercontent.com/45402324/88486759-ff3f6e80-cf4d-11ea-8869-cb0de304b698.png)
 
 ## Who am I?
