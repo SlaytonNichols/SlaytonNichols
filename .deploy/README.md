@@ -33,4 +33,5 @@
   - nicholsslayton.com. -> DO nameservers
   - api.nicholsslayton.com. -> DO Reserved IP
 
-- DO PostgreSQL DB
+- Azure SQL DB
+  - Configure droplet to send outbound traffic over reserved ip https://docs.digitalocean.com/products/networking/reserved-ips/how-to/outbound-traffic/

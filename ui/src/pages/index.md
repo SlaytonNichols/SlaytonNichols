@@ -1,10 +1,10 @@
 ---
 title: Introduction
-summary: Introduction
+summary: Slayton Nichols
 date: 2022-09-23
 ---
 
-## Introduction
+## Full Stack Software Engineer
 
 #### Who am I?
 
