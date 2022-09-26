@@ -28,6 +28,7 @@ const router = useRouter()
 const postRoutes = router.getRoutes()
   .filter(r => r.path.startsWith("/posts/") && r.meta?.frontmatter)
   .map(r => ({ path: r.path, name: r.name, frontmatter: (r.meta as any)?.frontmatter as FrontMatter }))
+  .filter(r => !r.path.includes("employment-history"))
   .sort((a, b) => (b.frontmatter.date ?? "")?.localeCompare(a.frontmatter.date ?? ""))
 
 </script>

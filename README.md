@@ -5,19 +5,19 @@
 
 My name is Slayton Nichols, I grew up in a small part of Southern Appalachia that most people know as Western North Carolina/The North Georgia Mountains. I am passionate about music, development, and the outdoors. Read more [here ...](https://nicholsslayton.com)
 
-## What am I interested in?
+### What am I interested in?
 
-Technologies:
+##### Technologies:
 
-C#, .NET Core, ASP.NET, HTML/CSS, jQuery, Javascript, MSSQL, Redis, Blazor, NodeJS
+C#, .NET Core, ASP.NET, HTML/CSS, jQuery, Javascript, MSSQL, Redis, NodeJS, Vue, Databricks
 
-Infrastructure/DevOps:
+##### Infrastructure/DevOps:
 
-AWS, Docker, PowerShell, Bash, Octopus, Appveyor, Git, Github, Github Actions
+AWS, Azure, Docker, PowerShell, Bash, Octopus, Appveyor, Git, Github, Github Actions
 
-Practicing Design Patterns and Areas of Expertise:
+##### Practicing Design Patterns and Areas of Expertise:
 
-OOP, MVC, MVVC, REST, CQRS, DDD, TDD, Web Application Development, API Development/Consumption
+OOP, MVC, MVVC, REST, CQRS, DDD, TDD, Web Application Development, API Development/Consumption, SOA, Clean Architecture
 
 ## What is this Repo?
 

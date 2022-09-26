@@ -13,7 +13,7 @@
       </li>
       <li v-for="crumb in crumbs">
         <div class="flex items-center">
-          <MdiChevronRight class="flex-shrink-0 h-8 w-8 text-gray-400" aria-hidden="true"/>
+          <MdiChevronRight class="flex-shrink-0 h-8 w-8 text-gray-400" aria-hidden="true"/>          
           <router-link :to="crumb.href">
             <a class="ml-1 sm:ml-4 sm:text-2xl text-gray-500 hover:text-gray-700">
               {{ crumb.name }}
@@ -24,6 +24,7 @@
       <li>
         <div class="flex items-center">
           <MdiChevronRight class="flex-shrink-0 h-8 w-8 text-gray-400" aria-hidden="true"/>
+          <Markdown v-if="blog" style="fontSize: 2em" class="ml-4"/>
           <router-link v-if="href" :to="href">
             <a class="ml-1 sm:ml-4 sm:text-2xl text-gray-500 hover:text-gray-700" :aria-current="ariaCurrent">
               {{ name }}
@@ -41,16 +42,20 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { Crumb } from "@/types"
+import Markdown from '~icons/cib/markdown/'
+import { useRouter } from "vue-router"
 
 const { current } = withDefaults(defineProps<{
   crumbs?: Crumb[],
   name: string, 
   href?: string,
-  current?: boolean, 
+  current?: boolean
 }>(), {
   current: true,
-  crumbs: () => []
+  crumbs: () => [],  
 })
 
+const router = useRouter()
+const blog = router.currentRoute.value.path.includes("posts") ? true : false
 const ariaCurrent = computed(() => current ? 'page' : undefined)
 </script>

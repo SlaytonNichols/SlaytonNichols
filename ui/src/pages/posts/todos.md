@@ -1,5 +1,5 @@
 ---
-title: TODO
+title: TODOs
 summary: Roadmap for this website
 date: 2022-09-22
 ---
