@@ -2,7 +2,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --open",
+    "dev": "vite --open --host",
     "dtos": "cd src && x ts",
     "build": "cross-env NODE_ENV=production vite-ssg build",
     "build:local": "vue-tsc --noEmit && vite-ssg build --mode development",

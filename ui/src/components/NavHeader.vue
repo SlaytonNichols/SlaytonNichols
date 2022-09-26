@@ -12,13 +12,13 @@
         <nav class="relative flex flex-grow">
           <ul class="flex flex-wrap items-center justify-end w-full">
             <NavItem>
-              <NavLink class="text-2xl" href="/posts">Blog</NavLink>
+              <NavLink :use-router="true" class="text-2xl" href="/posts">Blog</NavLink>
             </NavItem>
             <NavItem>
-              <a class="text-2xl hover:text-green-600 m-1" href="https://linkedin.com/in/slaytonnichols">LinkedIn</a>
+              <NavLink :use-router="false" class="text-2xl " href="https://linkedin.com/in/slaytonnichols">LinkedIn</NavLink>
             </NavItem>
             <NavItem>
-              <a class="text-2xl hover:text-green-600 m-1" href="https://github.com/SlaytonNichols">Github</a>
+              <NavLink :use-router="false" class="text-2xl " href="https://github.com/SlaytonNichols">Github</NavLink>
             </NavItem>
           </ul>
         </nav>
