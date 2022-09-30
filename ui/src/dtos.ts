@@ -111,12 +111,49 @@ export class AuditBase {
     public constructor(init?: Partial<AuditBase>) { (Object as any).assign(this, init); }
 }
 
-export enum RoomType {
-    Single = 'Single',
-    Double = 'Double',
-    Queen = 'Queen',
-    Twin = 'Twin',
-    Suite = 'Suite',
+export class Post extends AuditBase {
+    public id?: number;
+    public mdText?: string;
+    public name?: string;
+    public path?: string;
+}
+
+export class QueryPosts extends QueryDb<Post> implements IReturn<QueryResponse<Post>>
+{
+    public id?: number;
+
+    public constructor(init?: Partial<QueryPosts>) { super(init); (Object as any).assign(this, init); }
+    public createResponse () { return new QueryResponse<Post>(); }
+    public getTypeName () { return 'QueryPosts'; }
+    public getMethod () { return 'GET'; }
+}
+
+// @ValidateRequest(Validator="HasRole(`Employee`)")
+export class CreatePost implements IReturn<IdResponse>, ICreateDb<Post>
+{
+    public id?: number
+    public mdText?: string;
+    public name?: string;
+    public path?: string;
+
+    public constructor(init?: Partial<CreatePost>) { (Object as any).assign(this, init); }
+    public createResponse () { return new IdResponse(); }
+    public getTypeName () { return 'CreatePost'; }
+    public getMethod () { return 'POST'; }
+}
+
+// @ValidateRequest(Validator="HasRole(`Employee`)")
+export class UpdatePost implements IReturn<IdResponse>, IPatchDb<Post>
+{
+    public id?: number;
+    public mdText?: string;
+    public name?: string;
+    public path?: string;
+
+    public constructor(init?: Partial<UpdatePost>) { (Object as any).assign(this, init); }
+    public createResponse () { return new IdResponse(); }
+    public getTypeName () { return 'UpdatePost'; }
+    public getMethod () { return 'PATCH'; }
 }
 
 // @DataContract

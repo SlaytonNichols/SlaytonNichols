@@ -15,18 +15,24 @@ public class AppHost : AppHostBase, IHostingStartup
             services.ConfigureNonBreakingSameSiteCookies(context.HostingEnvironment);
         });
 
-    public AppHost() : base("SlaytonNichols", typeof(MyServices).Assembly) {}
+    public AppHost() : base("SlaytonNichols", typeof(MyServices).Assembly, typeof(TodosServices).Assembly) {}
 
     public override void Configure(Container container)
     {
+        //Logging
         LogManager.LogFactory = new Log4NetFactory("log4net.config");
         container.Register<ILog>(ctx => LogManager.LogFactory.GetLogger(typeof(IService)));
+
+        //ServiceStack
         SetConfig(new HostConfig {
         });
+
 
         Plugins.Add(new SpaFeature {
             EnableSpaFallback = true
         });
+
+
         Plugins.Add(new CorsFeature(allowOriginWhitelist:new[]{ 
             "http://localhost:5000",
             "http://localhost:3000",
@@ -34,6 +40,7 @@ public class AppHost : AppHostBase, IHostingStartup
             "https://localhost:5001",
             "https://" + Environment.GetEnvironmentVariable("DEPLOY_CDN")
         }, allowCredentials:true));
+
 
         ConfigurePlugin<UiFeature>(feature => {
             feature.Info.BrandIcon.Uri = "/assets/img/logo.svg";

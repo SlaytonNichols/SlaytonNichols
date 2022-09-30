@@ -17,6 +17,10 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router"
+import { ref, watchEffect } from "vue"
+import { Post, QueryPosts } from "@/dtos"
+import { client } from "@/api"
+import marked from "markdown-it"
 
 type FrontMatter = {
   title: string
@@ -24,11 +28,32 @@ type FrontMatter = {
   date?: string
 }
 
-const router = useRouter()
-const postRoutes = router.getRoutes()
-  .filter(r => r.path.startsWith("/posts/") && r.meta?.frontmatter)
-  .map(r => ({ path: r.path, name: r.name, frontmatter: (r.meta as any)?.frontmatter as FrontMatter }))
-  .filter(r => !r.path.includes("employment-history"))
-  .sort((a, b) => (b.frontmatter.date ?? "")?.localeCompare(a.frontmatter.date ?? ""))
+const posts = ref<Post[]>([])
+let postRoutes = []
+
+
+
+const refreshPosts = async () => {
+  const api = await client.api(new QueryPosts())
+  if (api.succeeded) {
+    posts.value = api.response!.results ?? []
+    let apiRoutes = api.response.results.forEach(result => {
+      postRoutes.push({ path: result.path, name: result.name, frontmatter: { title: result.name } })
+    });
+
+    return apiRoutes
+  }
+}
+
+watchEffect(async () => {
+  const router = useRouter()
+  postRoutes = router.getRoutes()
+    .filter(r => r.path.startsWith("/posts/") && r.meta?.frontmatter)
+    .map(r => ({ path: r.path, name: r.name, frontmatter: (r.meta as any)?.frontmatter as FrontMatter }))
+    .filter(r => !r.path.includes("employment-history"))  
+    .sort((a, b) => (b.frontmatter.date ?? "")?.localeCompare(a.frontmatter.date ?? ""))
+  await refreshPosts()
+  console.log(postRoutes)
+})
 
 </script>
