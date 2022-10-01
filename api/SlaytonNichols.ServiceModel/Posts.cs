@@ -17,11 +17,11 @@ namespace SlaytonNichols.ServiceModel
 
     [Tag("posts"), Description("Find posts")]
     [Route("/posts", "GET")]
-    [Route("/posts/{Id}", "GET")]
+    [Route("/posts/{Name}", "GET")]
     [AutoApply(Behavior.AuditQuery)]
     public class QueryPosts : QueryDb<Post>
     {
-        public int? Id { get; set; }
+        public string? Name { get; set; }
     }
 
     public class QueryPostsResponse : Post

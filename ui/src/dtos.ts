@@ -1,5 +1,5 @@
 /* Options:
-Date: 2022-10-01 14:16:06
+Date: 2022-10-01 16:13:41
 Version: 6.21
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://localhost:5001
@@ -310,10 +310,10 @@ export class IdResponse
 * Find posts
 */
 // @Route("/posts", "GET")
-// @Route("/posts/{Id}", "GET")
+// @Route("/posts/{Name}", "GET")
 export class QueryPosts extends QueryDb<Post> implements IReturn<QueryResponse<Post>>
 {
-    public id?: number;
+    public name?: string;
 
     public constructor(init?: Partial<QueryPosts>) { super(init); (Object as any).assign(this, init); }
     public getTypeName() { return 'QueryPosts'; }

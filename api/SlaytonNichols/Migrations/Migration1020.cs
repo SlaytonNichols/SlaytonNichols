@@ -19,6 +19,7 @@ namespace SlaytonNichols.Migrations
             Db.CreateTable<Post>();
 
             CreatePost("## First MD Post!", "Test", "/posts/test");
+            CreatePost("## Second MD Post!", "test-two", "/posts/test-two");
         }
 
         public void CreatePost(string mdText, string name, string path) =>
