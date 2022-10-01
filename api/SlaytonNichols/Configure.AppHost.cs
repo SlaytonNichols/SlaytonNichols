@@ -11,11 +11,12 @@ namespace SlaytonNichols;
 public class AppHost : AppHostBase, IHostingStartup
 {
     public void Configure(IWebHostBuilder builder) => builder
-        .ConfigureServices((context, services) => {
+        .ConfigureServices((context, services) =>
+        {
             services.ConfigureNonBreakingSameSiteCookies(context.HostingEnvironment);
         });
 
-    public AppHost() : base("SlaytonNichols", typeof(MyServices).Assembly, typeof(TodosServices).Assembly) {}
+    public AppHost() : base("SlaytonNichols", typeof(PostsServices).Assembly) { }
 
     public override void Configure(Container container)
     {
@@ -24,25 +25,28 @@ public class AppHost : AppHostBase, IHostingStartup
         container.Register<ILog>(ctx => LogManager.LogFactory.GetLogger(typeof(IService)));
 
         //ServiceStack
-        SetConfig(new HostConfig {
+        SetConfig(new HostConfig
+        {
         });
 
 
-        Plugins.Add(new SpaFeature {
+        Plugins.Add(new SpaFeature
+        {
             EnableSpaFallback = true
         });
 
 
-        Plugins.Add(new CorsFeature(allowOriginWhitelist:new[]{ 
+        Plugins.Add(new CorsFeature(allowOriginWhitelist: new[]{
             "http://localhost:5000",
             "http://localhost:3000",
             "http://localhost:5173",
             "https://localhost:5001",
             "https://" + Environment.GetEnvironmentVariable("DEPLOY_CDN")
-        }, allowCredentials:true));
+        }, allowCredentials: true));
 
 
-        ConfigurePlugin<UiFeature>(feature => {
+        ConfigurePlugin<UiFeature>(feature =>
+        {
             feature.Info.BrandIcon.Uri = "/assets/img/logo.svg";
             feature.Info.BrandIcon.Cls = "inline-block w-8 h-8 mr-2";
         });

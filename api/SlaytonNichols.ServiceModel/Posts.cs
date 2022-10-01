@@ -15,7 +15,7 @@ namespace SlaytonNichols.ServiceModel
         public string Path { get; set; }
     }
 
-    [Tag("posts"), Description("Find posts")]    
+    [Tag("posts"), Description("Find posts")]
     [Route("/posts", "GET")]
     [Route("/posts/{Id}", "GET")]
     [AutoApply(Behavior.AuditQuery)]
@@ -24,9 +24,13 @@ namespace SlaytonNichols.ServiceModel
         public int? Id { get; set; }
     }
 
-    [Tag("bookings"), Description("Create a new post")]
-    [Route("/bookings", "POST")]
-    [ValidateHasRole("Employee")]
+    public class QueryPostsResponse : Post
+    {
+    }
+
+    [Tag("posts"), Description("Create a new post")]
+    [Route("/posts", "POST")]
+    [ValidateHasRole("Admin")]
     [AutoApply(Behavior.AuditCreate)]
     public class CreatePost : ICreateDb<Post>, IReturn<IdResponse>
     {
@@ -36,9 +40,9 @@ namespace SlaytonNichols.ServiceModel
         public string Path { get; set; }
     }
 
-    [Tag("bookings"), Description("Update an existing post")]
-    [Route("/booking/{Id}", "PATCH")]
-    [ValidateHasRole("Employee")]
+    [Tag("posts"), Description("Update an existing post")]
+    [Route("/posts/{Id}", "PATCH")]
+    [ValidateHasRole("Admin")]
     [AutoApply(Behavior.AuditModify)]
     public class UpdatePost : IPatchDb<Post>, IReturn<IdResponse>
     {

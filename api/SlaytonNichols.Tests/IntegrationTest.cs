@@ -1,6 +1,11 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Funq;
 using NUnit.Framework;
 using ServiceStack;
+using ServiceStack.Data;
+using ServiceStack.OrmLite;
 using SlaytonNichols.ServiceInterface;
 using SlaytonNichols.ServiceModel;
 
@@ -15,12 +20,34 @@ namespace SlaytonNichols.Tests
         class AppHost : AppSelfHostBase
         {
             public AppHost() :
-                base(nameof(IntegrationTest), typeof (MyServices).Assembly)
+                base(nameof(IntegrationTest), typeof(PostsServices).Assembly)
             {
+                Plugins.Add(new AutoQueryFeature());
             }
 
             public override void Configure(Container container)
             {
+                var dbFactory = new OrmLiteConnectionFactory(
+                        ":memory:", SqliteDialect.Provider);
+                container.Register<IDbConnectionFactory>(dbFactory);
+                using (var db = dbFactory.Open())
+                {
+                    db.DropAndCreateTable<Post>();
+                    db.InsertAll(new[] {
+                        new Post
+                        {
+                            Id = 1,
+                            MdText = "## First Post",
+                            Name = "Test",
+                            Path = "/posts/test",
+                            CreatedBy = "SN",
+                            CreatedDate = DateTime.Now,
+                            ModifiedBy = "SN",
+                            ModifiedDate = DateTime.Now
+                        }
+                    });
+                }
+                container.RegisterAutoWired<PostsServices>();
             }
         }
 
@@ -35,13 +62,13 @@ namespace SlaytonNichols.Tests
         public IServiceClient CreateClient() => new JsonServiceClient(BaseUri);
 
         [Test]
-        public void Can_call_Hello_Service()
+        public void Can_call_Posts_Service()
         {
             var client = CreateClient();
 
-            var response = client.Get(new Hello { Name = "World" });
+            var response = client.Get(new QueryPosts { Id = 1 });
 
-            Assert.That(response.Result, Is.EqualTo("Hello, World!"));
+            Assert.That(response.Results.First().Id, Is.EqualTo(1));
         }
     }
 }
