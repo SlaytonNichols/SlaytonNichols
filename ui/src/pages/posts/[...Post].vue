@@ -175,14 +175,13 @@ const editPost = async () => {
     var md = new marked()
     var renderedMd = md.render(currentPost.get().mdText)
     renderedMdText.set(renderedMd)
-  } else if (isEditMode.get()) {    
-    currentPost.set({
-      id: post.value.id,
-      mdText: post.value.mdText,
-      name: post.value.name,
-      path: post.value.path
-    })    
   }
+  currentPost.set({
+    id: post.value.id,
+    mdText: post.value.mdText,
+    name: post.value.name,
+    path: post.value.path
+  })
 }
 
 const createPost = async () => {  
@@ -196,7 +195,7 @@ const createPost = async () => {
   await client.api(request) 
   isEditMode.set(false)  
   isCreateMode.set(false)
-  router.go(0)
+  router.push(`/posts/${post.value.path}`)
 }
 
 const deletePost = async () => {  
