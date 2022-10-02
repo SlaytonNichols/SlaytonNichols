@@ -50,16 +50,15 @@ const refreshPosts = async () => {
   let apiRoutes = []
   const api = await client.api(new QueryPosts())
     
-  if(api.succeeded && api.response!.results){
-    // TODO: rewrite with new form fields
+  if(api.succeeded && api.response!.results){    
     apiRoutes = api.response.results.forEach(result => {
       posts.value.push({ 
         id: result.id,
         path: '/posts/' + result.path, 
-        name: result.name, 
+        title: result.title, 
         frontmatter: { 
-          title: result.name, 
-          summary: 'Add a summary property' 
+          title: result.title, 
+          summary: result.summary
         } 
       })
     });

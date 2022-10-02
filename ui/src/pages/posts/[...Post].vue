@@ -125,7 +125,7 @@ const getPost = async () => {
     var md = new marked()
     renderedMdText.set(md.render(result.mdText))    
     frontmatterValue.set({ 
-        title: result.name, 
+        title: result.title, 
         summary: 'Add a summary property'
       })
     currentPost.set(result);
@@ -139,8 +139,9 @@ const savePost = async () => {
   {  
     id: post.value.id,
     mdText: post.value.mdText,
-    name: post.value.name,
-    path: post.value.path
+    title: post.value.title,
+    path: post.value.path,
+    summary: post.value.summary,
   })
   await client.api(request)
   isEditMode.set(!isEditMode.get())
@@ -159,8 +160,9 @@ const editPost = async () => {
   currentPost.set({
     id: post.value.id,
     mdText: post.value.mdText,
-    name: post.value.name,
-    path: post.value.path
+    title: post.value.title,
+    path: post.value.path,
+    summary: post.value.summary,
   })
 }
 
@@ -168,8 +170,9 @@ const createPost = async () => {
   let request = new CreatePost({
     id: totalPosts.get() + 1,
     mdText: post.value.mdText,
-    name: post.value.name,
-    path: post.value.path
+    title: post.value.title,
+    path: post.value.path,
+    summary: post.value.summary,
   })
 
   await client.api(request)  
@@ -195,7 +198,7 @@ onMounted(async () => {
   isCreateMode.set(false)
   if (router.currentRoute.value.params.Post === 'create') {    
     isCreateMode.set(true)   
-    currentPost.set({ id: totalPosts.get(), name: '', path: '', mdText: '' });    
+    currentPost.set({ id: totalPosts.get(), title: '', summary: '', path: '', mdText: '' });
   }  
 })
 

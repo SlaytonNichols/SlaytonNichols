@@ -11,8 +11,9 @@ namespace SlaytonNichols.ServiceModel
         [AutoIncrement]
         public int Id { get; set; }
         public string MdText { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string Path { get; set; }
+        public string Summary { get; set; }
     }
 
     [Tag("posts"), Description("Find posts")]
@@ -37,8 +38,9 @@ namespace SlaytonNichols.ServiceModel
         [AutoIncrement]
         public int Id { get; set; }
         public string MdText { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string Path { get; set; }
+        public string Summary { get; set; }
     }
 
     [Tag("posts"), Description("Update an existing post")]
@@ -49,8 +51,9 @@ namespace SlaytonNichols.ServiceModel
     {
         public int Id { get; set; }
         public string MdText { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string Path { get; set; }
+        public string Summary { get; set; }
     }
 
     [Tag("posts"), Description("Delete a Post")]

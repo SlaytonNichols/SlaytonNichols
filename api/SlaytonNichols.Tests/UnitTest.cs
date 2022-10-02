@@ -37,7 +37,7 @@ namespace SlaytonNichols.Tests
                         {
                             Id = 1,
                             MdText = "## First Post",
-                            Name = "Test",
+                            Title = "Test",
                             Path = "test",
                             CreatedBy = "SN",
                             CreatedDate = DateTime.Now,

@@ -9,8 +9,14 @@
     <text-input
         :id="'Title'" 
         :placeholder="'Post Title'"
-        :model-value="props.modelValue?.name" 
-        @input="updateName">
+        :model-value="props.modelValue?.title" 
+        @input="updateTitle">
+    </text-input>
+    <text-input
+        :id="'Summary'" 
+        :placeholder="'Summary of Post'"
+        :model-value="props.modelValue?.summary" 
+        @input="updateSummary">
     </text-input>
     <text-input
         :id="'Path'" 
@@ -73,14 +79,14 @@ const mdTextFormVal = reactive({
   }
 })
 
-const nameFormVal = reactive({
+const titleFormVal = reactive({
   // getter
   get() {
-    return props.modelValue?.name
+    return props.modelValue?.title
   },
   // setter
   set(newValue: string) {    
-    props.modelValue.name = newValue    
+    props.modelValue.title = newValue    
   }
 })
 
@@ -95,12 +101,23 @@ const pathFormVal = reactive({
   }
 })
 
+const summaryFormVal = reactive({
+  // getter
+  get() {
+    return props.modelValue?.summary
+  },
+  // setter
+  set(newValue: string) {    
+    props.modelValue.summary = newValue    
+  }
+})
+
 const updateMdText = async ($event) => {  
   mdTextFormVal.set($event.target.value)
 }
 
-const updateName = async ($event) => {  
-  nameFormVal.set($event.target.value)
+const updateTitle = async ($event) => {  
+  titleFormVal.set($event.target.value)
 }
 
 const updatePath = async ($event) => {  
@@ -109,6 +126,10 @@ const updatePath = async ($event) => {
 
 const updateId = async ($event) => {  
   idFormVal.set($event.target.value)
+}
+
+const updateSummary = async ($event) => {  
+  summaryFormVal.set($event.target.value)
 }
 
 onMounted(async () => {  
