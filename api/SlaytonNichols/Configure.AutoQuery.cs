@@ -1,5 +1,7 @@
 using ServiceStack;
 using ServiceStack.Data;
+using SlaytonNichols.ServiceInterface;
+using SlaytonNichols.ServiceModel;
 
 [assembly: HostingStartup(typeof(SlaytonNichols.ConfigureAutoQuery))]
 
@@ -8,18 +10,16 @@ namespace SlaytonNichols;
 public class ConfigureAutoQuery : IHostingStartup
 {
     public void Configure(IWebHostBuilder builder) => builder
-        .ConfigureServices(services => {
+        .ConfigureServices(services =>
+        {
             // Enable Audit History
             services.AddSingleton<ICrudEvents>(c =>
                 new OrmLiteCrudEvents(c.Resolve<IDbConnectionFactory>()));
         })
-        .ConfigureAppHost(appHost => {
-
-            // For TodosService
-            appHost.Plugins.Add(new AutoQueryDataFeature());
-
-            // For Bookings https://github.com/NetCoreApps/BookingsCrud
-            appHost.Plugins.Add(new AutoQueryFeature {
+        .ConfigureAppHost(appHost =>
+        {
+            appHost.Plugins.Add(new AutoQueryFeature
+            {
                 MaxLimit = 1000,
                 //IncludeTotal = true,
             });

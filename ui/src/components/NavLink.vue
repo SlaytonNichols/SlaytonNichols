@@ -10,8 +10,6 @@
 </template>
 
 <script setup lang="ts">
-
-import { attrs } from "@/auth"
 import { computed } from "vue";
 
 const props = defineProps<{

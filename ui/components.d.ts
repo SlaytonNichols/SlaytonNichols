@@ -15,7 +15,6 @@ declare module '@vue/runtime-core' {
     ConfirmDelete: typeof import('./src/components/form/ConfirmDelete.vue')['default']
     ErrorSummary: typeof import('./src/components/form/ErrorSummary.vue')['default']
     FormLoading: typeof import('./src/components/form/FormLoading.vue')['default']
-    HelloApi: typeof import('./src/components/HelloApi.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     InputDescription: typeof import('./src/components/form/InputDescription.vue')['default']
     MarkdownPage: typeof import('./src/components/MarkdownPage.vue')['default']

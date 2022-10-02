@@ -5,7 +5,7 @@
     "dev": "vite --open --host",
     "dtos": "cd src && x ts",
     "build": "cross-env NODE_ENV=production vite-ssg build",
-    "build:local": "vue-tsc --noEmit && vite-ssg build --mode development",
+    "build:local": "vite-ssg build --mode development",
     "publish": "npm run build && dotnet publish ../api/SlaytonNichols/SlaytonNichols.csproj -c Release",
     "serve": "vite preview",
     "typecheck": "vue-tsc --noEmit",
@@ -24,7 +24,9 @@
     "vue": "^3.2.38"
   },
   "devDependencies": {
+    "@iconify-json/bxs": "^1.1.4",
     "@iconify-json/carbon": "^1.1.7",
+    "@iconify-json/ci": "^1.1.2",
     "@iconify-json/cib": "^1.1.2",
     "@iconify-json/emojione": "^1.1.2",
     "@iconify-json/et": "^1.1.2",
@@ -58,6 +60,7 @@
     "vite-plugin-vue-layouts": "^0.7.0",
     "vite-plugin-vue-markdown": "^0.21.1",
     "vite-ssg": "^0.20.2",
+    "vue-markdown-renderer": "^0.2.7",
     "vue-router": "^4.1.5",
     "vue-tsc": "^0.40.5"
   }

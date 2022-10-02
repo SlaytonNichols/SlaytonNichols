@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <label v-if="useLabel" :for="id" class="block text-sm font-medium text-gray-700">{{ useLabel }}</label>
+  <div class="pt-4">
+    <!-- <label v-if="useLabel" :for="id" class="block text-sm font-medium text-gray-700">{{ useLabel }}</label> -->
     <div class="mt-1 relative rounded-md shadow-sm">
       <textarea
          :name="id"
@@ -10,7 +10,8 @@
          @input="$emit('update:modelValue', value($event.target))"
          :aria-invalid="errorField != null"
          :aria-describedby="`${id}-error`"
-         v-bind="remaining">{{ modelValue }}</textarea>
+         v-bind="remaining"
+         style="height: 500px;">{{ modelValue }}</textarea>
     </div>
     <p v-if="errorField" class="mt-2 text-sm text-red-500" :id="`${id}-error`">{{ errorField }}</p>
     <p v-else-if="help" class="mt-2 text-sm text-gray-500" :id="`${id}-description`">{{ help }}</p>

@@ -53,7 +53,7 @@ export default defineConfig(({ command, mode }) => {
         dirs: [
           { dir: "src/pages", baseRoute: "" }
         ],
-        extendRoute (route: any) {
+        async extendRoute (route: any) {
           const filePath = path.resolve(__dirname, route.component.slice(1))
           if (filePath.endsWith('.md')) {
             const md = fs.readFileSync(filePath, 'utf-8')
