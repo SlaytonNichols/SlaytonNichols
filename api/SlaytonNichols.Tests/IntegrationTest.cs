@@ -68,7 +68,7 @@ namespace SlaytonNichols.Tests
 
             var response = client.Get(new QueryPosts { Path = "test" });
 
-            Assert.That(response.Results.First().Id, Is.EqualTo(1));
+            Assert.That(response.Results.First().Path, Is.EqualTo("test"));
         }
     }
 }
