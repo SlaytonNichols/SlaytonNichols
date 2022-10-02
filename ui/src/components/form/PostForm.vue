@@ -2,26 +2,26 @@
   <div>      
     <text-input
         :id="'Id'"          
-        :model-value="idFormVal.get()" 
+        :model-value="props.modelValue?.id" 
         @input="updateId"
         hidden>
     </text-input>
     <text-input
         :id="'Title'" 
         :placeholder="'Post Title'"
-        :model-value="nameFormVal.get()" 
+        :model-value="props.modelValue?.name" 
         @input="updateName">
     </text-input>
     <text-input
         :id="'Path'" 
         :placeholder="'/posts/{path}'"
-        :model-value="pathFormVal.get()" 
+        :model-value="props.modelValue?.path" 
         @input="updatePath">
     </text-input>
     <text-area-input
         :id="'MarkdownBody'" 
         :placeholder="'## Markdown Post'"
-        :model-value="mdTextFormVal.get()" 
+        :model-value="props.modelValue?.mdText" 
         @input="updateMdText">
     </text-area-input>
   </div>
@@ -37,73 +37,61 @@ type FrontMatter = {
   date?: string
 }
 
-const modelValue = ref<Post>()
-const postsCount = ref<number>()
+const props = defineProps<{ modelValue: Post }>()
 
 const currentPost = reactive({
   // getter
   get() {
-    return modelValue.value
+    return props.modelValue
   },
   // setter
   set(newValue: Post) {
     
-    modelValue.value = newValue
-  }
-})
-
-const totalPosts = reactive({
-  // getter
-  get() {
-    return postsCount.value
-  },
-  // setter
-  set(newValue: number) {    
-    postsCount.value = newValue
+    props.modelValue.value = newValue
   }
 })
 
 const idFormVal = reactive({
   // getter
   get() {
-    return modelValue?.value?.id
+    return props.modelValue?.id
   },
   // setter
   set(newValue: number) {    
-    modelValue.value.id = newValue    
+    props.modelValue.id = newValue    
   }
 })
 
 const mdTextFormVal = reactive({
   // getter
   get() {
-    return modelValue?.value?.mdText
+    return props.modelValue?.mdText
   },
   // setter
   set(newValue: string) {    
-    modelValue.value.mdText = newValue    
+    props.modelValue.mdText = newValue    
   }
 })
 
 const nameFormVal = reactive({
   // getter
   get() {
-    return modelValue?.value?.name
+    return props.modelValue?.name
   },
   // setter
   set(newValue: string) {    
-    modelValue.value.name = newValue    
+    props.modelValue.name = newValue    
   }
 })
 
 const pathFormVal = reactive({
   // getter
   get() {
-    return modelValue?.value?.path
+    return props.modelValue?.path
   },
   // setter
   set(newValue: string) {    
-    modelValue.value.path = newValue    
+    props.modelValue.path = newValue    
   }
 })
 
@@ -124,7 +112,7 @@ const updateId = async ($event) => {
 }
 
 onMounted(async () => {  
-//   console.log(idFormVal.get())
+  
 })
 
 </script>

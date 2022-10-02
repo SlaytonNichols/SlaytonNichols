@@ -14,34 +14,10 @@
         class="markdown-body pt-4">
       </div>
       <div v-else class="pt-4">
-        <!-- <post-form 
-          :current-post="currentPost.get()"          
+        <post-form          
+          :model-value="currentPost.get()"
           @update="onUpdate"
-        /> -->
-        <text-input
-          :id="'Id'"          
-          :model-value="idFormVal.get()" 
-          @input="updateId"
-          hidden>
-        </text-input>
-        <text-input
-          :id="'Title'" 
-          :placeholder="'Post Title'"
-          :model-value="nameFormVal.get()" 
-          @input="updateName">
-        </text-input>
-        <text-input
-          :id="'Path'" 
-          :placeholder="'/posts/{path}'"
-          :model-value="pathFormVal.get()" 
-          @input="updatePath">
-        </text-input>
-        <text-area-input
-          :id="'MarkdownBody'" 
-          :placeholder="'## Markdown Post'"
-          :model-value="mdTextFormVal.get()" 
-          @input="updateMdText">
-        </text-area-input>
+        />
       </div>      
     </markdown-page>    
   </div>
@@ -154,64 +130,8 @@ const totalPosts = reactive({
   }
 })
 
-const idFormVal = reactive({
-  // getter
-  get() {
-    return post.value.id
-  },
-  // setter
-  set(newValue: number) {    
-    post.value.id = newValue    
-  }
-})
-
-const mdTextFormVal = reactive({
-  // getter
-  get() {
-    return post.value.mdText
-  },
-  // setter
-  set(newValue: string) {    
-    post.value.mdText = newValue    
-  }
-})
-
-const nameFormVal = reactive({
-  // getter
-  get() {
-    return post.value.name
-  },
-  // setter
-  set(newValue: string) {    
-    post.value.name = newValue    
-  }
-})
-
-const pathFormVal = reactive({
-  // getter
-  get() {
-    return post.value.path
-  },
-  // setter
-  set(newValue: string) {    
-    post.value.path = newValue    
-  }
-})
-
-const updateMdText = async ($event) => {  
-  mdTextFormVal.set($event.target.value)
-}
-
-const updateName = async ($event) => {  
-  nameFormVal.set($event.target.value)
-}
-
-const updatePath = async ($event) => {  
-  pathFormVal.set($event.target.value)
-}
-
-const updateId = async ($event) => {  
-  idFormVal.set($event.target.value)
+const onUpdate = async ($event) => {  
+  console.log($event.target.value)
 }
 
 const getPost = async () => {    
@@ -235,7 +155,7 @@ const getPost = async () => {
 const savePost = async () => {  
   let request = new UpdatePost(
   {  
-    id: totalPosts.get(),
+    id: post.value.id,
     mdText: post.value.mdText,
     name: post.value.name,
     path: post.value.path
@@ -250,15 +170,17 @@ const editPost = async () => {
   isEditMode.set(!isEditMode.get())
   //if turning edit mode off or loading the page
   if(!isEditMode.get()) {
-    rawMdText.set(mdTextFormVal.get())
+    rawMdText.set(currentPost.get().mdText)
     var md = new marked()
-    var renderedMd = md.render(mdTextFormVal.get())
+    var renderedMd = md.render(currentPost.get().mdText)
     renderedMdText.set(renderedMd)
   } else if (isEditMode.get()) {    
-    idFormVal.set(post.value.id)
-    mdTextFormVal.set(rawMdText.get())
-    nameFormVal.set(post.value.name)
-    pathFormVal.set(post.value.path)
+    currentPost.set({
+      id: post.value.id,
+      mdText: post.value.mdText,
+      name: post.value.name,
+      path: post.value.path
+    })    
   }
 }
 
