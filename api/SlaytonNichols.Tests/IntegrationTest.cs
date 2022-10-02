@@ -66,7 +66,7 @@ namespace SlaytonNichols.Tests
         {
             var client = CreateClient();
 
-            var response = client.Get(new QueryPosts { Id = 1 });
+            var response = client.Get(new QueryPosts { Path = "test" });
 
             Assert.That(response.Results.First().Id, Is.EqualTo(1));
         }

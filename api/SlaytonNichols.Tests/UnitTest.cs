@@ -60,7 +60,7 @@ namespace SlaytonNichols.Tests
             var service = appHost.Container.Resolve<PostsServices>();
             service.Request = new BasicRequest();
             var response =
-                (QueryResponse<Post>)(await service.Get(new QueryPosts { Id = 1 }));
+                (QueryResponse<Post>)(await service.Get(new QueryPosts { Path = "test" }));
 
             Assert.That(response.Results.First().Id, Is.EqualTo(1));
         }
