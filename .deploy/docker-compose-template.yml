@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  ${APP_NAME}:
+  "${APP_NAME}":
     image: ghcr.io/${IMAGE_REPO}:${RELEASE_VERSION}
     restart: always
     network_mode: bridge
@@ -15,8 +15,8 @@ services:
       ConnectionStrings__DefaultConnection: ${DEFAULTCONNECTION}
       AuthKeyBase64: ${AUTHKEYBASE64}
     labels:
-      com.datadoghq.ad.logs: '[{"type":"file", "source": "docker", "service": "${APP_NAME}", "path": "/logs/logs.json"}, {"type": "docker", "source": "docker", "service": "${APP_NAME}"}]'
-  ${APP_NAME}-migration:
+      com.datadoghq.ad.logs: '[{"source": "docker", "service": "${APP_NAME}"}]'
+  "${APP_NAME}-migration":
     image: ghcr.io/${IMAGE_REPO}:${RELEASE_VERSION}
     restart: "no"
     profiles:
