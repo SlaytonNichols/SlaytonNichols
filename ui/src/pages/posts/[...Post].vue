@@ -1,16 +1,21 @@
 <template>
-<div>
-    <button @click="editPost">Edit</button>
-    <markdown-page v-if="!isEditMode.get()" :frontmatter="frontmatterValue">
-      <div v-html="renderedMdText.get()" class="markdown-body"></div>
-    </markdown-page>
-    <text-area-input :id="'Test'" v-else-if="isEditMode.get()" :model-value="inputValue.get()" @input="updatePostText"></text-area-input>    
+  <div>
+    <markdown-page 
+      :frontmatter="frontmatterValue" 
+      @edit="editPost">
+      <div v-if="!isEditMode.get()" v-html="renderedMdText.get()" class="markdown-body"></div>
+      <text-area-input class="markdown-body" v-else-if="isEditMode.get()" 
+        :id="post.name" 
+        :model-value="inputValue.get()" 
+        @input="updatePostText">
+      </text-area-input>
+    </markdown-page>    
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, reactive } from "vue"
-import { QueryPosts } from "@/dtos"
+import { QueryPosts, UpdatePost, Post } from "@/dtos"
 import { client } from "@/api"
 import marked from "markdown-it"
 import { useAttrs } from 'vue'
@@ -26,6 +31,19 @@ const mdHtml = ref<string>()
 const input = ref<string>('')
 const editMode = ref<Boolean>()
 const attrs = useAttrs()
+const post = ref<Post>()
+
+const currentPost = reactive({
+  // getter
+  get() {
+    return post.value
+  },
+  // setter
+  set(newValue: Post) {
+    
+    post.value = newValue
+  }
+})
 
 const renderedMdText = reactive({
   // getter
@@ -86,29 +104,40 @@ const isEditMode = reactive({
   }
 })
 
-const refreshPosts = async () => {  
-  let apiRoutes = []
+const refreshPost = async () => {  
   let request = new QueryPosts()
   request.name = attrs.Post
   const api = await client.api(request)
     
   if(api.succeeded && api.response!.results){    
-    apiRoutes = api.response.results.forEach(result => {
-      var md = new marked()
-      renderedMdText.set(md.render(result.mdText))      
-      rawMdText.set(result.mdText)
-      frontmatterValue.set({ 
-          title: result.name, 
-          summary: 'Test' // TODO: replace this
-        })
-    });
+    let result = api.response.results[0];
+    var md = new marked()
+    renderedMdText.set(md.render(result.mdText))      
+    rawMdText.set(result.mdText)
+    frontmatterValue.set({ 
+        title: result.name, 
+        summary: 'Test' // TODO: replace this
+      })
+    currentPost.set(api.response.results[0]);
   }
       
-  return apiRoutes  
+  return currentPost.get()  
 }
 
 const updatePostText = async ($event) => {  
   inputValue.set($event.target.value)
+}
+
+const savePost = async (rawMdText, post) => {
+  let request = new UpdatePost(
+    {  
+      id: post.id,
+      mdText: rawMdText,
+      name: post.name,
+      path: post.path
+    })
+  request.name = attrs.Post
+  await client.api(request)  
 }
 
 const editPost = async () => {  
@@ -118,6 +147,8 @@ const editPost = async () => {
     var md = new marked()
     var renderedMd = md.render(rawMdText.get())
     renderedMdText.set(renderedMd)    
+    savePost(rawMdText.get(), currentPost.get())
+
   } else if (isEditMode.get()) {    
     inputValue.set(rawMdText.get())
   }
@@ -125,7 +156,7 @@ const editPost = async () => {
 
 onMounted(async () => {  
   isEditMode.set(false)
-  await refreshPosts()  
+  await refreshPost()
 })
 
 </script>

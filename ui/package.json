@@ -5,7 +5,7 @@
     "dev": "vite --open --host",
     "dtos": "cd src && x ts",
     "build": "cross-env NODE_ENV=production vite-ssg build",
-    "build:local": "vue-tsc --noEmit && vite-ssg build --mode development",
+    "build:local": "vite-ssg build --mode development",
     "publish": "npm run build && dotnet publish ../api/SlaytonNichols/SlaytonNichols.csproj -c Release",
     "serve": "vite preview",
     "typecheck": "vue-tsc --noEmit",
