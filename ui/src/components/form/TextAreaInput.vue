@@ -1,6 +1,6 @@
 <template>
   <div class="pt-4">
-    <!-- <label v-if="useLabel" :for="id" class="block text-sm font-medium text-gray-700">{{ useLabel }}</label> -->
+    <label v-if="useLabel" :for="id" class="block text-sm font-medium text-gray-700">{{ useLabel }}</label>
     <div class="mt-1 relative rounded-md shadow-sm">
       <textarea
          :name="id"

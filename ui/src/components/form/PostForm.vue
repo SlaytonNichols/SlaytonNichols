@@ -1,23 +1,26 @@
 <template>
   <div>      
     <text-input
-        :id="post.id" 
+        :id="'Id'"          
         :model-value="idFormVal.get()" 
         @input="updateId"
         hidden>
     </text-input>
     <text-input
-        :id="post.name" 
+        :id="'Title'" 
+        :placeholder="'Post Title'"
         :model-value="nameFormVal.get()" 
         @input="updateName">
     </text-input>
     <text-input
-        :id="post.path" 
+        :id="'Path'" 
+        :placeholder="'/posts/{path}'"
         :model-value="pathFormVal.get()" 
         @input="updatePath">
     </text-input>
     <text-area-input
-        :id="post.mdText" 
+        :id="'MarkdownBody'" 
+        :placeholder="'## Markdown Post'"
         :model-value="mdTextFormVal.get()" 
         @input="updateMdText">
     </text-area-input>
@@ -26,12 +29,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, reactive } from "vue"
-import { QueryPosts, UpdatePost, CreatePost, Post } from "@/dtos"
-import { client } from "@/api"
-import marked from "markdown-it"
-import { useAttrs } from 'vue'
-import { useRouter } from "vue-router"
-import { auth } from "@/auth"
+import { Post } from "@/dtos"
 
 type FrontMatter = {
   title: string
@@ -39,19 +37,18 @@ type FrontMatter = {
   date?: string
 }
 
-const post = ref<Post>()
+const modelValue = ref<Post>()
 const postsCount = ref<number>()
-const router = useRouter()
 
 const currentPost = reactive({
   // getter
   get() {
-    return post.value
+    return modelValue.value
   },
   // setter
   set(newValue: Post) {
     
-    post.value = newValue
+    modelValue.value = newValue
   }
 })
 
@@ -69,44 +66,44 @@ const totalPosts = reactive({
 const idFormVal = reactive({
   // getter
   get() {
-    return post.value.id
+    return modelValue?.value?.id
   },
   // setter
   set(newValue: number) {    
-    post.value.id = newValue    
+    modelValue.value.id = newValue    
   }
 })
 
 const mdTextFormVal = reactive({
   // getter
   get() {
-    return post.value.mdText
+    return modelValue?.value?.mdText
   },
   // setter
   set(newValue: string) {    
-    post.value.mdText = newValue    
+    modelValue.value.mdText = newValue    
   }
 })
 
 const nameFormVal = reactive({
   // getter
   get() {
-    return post.value.name
+    return modelValue?.value?.name
   },
   // setter
   set(newValue: string) {    
-    post.value.name = newValue    
+    modelValue.value.name = newValue    
   }
 })
 
 const pathFormVal = reactive({
   // getter
   get() {
-    return post.value.path
+    return modelValue?.value?.path
   },
   // setter
   set(newValue: string) {    
-    post.value.path = newValue    
+    modelValue.value.path = newValue    
   }
 })
 
@@ -127,7 +124,7 @@ const updateId = async ($event) => {
 }
 
 onMounted(async () => {  
-  
+//   console.log(idFormVal.get())
 })
 
 </script>

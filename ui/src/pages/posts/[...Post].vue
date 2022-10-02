@@ -1,11 +1,11 @@
 <template>
   <div>
     <markdown-page 
-      :frontmatter="frontmatterValue" 
+      :frontmatter="frontmatterValue.get()" 
       @edit="editPost"
       @create="createPost"      
       @save="savePost"
-      :allow-edit="admin.get()"
+      :allow-edit="admin"
       :is-edit-mode="isEditMode.get()"
       :is-create-mode="isCreateMode.get()">
       <div 
@@ -15,26 +15,30 @@
       </div>
       <div v-else class="pt-4">
         <!-- <post-form 
-          :post="currentPost.get()"
+          :current-post="currentPost.get()"          
+          @update="onUpdate"
         /> -->
         <text-input
-          :id="post.id" 
+          :id="'Id'"          
           :model-value="idFormVal.get()" 
           @input="updateId"
           hidden>
         </text-input>
         <text-input
-          :id="post.name" 
+          :id="'Title'" 
+          :placeholder="'Post Title'"
           :model-value="nameFormVal.get()" 
           @input="updateName">
         </text-input>
         <text-input
-          :id="post.path" 
+          :id="'Path'" 
+          :placeholder="'/posts/{path}'"
           :model-value="pathFormVal.get()" 
           @input="updatePath">
         </text-input>
         <text-area-input
-          :id="post.mdText" 
+          :id="'MarkdownBody'" 
+          :placeholder="'## Markdown Post'"
           :model-value="mdTextFormVal.get()" 
           @input="updateMdText">
         </text-area-input>
@@ -66,11 +70,7 @@ const attrs = useAttrs()
 const post = ref<Post>()
 const postsCount = ref<number>()
 const router = useRouter()
-const admin = reactive({
-  get () {
-    return auth?.value?.roles.indexOf('Admin') >= 0
-  }
-})
+const admin = auth?.value?.roles.indexOf('Admin') >= 0
 
 const isEditMode = reactive({
   // getter
@@ -255,7 +255,7 @@ const editPost = async () => {
     var renderedMd = md.render(mdTextFormVal.get())
     renderedMdText.set(renderedMd)
   } else if (isEditMode.get()) {    
-    idFormVal.set(totalPosts.get())
+    idFormVal.set(post.value.id)
     mdTextFormVal.set(rawMdText.get())
     nameFormVal.set(post.value.name)
     pathFormVal.set(post.value.path)
@@ -271,14 +271,17 @@ const createPost = async () => {
   })
 
   await client.api(request) 
+  isEditMode.set(false)  
+  isCreateMode.set(false)
   router.push({path: `/posts/${post.value.path}`})
 }
 
 onMounted(async () => {  
   await getPost()
   isEditMode.set(false)  
+  isCreateMode.set(false)
   if (router.currentRoute.value.params.Post === 'create') {    
-    isCreateMode.set(true)    
+    isCreateMode.set(true)   
     currentPost.set({ id: totalPosts.get(), name: '', path: '', mdText: '' });    
   }  
 })

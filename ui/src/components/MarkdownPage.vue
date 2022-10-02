@@ -6,7 +6,7 @@
           <slot></slot>
         </article>
       </div>      
-      <div v-if="allowEdit" class="mr-4 mb-4 mt-4">
+      <div v-if="allowEdit ?? false" class="mr-4 mb-4 mt-4">
         <button>
           <Edit @click="$emit('edit')" v-if="!props.isEditMode && !props.isCreateMode" />
           <Add @click="$emit('create')" v-else-if="props.isCreateMode"/>
@@ -34,10 +34,10 @@ type FrontMatter = {
 
 const props = defineProps<{
   frontmatter?: FrontMatter|null
-  allowEdit: boolean|false
+  allowEdit?: boolean|false
   label?: string
-  isEditMode: boolean|false
-  isCreateMode: boolean|false
+  isEditMode?: boolean|false
+  isCreateMode?: boolean|false
 }>()
 
 </script>

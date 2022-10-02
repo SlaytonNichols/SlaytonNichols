@@ -1,12 +1,12 @@
 <template>
   <div>
-    <!-- <label v-if="useLabel" :for="id" class="block text-sm font-medium text-gray-700">{{ useLabel }}</label> -->
+    <label v-if="useLabel" :for="id" class="mt-2 block text-sm font-medium text-gray-700">{{ useLabel }}</label>
     <div class="mt-3 relative rounded-md shadow-sm">
       <input :type="useType"
              :name="id"
              :id="id"
              :class="cls"
-             
+             :placeholder="usePlaceholder"
              :value="modelValue"
              @input="$emit('update:modelValue', value($event.target))"
              :aria-invalid="errorField != null"
@@ -41,8 +41,8 @@ const props = defineProps<{
 }>()
 
 const useType = computed(() => props.type || 'text')
-// const useLabel = computed(() => props.label ?? humanize(toPascalCase(props.id)))
-// const usePlaceholder = computed(() => props.placeholder ?? useLabel.value)
+const useLabel = computed(() => props.label ?? humanize(toPascalCase(props.id)))
+const usePlaceholder = computed(() => props.placeholder ?? useLabel.value)
 
 const remaining = computed(() => omit(useAttrs(), [...Object.keys(props)]))
 
