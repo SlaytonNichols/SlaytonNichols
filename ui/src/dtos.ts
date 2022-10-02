@@ -1,5 +1,5 @@
 /* Options:
-Date: 2022-10-02 01:53:02
+Date: 2022-10-02 12:49:28
 Version: 6.21
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://localhost:5001
@@ -45,6 +45,10 @@ export interface ICreateDb<Table>
 }
 
 export interface IPatchDb<Table>
+{
+}
+
+export interface IDeleteDb<Table>
 {
 }
 
@@ -515,5 +519,20 @@ export class UpdatePost implements IReturn<IdResponse>, IPatchDb<Post>
     public getTypeName() { return 'UpdatePost'; }
     public getMethod() { return 'PATCH'; }
     public createResponse() { return new IdResponse(); }
+}
+
+/**
+* Delete a Post
+*/
+// @Route("/posts/{Id}", "DELETE")
+// @ValidateRequest(Validator="HasRole(`Admin`)")
+export class DeletePost implements IReturnVoid, IDeleteDb<Post>
+{
+    public id?: number;
+
+    public constructor(init?: Partial<DeletePost>) { (Object as any).assign(this, init); }
+    public getTypeName() { return 'DeletePost'; }
+    public getMethod() { return 'DELETE'; }
+    public createResponse() {}
 }
 

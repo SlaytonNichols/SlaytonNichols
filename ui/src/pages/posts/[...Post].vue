@@ -5,6 +5,7 @@
       @edit="editPost"
       @create="createPost"      
       @save="savePost"
+      @delete="deletePost"
       :allow-edit="admin"
       :is-edit-mode="isEditMode.get()"
       :is-create-mode="isCreateMode.get()">
@@ -25,7 +26,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, reactive } from "vue"
-import { QueryPosts, UpdatePost, CreatePost, Post } from "@/dtos"
+import { QueryPosts, UpdatePost, CreatePost, DeletePost, Post } from "@/dtos"
 import { client } from "@/api"
 import marked from "markdown-it"
 import { useAttrs } from 'vue'
@@ -162,7 +163,7 @@ const savePost = async () => {
   })
   await client.api(request)
   isEditMode.set(!isEditMode.get())
-  router.push({path: `/posts/${post.value.path}`})
+  router.go(0)
 }
 
 const editPost = async () => {  
@@ -195,7 +196,18 @@ const createPost = async () => {
   await client.api(request) 
   isEditMode.set(false)  
   isCreateMode.set(false)
-  router.push({path: `/posts/${post.value.path}`})
+  router.go(0)
+}
+
+const deletePost = async () => {  
+  let request = new DeletePost({
+    id: post.value.id
+  })
+
+  await client.api(request) 
+  isEditMode.set(false)  
+  isCreateMode.set(false)
+  router.push('/posts')
 }
 
 onMounted(async () => {  

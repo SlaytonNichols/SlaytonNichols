@@ -52,4 +52,13 @@ namespace SlaytonNichols.ServiceModel
         public string Name { get; set; }
         public string Path { get; set; }
     }
+
+    [Tag("posts"), Description("Delete a Post")]
+    [Route("/posts/{Id}", "DELETE")]
+    [ValidateHasRole("Admin")]
+    [AutoApply(Behavior.AuditSoftDelete)]
+    public class DeletePost : IDeleteDb<Post>, IReturnVoid
+    {
+        public int Id { get; set; }
+    }
 }
