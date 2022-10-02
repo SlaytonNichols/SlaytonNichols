@@ -3,17 +3,23 @@
     <markdown-page 
       :frontmatter="frontmatterValue" 
       @edit="editPost"
-      @create="savePost"
+      @create="createPost"      
       @save="savePost"
-      :allow-edit="admin"
-      :is-edit-mode="isEditMode.get() && admin"
-      :is-create-mode="isCreateMode.get() && admin">
+      :allow-edit="admin.get()"
+      :is-edit-mode="isEditMode.get()"
+      :is-create-mode="isCreateMode.get()">
       <div 
         v-if="!isEditMode.get() && !isCreateMode.get()" 
         v-html="renderedMdText.get()" 
-        class="markdown-body">
+        class="markdown-body pt-4">
       </div>
-      <div v-else>
+      <div v-else class="pt-4">
+        <text-input
+          :id="post.id" 
+          :model-value="idFormVal.get()" 
+          @input="updateId"
+          hidden>
+        </text-input>
         <text-input
           :id="post.name" 
           :model-value="nameFormVal.get()" 
@@ -56,12 +62,10 @@ const createMode = ref<Boolean>()
 const attrs = useAttrs()
 const post = ref<Post>()
 const postsCount = ref<number>()
-const router = useRouter()  
-const isAdmin = ref<Boolean>()
-
+const router = useRouter()
 const admin = reactive({
   get () {
-    return auth.value.roles.indexOf('Admin') >= 0
+    return auth?.value?.roles.indexOf('Admin') >= 0
   }
 })
 
@@ -153,7 +157,7 @@ const idFormVal = reactive({
     return post.value.id
   },
   // setter
-  set(newValue: string) {    
+  set(newValue: number) {    
     post.value.id = newValue    
   }
 })
@@ -209,8 +213,7 @@ const updateId = async ($event) => {
 
 const getPost = async () => {    
   const api = await client.api(new QueryPosts())  
-  totalPosts.set(Math.max.apply(null, api.response.results.map(x => x.id)) + 1)
-  console.log(totalPosts.get())
+  totalPosts.set(Math.max.apply(null, api.response.results.map(x => x.id)))  
   let result = api.response.results.filter(p => p.path === attrs.Post)[0]
   if(api.succeeded && result){
     var md = new marked()
@@ -227,36 +230,44 @@ const getPost = async () => {
 }
 
 const savePost = async () => {  
-  let request = new CreatePost({
-    id: post.value.id,
-    mdText: post.value.mdText,
-    name: post.value.name,
-    path: post.value.path
-  })
-
-  await client.api(request) 
-  router.push({path: `/posts/${post.value.path}`})
-}
-
-const editPost = async () => {  
-  isEditMode.set(!isEditMode.get())
-  if(!isEditMode.get()) {
-    rawMdText.set(mdTextFormVal.get())
-    var md = new marked()
-    var renderedMd = md.render(mdTextFormVal.get())
-    renderedMdText.set(renderedMd)
-  } else if (isEditMode.get()) {    
-    mdTextFormVal.set(rawMdText.get())
-  }  
   let request = new UpdatePost(
   {  
-    id: post.value.id,
+    id: totalPosts.get(),
     mdText: post.value.mdText,
     name: post.value.name,
     path: post.value.path
   })
   await client.api(request)
   
+  router.push({path: `/posts/${post.value.path}`})
+}
+
+const editPost = async () => {  
+  await getPost()
+  isEditMode.set(!isEditMode.get())
+  //if turning edit mode off or loading the page
+  if(!isEditMode.get()) {
+    rawMdText.set(mdTextFormVal.get())
+    var md = new marked()
+    var renderedMd = md.render(mdTextFormVal.get())
+    renderedMdText.set(renderedMd)
+  } else if (isEditMode.get()) {    
+    idFormVal.set(totalPosts.get())
+    mdTextFormVal.set(rawMdText.get())
+    nameFormVal.set(post.value.name)
+    pathFormVal.set(post.value.path)
+  }
+}
+
+const createPost = async () => {  
+  let request = new CreatePost({
+    id: totalPosts.get() + 1,
+    mdText: post.value.mdText,
+    name: post.value.name,
+    path: post.value.path
+  })
+
+  await client.api(request) 
   router.push({path: `/posts/${post.value.path}`})
 }
 

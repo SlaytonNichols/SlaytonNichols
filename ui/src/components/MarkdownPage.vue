@@ -7,11 +7,11 @@
         </article>
       </div>      
     </main>
-    <div v-if="allowEdit" class="flex justify-end mr-4">
+    <div v-if="allowEdit" class="flex justify-end mr-4 mb-4">
       <button>
         <Edit @click="$emit('edit')" v-if="!props.isEditMode && !props.isCreateMode" />
         <Add @click="$emit('create')" v-else-if="props.isCreateMode"/>
-        <Save @click="$emit('edit')" v-else/>
+        <Save @click="$emit('save')" v-else/>
       </button>
     </div>    
   </div>

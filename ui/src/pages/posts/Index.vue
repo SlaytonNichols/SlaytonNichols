@@ -33,7 +33,7 @@ type FrontMatter = {
   summary?: string
   date?: string
 }
-const isAdmin = auth.value.roles.indexOf('Admin') >= 0
+const isAdmin = auth?.value?.roles.indexOf('Admin') >= 0
 const posts = ref<Post[]>([])
 const router = useRouter()  
 posts.value = router.getRoutes()
