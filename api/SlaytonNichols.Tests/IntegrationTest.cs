@@ -41,7 +41,11 @@ namespace SlaytonNichols.Tests
 
             var response = client.Get(new Hello { Name = "World" });
 
+<<<<<<< Updated upstream
             Assert.That(response.Result, Is.EqualTo("Hello, World!"));
+=======
+            Assert.That(response.Results.First().Id, Is.EqualTo("test"));
+>>>>>>> Stashed changes
         }
     }
 }
