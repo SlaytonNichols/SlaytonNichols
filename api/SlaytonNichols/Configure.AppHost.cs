@@ -22,7 +22,7 @@ public class AppHost : AppHostBase, IHostingStartup
             {
                 jsonConsoleFormatterOptions.JsonWriterOptions = new()
                 {
-                    Indented = true,
+                    Indented = false,
                     Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
                 };
             });
