@@ -12,6 +12,11 @@
         </div>
       </div>
     </main>
+    <div v-if="isAdmin" class="flex justify-end mr-4">
+      <button @click="createPost">
+        <Add />
+      </button>      
+    </div>
   </div>
 </template>
 
@@ -20,13 +25,15 @@ import { useRouter } from "vue-router"
 import { onMounted, ref } from "vue"
 import { Post, QueryPosts } from "@/dtos"
 import { client } from "@/api"
+import Add from "~icons/bxs/add-to-queue/"
+import { auth } from "@/auth"
 
 type FrontMatter = {
   title: string
   summary?: string
   date?: string
 }
-
+const isAdmin = auth.value.roles.indexOf('Admin') >= 0
 const posts = ref<Post[]>([])
 const router = useRouter()  
 posts.value = router.getRoutes()
@@ -35,16 +42,20 @@ posts.value = router.getRoutes()
   .filter(r => !r.path.includes("employment-history"))
   .sort((a, b) => (b.frontmatter.date ?? "")?.localeCompare(a.frontmatter.date ?? ""))
 
-
+const createPost = async () => {
+  router.push({path: '/posts/create'})
+}
 
 const refreshPosts = async () => {
   let apiRoutes = []
   const api = await client.api(new QueryPosts())
     
-  if(api.succeeded && api.response!.results){      
+  if(api.succeeded && api.response!.results){
+    // TODO: rewrite with new form fields
     apiRoutes = api.response.results.forEach(result => {
       posts.value.push({ 
-        path: result.path, 
+        id: result.id,
+        path: '/posts/' + result.path, 
         name: result.name, 
         frontmatter: { 
           title: result.name, 
@@ -53,7 +64,6 @@ const refreshPosts = async () => {
       })
     });
   }
-      
   return apiRoutes  
 }
 

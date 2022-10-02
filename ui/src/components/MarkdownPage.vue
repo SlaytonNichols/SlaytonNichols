@@ -8,9 +8,10 @@
       </div>      
     </main>
     <div v-if="allowEdit" class="flex justify-end mr-4">
-      <button @click="$emit('edit')">
-        <Edit v-if="!props.currentlyEditing" />
-        <Save v-else/>
+      <button>
+        <Edit @click="$emit('edit')" v-if="!props.isEditMode && !props.isCreateMode" />
+        <Add @click="$emit('create')" v-else-if="props.isCreateMode"/>
+        <Save @click="$emit('edit')" v-else/>
       </button>
     </div>    
   </div>
@@ -23,6 +24,7 @@
 import { reactive, ref } from "vue"
 import Edit from "~icons/ci/edit/"
 import Save from "~icons/fluent/save-20-filled/"
+import Add from "~icons/bxs/add-to-queue/"
 
 type FrontMatter = {
   title: string
@@ -32,9 +34,10 @@ type FrontMatter = {
 
 const props = defineProps<{
   frontmatter?: FrontMatter|null
-  allowEdit: boolean
+  allowEdit: boolean|false
   label?: string
-  currentlyEditing: boolean
+  isEditMode: boolean|false
+  isCreateMode: boolean|false
 }>()
 
 </script>

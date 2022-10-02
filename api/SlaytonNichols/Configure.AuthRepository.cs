@@ -52,19 +52,22 @@ public class ConfigureAuthRepository : IHostingStartup
 {
     public void Configure(IWebHostBuilder builder) => builder
         .ConfigureServices(services => services.AddSingleton<IAuthRepository>(c =>
-            new OrmLiteAuthRepository<AppUser, UserAuthDetails>(c.Resolve<IDbConnectionFactory>()) {
+            new OrmLiteAuthRepository<AppUser, UserAuthDetails>(c.Resolve<IDbConnectionFactory>())
+            {
                 UseDistinctRoleTables = true
             }))
-        .ConfigureAppHost(appHost => {
+        .ConfigureAppHost(appHost =>
+        {
             var authRepo = appHost.Resolve<IAuthRepository>();
             authRepo.InitSchema();
-            CreateUser(authRepo, "admin@email.com", "Admin User", "p@55wOrd", roles: new[] { RoleNames.Admin });
-            CreateUser(authRepo, "manager@email.com", "The Manager", "p@55wOrd", roles: new[] { "Employee", "Manager" });
-            CreateUser(authRepo, "employee@email.com", "A Employee", "p@55wOrd", roles: new[] { "Employee" });
+            // CreateUser(authRepo, "admin@email.com", "Admin User", "p@55wOrd", roles: new[] { RoleNames.Admin });
+            // CreateUser(authRepo, "manager@email.com", "The Manager", "p@55wOrd", roles: new[] { "Employee", "Manager" });
+            // CreateUser(authRepo, "employee@email.com", "A Employee", "p@55wOrd", roles: new[] { "Employee" });
 
             // Removing unused UserName in Admin Users UI 
-            appHost.Plugins.Add(new ServiceStack.Admin.AdminUsersFeature {
-                
+            appHost.Plugins.Add(new ServiceStack.Admin.AdminUsersFeature
+            {
+
                 // Show custom fields in Search Results
                 QueryUserAuthProperties = new() {
                     nameof(AppUser.Id),
@@ -102,7 +105,8 @@ public class ConfigureAuthRepository : IHostingStartup
             });
 
         },
-        afterConfigure: appHost => {
+        afterConfigure: appHost =>
+        {
             appHost.AssertPlugin<AuthFeature>().AuthEvents.Add(new AppUserAuthEvents());
         });
 

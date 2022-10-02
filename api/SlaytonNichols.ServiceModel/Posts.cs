@@ -17,11 +17,11 @@ namespace SlaytonNichols.ServiceModel
 
     [Tag("posts"), Description("Find posts")]
     [Route("/posts", "GET")]
-    [Route("/posts/{Name}", "GET")]
+    [Route("/posts/{Path}", "GET")]
     [AutoApply(Behavior.AuditQuery)]
     public class QueryPosts : QueryDb<Post>
     {
-        public string? Name { get; set; }
+        public string? Path { get; set; }
     }
 
     public class QueryPostsResponse : Post
@@ -34,6 +34,7 @@ namespace SlaytonNichols.ServiceModel
     [AutoApply(Behavior.AuditCreate)]
     public class CreatePost : ICreateDb<Post>, IReturn<IdResponse>
     {
+        [AutoIncrement]
         public int Id { get; set; }
         public string MdText { get; set; }
         public string Name { get; set; }

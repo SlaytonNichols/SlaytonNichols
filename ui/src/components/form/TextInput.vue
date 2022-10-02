@@ -1,7 +1,7 @@
 <template>
   <div>
-    <label v-if="useLabel" :for="id" class="block text-sm font-medium text-gray-700">{{ useLabel }}</label>
-    <div class="mt-1 relative rounded-md shadow-sm">
+    <!-- <label v-if="useLabel" :for="id" class="block text-sm font-medium text-gray-700">{{ useLabel }}</label> -->
+    <div class="mt-3 relative rounded-md shadow-sm">
       <input :type="useType"
              :name="id"
              :id="id"
