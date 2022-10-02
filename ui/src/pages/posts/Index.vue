@@ -11,7 +11,7 @@
           </p>
         </div>
       </div>
-      <div v-if="isAdmin" class="mr-4 mb-4 mt-8">
+      <div v-if="isAdmin" class="ml-4 mb-4 mt-8">
         <button @click="createPost">
           <Add />
         </button>      
