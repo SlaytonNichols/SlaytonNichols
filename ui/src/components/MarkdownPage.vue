@@ -7,8 +7,11 @@
         </article>
       </div>      
     </main>
-    <div class="flex justify-end mr-4">
-      <button @click="$emit('edit')">Edit/Save</button>
+    <div v-if="allowEdit" class="flex justify-end mr-4">
+      <button @click="$emit('edit')">
+        <Edit v-if="!props.currentlyEditing" />
+        <Save v-else/>
+      </button>
     </div>    
   </div>
 </template>
@@ -18,25 +21,21 @@
 // import AppBreadcrumb from './AppBreadcrumb.vue'
 
 import { reactive, ref } from "vue"
+import Edit from "~icons/ci/edit/"
+import Save from "~icons/fluent/save-20-filled/"
 
 type FrontMatter = {
   title: string
   summary?: string
   date?: string
 }
-const frontmatter = ref<FrontMatter>()
-const allowEdit = ref<Boolean>()
 
-const isEdit = reactive({
-  // getter
-  get() {
-    return allowEdit.value
-  },
-  // setter
-  set(newValue: boolean) {    
-    allowEdit.value = newValue
-  }
-})
+const props = defineProps<{
+  frontmatter?: FrontMatter|null
+  allowEdit: boolean
+  label?: string
+  currentlyEditing: boolean
+}>()
 
 </script>
 <style scoped>

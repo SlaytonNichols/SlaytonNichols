@@ -2,7 +2,9 @@
   <div>
     <markdown-page 
       :frontmatter="frontmatterValue" 
-      @edit="editPost">
+      @edit="editPost"
+      :allow-edit="true"
+      :currently-editing="isEditMode.get()">
       <div v-if="!isEditMode.get()" v-html="renderedMdText.get()" class="markdown-body"></div>
       <text-area-input class="markdown-body" v-else-if="isEditMode.get()" 
         :id="post.name" 
