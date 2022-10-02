@@ -39,7 +39,7 @@ namespace SlaytonNichols.Tests
                             Id = 1,
                             MdText = "## First Post",
                             Name = "Test",
-                            Path = "/posts/test",
+                            Path = "test",
                             CreatedBy = "SN",
                             CreatedDate = DateTime.Now,
                             ModifiedBy = "SN",
@@ -68,7 +68,7 @@ namespace SlaytonNichols.Tests
 
             var response = client.Get(new QueryPosts { Path = "test" });
 
-            Assert.That(response.Results.First().Path, Is.EqualTo("test"));
+            Assert.That(response.Results.FirstOrDefault().Path, Is.EqualTo("test"));
         }
     }
 }
