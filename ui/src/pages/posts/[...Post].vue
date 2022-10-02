@@ -145,7 +145,7 @@ const savePost = async () => {
   })
   await client.api(request)
   isEditMode.set(!isEditMode.get())
-  router.go(0)
+  router.push(`/posts/${post.value.path}`)
 }
 
 const editPost = async () => {  

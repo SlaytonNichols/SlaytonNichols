@@ -1,8 +1,8 @@
 using Funq;
 using ServiceStack;
 using SlaytonNichols.ServiceInterface;
-using ServiceStack.Logging.Log4Net;
-using ServiceStack.Logging;
+
+using System.Text.Encodings.Web;
 
 [assembly: HostingStartup(typeof(SlaytonNichols.AppHost))]
 
@@ -14,16 +14,23 @@ public class AppHost : AppHostBase, IHostingStartup
         .ConfigureServices((context, services) =>
         {
             services.ConfigureNonBreakingSameSiteCookies(context.HostingEnvironment);
+        }).ConfigureLogging(logginBuilder =>
+        {
+            logginBuilder.ClearProviders();
+            logginBuilder.AddJsonConsole(jsonConsoleFormatterOptions =>
+            {
+                jsonConsoleFormatterOptions.JsonWriterOptions = new()
+                {
+                    Indented = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                };
+            });
         });
 
     public AppHost() : base("SlaytonNichols", typeof(PostsServices).Assembly) { }
 
     public override void Configure(Container container)
     {
-        //Logging
-        LogManager.LogFactory = new Log4NetFactory("log4net.config");
-        container.Register<ILog>(ctx => LogManager.LogFactory.GetLogger(typeof(IService)));
-
         //ServiceStack
         SetConfig(new HostConfig
         {
