@@ -48,7 +48,6 @@ namespace SlaytonNichols.Tests
                     });
                     }
                     container.RegisterAutoWired<PostsServices>();
-                    container.RegisterAutoWired<ILogger<PostsServices>>();
                 },
             }.Init();
         }
@@ -56,17 +55,16 @@ namespace SlaytonNichols.Tests
         [OneTimeTearDown]
         public void OneTimeTearDown() => appHost.Dispose();
 
-        // [Test]
-        // public async Task Can_call_PostsServices()
-        // {
-        //     var logger = appHost.Container.Resolve<ILogger<PostsServices>>();
-        //     var service = appHost.Container.Resolve<PostsServices>();
-        //     service.Request = new BasicRequest();
+        [Test]
+        public async Task Can_call_PostsServices()
+        {
+            var service = appHost.Container.Resolve<PostsServices>();
+            service.Request = new BasicRequest();
 
-        //     var response =
-        //         (QueryResponse<Post>)(await service.Get(new QueryPosts { Path = "test" }));
+            var response =
+                (QueryResponse<Post>)(await service.Get(new QueryPosts { Path = "test" }));
 
-        //     Assert.That(response.Results.FirstOrDefault().Path, Is.EqualTo("test"));
-        // }
+            Assert.That(response.Results.FirstOrDefault().Path, Is.EqualTo("test"));
+        }
     }
 }
