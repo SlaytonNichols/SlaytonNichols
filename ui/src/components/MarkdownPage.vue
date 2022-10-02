@@ -21,9 +21,6 @@
 </template>
 
 <script setup lang="ts">
-// TODO: Add prop to allow this to be hidden on some md pages
-// import AppBreadcrumb from './AppBreadcrumb.vue'
-
 import { reactive, ref } from "vue"
 import Edit from "~icons/ci/edit/"
 import Save from "~icons/fluent/save-20-filled/"

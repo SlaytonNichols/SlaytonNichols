@@ -16,8 +16,7 @@
       </div>
       <div v-else class="pt-4">
         <post-form          
-          :model-value="currentPost.get()"
-          @update="onUpdate"
+          :model-value="currentPost.get()"          
         />
       </div>      
     </markdown-page>    
@@ -39,7 +38,6 @@ type FrontMatter = {
   date?: string
 }
 const frontmatter = ref<FrontMatter>()
-const mdText = ref<string>()
 const mdHtml = ref<string>()
 const editMode = ref<Boolean>()
 const createMode = ref<Boolean>()
@@ -97,18 +95,6 @@ const renderedMdText = reactive({
   }
 })
 
-const rawMdText = reactive({
-  // getter
-  get() {
-    return mdText.value
-  },
-  // setter
-  set(newValue: string) {
-    
-    mdText.value = newValue
-  }
-})
-
 const frontmatterValue = reactive({
   // getter
   get() {
@@ -131,18 +117,13 @@ const totalPosts = reactive({
   }
 })
 
-const onUpdate = async ($event) => {  
-  console.log($event.target.value)
-}
-
 const getPost = async () => {    
   const api = await client.api(new QueryPosts())  
   totalPosts.set(Math.max.apply(null, api.response.results.map(x => x.id)))  
   let result = api.response.results.filter(p => p.path === attrs.Post)[0]
   if(api.succeeded && result){
     var md = new marked()
-    renderedMdText.set(md.render(result.mdText))      
-    rawMdText.set(result.mdText)
+    renderedMdText.set(md.render(result.mdText))    
     frontmatterValue.set({ 
         title: result.name, 
         summary: 'Add a summary property'
@@ -170,8 +151,7 @@ const editPost = async () => {
   await getPost()
   isEditMode.set(!isEditMode.get())
   //if turning edit mode off or loading the page
-  if(!isEditMode.get()) {
-    rawMdText.set(currentPost.get().mdText)
+  if(!isEditMode.get()) {    
     var md = new marked()
     var renderedMd = md.render(currentPost.get().mdText)
     renderedMdText.set(renderedMd)
@@ -192,10 +172,10 @@ const createPost = async () => {
     path: post.value.path
   })
 
-  await client.api(request) 
+  await client.api(request)  
+  router.push(`/posts/${post.value.path}`)
   isEditMode.set(false)  
   isCreateMode.set(false)
-  router.push(`/posts/${post.value.path}`)
 }
 
 const deletePost = async () => {  
@@ -203,10 +183,10 @@ const deletePost = async () => {
     id: post.value.id
   })
 
-  await client.api(request) 
+  await client.api(request)  
+  router.push('/posts')
   isEditMode.set(false)  
   isCreateMode.set(false)
-  router.push('/posts')
 }
 
 onMounted(async () => {  
