@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen">
     <main class="flex justify-center">
-      <div class="mx-auto px-5">
+      <div class="px-5">
         <AppBreadcrumb class="my-8" name="Blog" />
         <div v-for="route in posts" class="mb-8">
           <router-link class="text-2xl hover:text-green-600" :to="route.path">{{ route.frontmatter.title }}
@@ -11,12 +11,12 @@
           </p>
         </div>
       </div>
+      <div v-if="isAdmin" class="mr-4 mb-4 mt-4">
+        <button @click="createPost">
+          <Add />
+        </button>      
+      </div>
     </main>
-    <div v-if="isAdmin" class="flex justify-end mr-4">
-      <button @click="createPost">
-        <Add />
-      </button>      
-    </div>
   </div>
 </template>
 

@@ -14,6 +14,9 @@
         class="markdown-body pt-4">
       </div>
       <div v-else class="pt-4">
+        <!-- <post-form 
+          :post="currentPost.get()"
+        /> -->
         <text-input
           :id="post.id" 
           :model-value="idFormVal.get()" 
@@ -238,7 +241,7 @@ const savePost = async () => {
     path: post.value.path
   })
   await client.api(request)
-  
+  isEditMode.set(!isEditMode.get())
   router.push({path: `/posts/${post.value.path}`})
 }
 

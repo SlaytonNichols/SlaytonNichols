@@ -1,19 +1,19 @@
 <template>
   <div class="min-h-screen">
     <main class="flex justify-center">
-      <div class="px-5 flex-basis">
-        <article class="prose lg:prose-xl">
+      <div :class="(!props.isEditMode && !props.isCreateMode ? 'px-5' : 'px-5 flex-basis')">
+        <article :class="(!props.isEditMode && !props.isCreateMode ? 'prose lg:prose-xl' : 'lg:prose-xl')">
           <slot></slot>
         </article>
       </div>      
+      <div v-if="allowEdit" class="mr-4 mb-4 mt-4">
+        <button>
+          <Edit @click="$emit('edit')" v-if="!props.isEditMode && !props.isCreateMode" />
+          <Add @click="$emit('create')" v-else-if="props.isCreateMode"/>
+          <Save @click="$emit('save')" v-else/>
+        </button>
+      </div>
     </main>
-    <div v-if="allowEdit" class="flex justify-end mr-4 mb-4">
-      <button>
-        <Edit @click="$emit('edit')" v-if="!props.isEditMode && !props.isCreateMode" />
-        <Add @click="$emit('create')" v-else-if="props.isCreateMode"/>
-        <Save @click="$emit('save')" v-else/>
-      </button>
-    </div>    
   </div>
 </template>
 
@@ -43,6 +43,6 @@ const props = defineProps<{
 </script>
 <style scoped>
 .flex-basis {
-  flex-basis: 50%;
+  flex-basis: 100%;
 }
 </style>
