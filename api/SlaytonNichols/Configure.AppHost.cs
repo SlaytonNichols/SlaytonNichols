@@ -1,5 +1,6 @@
 using Funq;
 using ServiceStack;
+using ServiceStack.Api.OpenApi;
 using SlaytonNichols.ServiceInterface;
 
 using System.Text.Encodings.Web;
@@ -31,6 +32,8 @@ public class AppHost : AppHostBase, IHostingStartup
 
     public override void Configure(Container container)
     {
+        Plugins.Add(new OpenApiFeature());
+        Plugins.Add(new PostmanFeature());
         //ServiceStack
         SetConfig(new HostConfig
         {
