@@ -59,7 +59,7 @@ const refreshPosts = async () => {
         name: result.name, 
         frontmatter: { 
           title: result.name, 
-          summary: 'Test' 
+          summary: 'Add a summary property' 
         } 
       })
     });

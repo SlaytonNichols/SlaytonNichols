@@ -5,9 +5,9 @@
       @edit="editPost"
       @create="savePost"
       @save="savePost"
-      :allow-edit="isAdmin"
-      :is-edit-mode="isEditMode.get() && isAdmin"
-      :is-create-mode="isCreateMode.get() && isAdmin">
+      :allow-edit="admin"
+      :is-edit-mode="isEditMode.get() && admin"
+      :is-create-mode="isCreateMode.get() && admin">
       <div 
         v-if="!isEditMode.get() && !isCreateMode.get()" 
         v-html="renderedMdText.get()" 
@@ -57,7 +57,13 @@ const attrs = useAttrs()
 const post = ref<Post>()
 const postsCount = ref<number>()
 const router = useRouter()  
-const isAdmin = auth.value.roles.indexOf('Admin') >= 0
+const isAdmin = ref<Boolean>()
+
+const admin = reactive({
+  get () {
+    return auth.value.roles.indexOf('Admin') >= 0
+  }
+})
 
 const isEditMode = reactive({
   // getter
@@ -141,6 +147,17 @@ const totalPosts = reactive({
   }
 })
 
+const idFormVal = reactive({
+  // getter
+  get() {
+    return post.value.id
+  },
+  // setter
+  set(newValue: string) {    
+    post.value.id = newValue    
+  }
+})
+
 const mdTextFormVal = reactive({
   // getter
   get() {
@@ -186,11 +203,16 @@ const updatePath = async ($event) => {
   pathFormVal.set($event.target.value)
 }
 
+const updateId = async ($event) => {  
+  idFormVal.set($event.target.value)
+}
+
 const getPost = async () => {    
   const api = await client.api(new QueryPosts())  
-  totalPosts.set(api.response.total)
+  totalPosts.set(Math.max.apply(null, api.response.results.map(x => x.id)) + 1)
+  console.log(totalPosts.get())
   let result = api.response.results.filter(p => p.path === attrs.Post)[0]
-  if(api.succeeded && result){    
+  if(api.succeeded && result){
     var md = new marked()
     renderedMdText.set(md.render(result.mdText))      
     rawMdText.set(result.mdText)
@@ -204,8 +226,8 @@ const getPost = async () => {
   return currentPost.get()
 }
 
-const savePost = async (post) => {  
-  let request = new CreatePost({ 
+const savePost = async () => {  
+  let request = new CreatePost({
     id: post.value.id,
     mdText: post.value.mdText,
     name: post.value.name,
@@ -243,7 +265,7 @@ onMounted(async () => {
   isEditMode.set(false)  
   if (router.currentRoute.value.params.Post === 'create') {    
     isCreateMode.set(true)    
-    currentPost.set({ id: totalPosts.get(), name: '', path: '', mdText: '' });
+    currentPost.set({ id: totalPosts.get(), name: '', path: '', mdText: '' });    
   }  
 })
 
