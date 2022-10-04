@@ -1,9 +1,9 @@
 <template>
   <div class="min-h-screen">
-    <main class="flex justify-center">
-      <div class="px-5">
-        <AppBreadcrumb class="my-8" name="Blog" />
-        <div v-for="route in posts" class="mb-8">
+    <main class="flex">
+      <div class="px-5 flex-grow mt-10">
+        <AppBreadcrumb class="my-4 justify-center" name="Blog" />
+        <div v-for="route in posts" class="flex mb-8 justify-center flex-col align-center">
           <router-link class="text-2xl hover:text-green-600" :to="route.path">{{ route.frontmatter.title }}
           </router-link>
           <p v-if="route.frontmatter.summary" class="text-gray-500">
@@ -11,7 +11,7 @@
           </p>
         </div>
       </div>
-      <div v-if="isAdmin" class="ml-4 mb-4 mt-8">
+      <div v-if="isAdmin" class="m-4 justify-end">
         <button @click="createPost">
           <Add />
         </button>      
@@ -71,3 +71,8 @@ onMounted(async () => {
 })
 
 </script>
+<style scoped>
+.align-center {
+  align-items: center;
+}
+</style>

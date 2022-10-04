@@ -1,41 +1,57 @@
 <template>
-  <div>      
-    <text-input
-        :id="'Id'"          
-        :model-value="props.modelValue?.id" 
-        @input="updateId"
-        hidden>
-    </text-input>
-    <text-input
+  <api-form class="flex flex-col ml-4 mb-4" v-if="props.isEditMode || props.isCreateMode">
+    <div class="flex-align-self-end">
+      <button title="delete" v-if="props.isEditMode" type="submit" class="mr-2">
+        <Delete @click="$emit('delete')"/>
+      </button>
+      <button title="submit" type="submit">
+        <Add @click="$emit('create');" v-if="props.isCreateMode"/>
+        <Save @click="$emit('save')" v-else-if="props.isEditMode"/>
+      </button>
+    </div>
+    <div>
+      <text-input        
         :id="'Title'" 
         :placeholder="'Post Title'"
         :model-value="props.modelValue?.title" 
         @input="updateTitle">
-    </text-input>
-    <text-input
-        :id="'Summary'" 
-        :placeholder="'Summary of Post'"
-        :model-value="props.modelValue?.summary" 
-        @input="updateSummary">
-    </text-input>
-    <text-input
+      </text-input>
+      <text-input        
         :id="'Path'" 
         :placeholder="'/posts/{path}'"
         :model-value="props.modelValue?.path" 
         @input="updatePath">
-    </text-input>
-    <text-area-input
-        :id="'MarkdownBody'" 
-        :placeholder="'## Markdown Post'"
-        :model-value="props.modelValue?.mdText" 
-        @input="updateMdText">
-    </text-area-input>
-  </div>
+      </text-input>
+    </div>
+    <div class="">
+      <text-input
+          :id="'Id'"          
+          :model-value="props.modelValue?.id" 
+          @input="updateId"
+          hidden>
+      </text-input>    
+      <text-input
+          :id="'Summary'" 
+          :placeholder="'Summary of Post'"
+          :model-value="props.modelValue?.summary" 
+          @input="updateSummary">
+      </text-input>
+      <text-area-input
+          :id="'MarkdownBody'" 
+          :placeholder="'## Markdown Post'"
+          :model-value="props.modelValue?.mdText" 
+          @input="updateMdText">
+      </text-area-input>
+    </div>
+  </api-form>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, reactive } from "vue"
 import { Post } from "@/dtos"
+import Save from "~icons/fluent/save-20-filled/"
+import Add from "~icons/bxs/add-to-queue/"
+import Delete from "~icons/fluent/delete-20-filled/"
 
 type FrontMatter = {
   title: string
@@ -43,7 +59,14 @@ type FrontMatter = {
   date?: string
 }
 
-const props = defineProps<{ modelValue: Post }>()
+const props = defineProps<{
+  modelValue: Post
+  frontmatter?: FrontMatter|null
+  allowEdit?: boolean|false
+  label?: string
+  isEditMode?: boolean|false
+  isCreateMode?: boolean|false
+}>()
 
 const currentPost = reactive({
   // getter
@@ -137,3 +160,11 @@ onMounted(async () => {
 })
 
 </script>
+<style scoped>
+.flex-basis {
+  flex-basis: 100%;
+}
+.flex-align-self-end {
+  align-self: flex-end;
+}
+</style>

@@ -1,25 +1,31 @@
 <template>
-  <div>
+  <div class="flex">
     <markdown-page 
-      :frontmatter="frontmatterValue.get()" 
-      @edit="editPost"
-      @create="createPost"      
-      @save="savePost"
-      @delete="deletePost"
-      :allow-edit="admin"
-      :is-edit-mode="isEditMode.get()"
-      :is-create-mode="isCreateMode.get()">
-      <div 
-        v-if="!isEditMode.get() && !isCreateMode.get()" 
+      class="flex-grow"
+      v-if="!isEditMode.get() && !isCreateMode.get()"
+      :frontmatter="frontmatterValue.get()">
+      <div         
         v-html="renderedMdText.get()" 
         class="markdown-body pt-4">
-      </div>
-      <div v-else class="pt-4">
-        <post-form          
-          :model-value="currentPost.get()"          
-        />
       </div>      
-    </markdown-page>    
+    </markdown-page>   
+    <div v-else class="pt-4 flex-grow">
+        <post-form
+          :model-value="currentPost.get()"     
+          @edit="editPost"
+          @create="createPost"      
+          @save="savePost"
+          @delete="deletePost"
+          :allow-edit="admin"
+          :is-edit-mode="isEditMode.get()"
+          :is-create-mode="isCreateMode.get()"   
+        />
+    </div> 
+    <div v-if="admin" class="mb-4 mt-4 mr-4">
+      <button type="button" title="edit">
+        <Edit @click="editPost" v-if="!isEditMode.get() && !isCreateMode.get()" />        
+      </button>
+    </div>
   </div>
 </template>
 
@@ -31,6 +37,7 @@ import marked from "markdown-it"
 import { useAttrs } from 'vue'
 import { useRouter } from "vue-router"
 import { auth } from "@/auth"
+import Edit from "~icons/ci/edit/"
 
 type FrontMatter = {
   title: string
@@ -119,16 +126,22 @@ const totalPosts = reactive({
 
 const getPost = async () => {    
   const api = await client.api(new QueryPosts())  
-  totalPosts.set(Math.max.apply(null, api.response.results.map(x => x.id)))  
+  totalPosts.set(Math.max.apply(null, api.response.results.map(x => x.id)))
   let result = api.response.results.filter(p => p.path === attrs.Post)[0]
   if(api.succeeded && result){
     var md = new marked()
     renderedMdText.set(md.render(result.mdText))    
     frontmatterValue.set({ 
         title: result.title, 
-        summary: 'Add a summary property'
+        summary: result.summary
       })
+    //TODO: This is ridiculous but I don't feel like figuring out why servicestack is throwing an OptimisticConcurrencyException
+    if(totalPosts.get() === 0) {
+      result.id = 1
+      totalPosts.set(1)
+    }
     currentPost.set(result);
+    console.log(currentPost.get())
   }
       
   return currentPost.get()
@@ -143,9 +156,9 @@ const savePost = async () => {
     path: post.value.path,
     summary: post.value.summary,
   })
-  await client.api(request)
-  isEditMode.set(!isEditMode.get())
+  await client.api(request)  
   router.push(`/posts/${post.value.path}`)
+  isEditMode.set(!isEditMode.get())
 }
 
 const editPost = async () => {  
@@ -199,7 +212,7 @@ onMounted(async () => {
   if (router.currentRoute.value.params.Post === 'create') {    
     isCreateMode.set(true)   
     currentPost.set({ id: totalPosts.get(), title: '', summary: '', path: '', mdText: '' });
-  }  
+  }
 })
 
 </script>

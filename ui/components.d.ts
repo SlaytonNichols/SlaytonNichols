@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     InputDescription: typeof import('./src/components/form/InputDescription.vue')['default']
     MarkdownPage: typeof import('./src/components/MarkdownPage.vue')['default']
+    MdiAccountCircle: typeof import('~icons/mdi/account-circle')['default']
     MdiChevronRight: typeof import('~icons/mdi/chevron-right')['default']
     MdiCloseCircle: typeof import('~icons/mdi/close-circle')['default']
     MdiHome: typeof import('~icons/mdi/home')['default']
