@@ -21,6 +21,9 @@ services:
     restart: "no"
     profiles:
       - migration
+    environment:
+      ConnectionStrings__DefaultConnection: ${DEFAULTCONNECTION}
+      AuthKeyBase64: ${AUTHKEYBASE64}
     labels:
       com.datadoghq.ad.logs: '[{"source": "docker", "service": "${APP_NAME}-migration"}]'
     command: --AppTasks=migrate
