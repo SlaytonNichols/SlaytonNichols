@@ -36,12 +36,8 @@
   "src/layouts/default.vue?vue&type=script&setup=true&lang.ts": [],
   "src/layouts/default.vue?vue&type=style&index=0&lang.css": [],
   "../../../../../../@vite-plugin-vue-layouts/generated-layouts": [],
-  "~icons/ci/edit": [],
-  "~icons/fluent/save-20-filled": [],
-  "~icons/bxs/add-to-queue": [],
-  "~icons/fluent/delete-20-filled": [],
   "src/components/MarkdownPage.vue?vue&type=script&setup=true&lang.ts": [],
-  "src/components/MarkdownPage.vue?vue&type=style&index=0&scoped=40dd7979&lang.css": [],
+  "src/components/MarkdownPage.vue?vue&type=style&index=0&scoped=c1355001&lang.css": [],
   "src/components/MarkdownPage.vue": [],
   "src/pages/index.md": [],
   "../../../../../../@vite-plugin-pages/generated-pages?id=~pages": [],
@@ -49,354 +45,474 @@
   "src/routing.ts": [],
   "src/main.ts": [],
   "index.html": [],
-  "empty.7b076c20.js": [],
-  "Admin.3d07a0ed.js": [],
-  "Forbidden.0b65fff8.js": [],
-  "Profile.cc2b37cc.js": [],
-  "Signin.bcaafd5d.js": [],
-  "Signup.322662bd.js": [],
-  "_...all_.517b105a.js": [],
-  "Index.974a2658.js": [],
-  "_...Post_.043271aa.js": [],
-  "employment-history.d3247a2b.js": [],
-  "todos.20820a65.js": [],
+  "empty.22f59be2.js": [],
+  "Admin.ffb18f9f.js": [],
+  "Forbidden.477208d7.js": [],
+  "Profile.82056364.js": [],
+  "Signin.242aa80e.js": [],
+  "Signup.703a3e8b.js": [],
+  "_...all_.ba767657.js": [],
+  "Index.5f854a60.js": [
+    "/assets/Index.0523a1ec.css"
+  ],
+  "_...Post_.cc8d0012.js": [
+    "/assets/[...Post].01139eb4.css"
+  ],
+  "employment-history.2ad5abaf.js": [],
+  "todos.b132f7fa.js": [],
   "src/layouts/empty.vue": [
-    "/assets/empty.7b076c20.js"
+    "/assets/empty.22f59be2.js"
   ],
   "~icons/mdi/shield-account": [
-    "/assets/Admin.3d07a0ed.js"
+    "/assets/Admin.ffb18f9f.js"
   ],
   "src/pages/Admin.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/Admin.3d07a0ed.js"
+    "/assets/Admin.ffb18f9f.js"
   ],
   "src/pages/Admin.vue": [
-    "/assets/Admin.3d07a0ed.js"
+    "/assets/Admin.ffb18f9f.js"
   ],
   "src/components/AppPage.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/AppPage.vue_vue_type_script_setup_true_lang.08009ea1.js"
+    "/assets/AppPage.vue_vue_type_script_setup_true_lang.bce617ea.js"
   ],
   "src/components/form/SecondaryButton.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/SecondaryButton.vue_vue_type_script_setup_true_lang.f037864a.js"
+    "/assets/SecondaryButton.vue_vue_type_script_setup_true_lang.297eed05.js"
   ],
   "~icons/mdi/chevron-right": [
-    "/assets/AppBreadcrumb.vue_vue_type_script_setup_true_lang.008e34f1.js"
+    "/assets/AppBreadcrumb.vue_vue_type_script_setup_true_lang.b65516ce.js"
   ],
   "src/components/AppBreadcrumb.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/AppBreadcrumb.vue_vue_type_script_setup_true_lang.008e34f1.js"
+    "/assets/AppBreadcrumb.vue_vue_type_script_setup_true_lang.b65516ce.js"
   ],
   "~icons/mdi/home": [
-    "/assets/home.f8cdab46.js"
+    "/assets/home.8213bd5b.js"
   ],
   "src/pages/Forbidden.vue": [
-    "/assets/Forbidden.0b65fff8.js"
+    "/assets/Forbidden.477208d7.js"
   ],
   "../../../../../../@vite-plugin-pages/route-block": [
     "/assets/route-block.011d1056.js"
   ],
   "~icons/mdi/account-circle": [
-    "/assets/Profile.cc2b37cc.js"
+    "/assets/Profile.82056364.js"
   ],
   "src/pages/Profile.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/Profile.cc2b37cc.js"
+    "/assets/Profile.82056364.js"
   ],
   "src/pages/Profile.vue": [
-    "/assets/Profile.cc2b37cc.js"
+    "/assets/Profile.82056364.js"
   ],
   "src/pages/Signin.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/Signin.bcaafd5d.js"
+    "/assets/Signin.242aa80e.js"
   ],
   "src/pages/Signin.vue": [
-    "/assets/Signin.bcaafd5d.js"
+    "/assets/Signin.242aa80e.js"
   ],
   "~icons/mdi/close-circle": [
-    "/assets/PrimaryButton.vue_vue_type_script_setup_true_lang.8568706f.js"
+    "/assets/PrimaryButton.vue_vue_type_script_setup_true_lang.bb07a7ee.js"
   ],
   "src/components/form/ErrorSummary.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/PrimaryButton.vue_vue_type_script_setup_true_lang.8568706f.js"
+    "/assets/PrimaryButton.vue_vue_type_script_setup_true_lang.bb07a7ee.js"
   ],
   "src/components/form/Checkbox.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/PrimaryButton.vue_vue_type_script_setup_true_lang.8568706f.js"
+    "/assets/PrimaryButton.vue_vue_type_script_setup_true_lang.bb07a7ee.js"
   ],
   "src/components/form/FormLoading.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/PrimaryButton.vue_vue_type_script_setup_true_lang.8568706f.js"
+    "/assets/PrimaryButton.vue_vue_type_script_setup_true_lang.bb07a7ee.js"
   ],
   "src/components/form/PrimaryButton.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/PrimaryButton.vue_vue_type_script_setup_true_lang.8568706f.js"
+    "/assets/PrimaryButton.vue_vue_type_script_setup_true_lang.bb07a7ee.js"
   ],
   "src/components/form/TextInput.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/TextInput.vue_vue_type_script_setup_true_lang.12f45fbf.js"
+    "/assets/TextInput.vue_vue_type_script_setup_true_lang.7cc3d431.js"
   ],
   "src/pages/Signup.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/Signup.322662bd.js"
+    "/assets/Signup.703a3e8b.js"
   ],
   "src/pages/Signup.vue": [
-    "/assets/Signup.322662bd.js"
+    "/assets/Signup.703a3e8b.js"
   ],
   "~icons/mdi/arrow-left-thin": [
-    "/assets/_...all_.517b105a.js"
+    "/assets/_...all_.ba767657.js"
   ],
   "src/pages/[...all].vue": [
-    "/assets/_...all_.517b105a.js"
+    "/assets/_...all_.ba767657.js"
   ],
   "src/pages/posts/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/Index.974a2658.js"
+    "/assets/Index.5f854a60.js",
+    "/assets/Index.0523a1ec.css"
+  ],
+  "src/pages/posts/Index.vue?vue&type=style&index=0&scoped=a1d287d0&lang.css": [
+    "/assets/Index.5f854a60.js",
+    "/assets/Index.0523a1ec.css"
   ],
   "src/pages/posts/Index.vue": [
-    "/assets/Index.974a2658.js"
+    "/assets/Index.5f854a60.js",
+    "/assets/Index.0523a1ec.css"
+  ],
+  "~icons/bxs/add-to-queue": [
+    "/assets/add-to-queue.9e03dc7e.js"
+  ],
+  "src/components/form/ApiForm.vue?vue&type=script&setup=true&lang.ts": [
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "src/components/form/TextAreaInput.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
+  ],
+  "~icons/fluent/save-20-filled": [
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
+  ],
+  "~icons/fluent/delete-20-filled": [
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "src/components/form/PostForm.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
+  ],
+  "src/components/form/PostForm.vue?vue&type=style&index=0&scoped=a2bf9407&lang.css": [
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
+  ],
+  "src/components/form/PostForm.vue": [
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "\u0000/home/runner/work/SlaytonNichols/SlaytonNichols/ui/node_modules/markdown-it/index.js?commonjs-module": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "\u0000/home/runner/work/SlaytonNichols/SlaytonNichols/ui/node_modules/markdown-it/lib/common/utils.js?commonjs-exports": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "\u0000/home/runner/work/SlaytonNichols/SlaytonNichols/ui/node_modules/markdown-it/lib/common/entities.js?commonjs-module": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/entities/lib/maps/entities.json": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/common/entities.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/uc.micro/categories/P/regex.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "\u0000/home/runner/work/SlaytonNichols/SlaytonNichols/ui/node_modules/mdurl/index.js?commonjs-exports": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/mdurl/encode.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/mdurl/decode.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/mdurl/format.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/mdurl/parse.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/mdurl/index.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "\u0000/home/runner/work/SlaytonNichols/SlaytonNichols/ui/node_modules/uc.micro/index.js?commonjs-exports": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/uc.micro/properties/Any/regex.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/uc.micro/categories/Cc/regex.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/uc.micro/categories/Cf/regex.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/uc.micro/categories/Z/regex.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/uc.micro/index.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/common/utils.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "\u0000/home/runner/work/SlaytonNichols/SlaytonNichols/ui/node_modules/markdown-it/lib/helpers/index.js?commonjs-exports": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/helpers/parse_link_label.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/helpers/parse_link_destination.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/helpers/parse_link_title.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/helpers/index.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/renderer.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/ruler.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_core/normalize.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_core/block.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_core/inline.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_core/linkify.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_core/replacements.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_core/smartquotes.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_core/text_join.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/token.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_core/state_core.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/parser_core.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/table.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/code.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/fence.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/blockquote.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/hr.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/list.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/reference.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/common/html_blocks.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "\u0000/home/runner/work/SlaytonNichols/SlaytonNichols/ui/node_modules/markdown-it/lib/common/html_re.js?commonjs-exports": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/common/html_re.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/html_block.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/heading.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/lheading.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/paragraph.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_block/state_block.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/parser_block.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/text.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/linkify.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/newline.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/escape.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/backticks.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "\u0000/home/runner/work/SlaytonNichols/SlaytonNichols/ui/node_modules/markdown-it/lib/rules_inline/strikethrough.js?commonjs-exports": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/strikethrough.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "\u0000/home/runner/work/SlaytonNichols/SlaytonNichols/ui/node_modules/markdown-it/lib/rules_inline/emphasis.js?commonjs-exports": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/emphasis.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/link.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/image.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/autolink.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/html_inline.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/entity.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/balance_pairs.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/fragments_join.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/rules_inline/state_inline.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/parser_inline.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/linkify-it/lib/re.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/linkify-it/index.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/punycode/punycode.es6.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "\u0000/home/runner/work/SlaytonNichols/SlaytonNichols/ui/node_modules/punycode/punycode.es6.js?commonjs-proxy": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/presets/default.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/presets/zero.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/presets/commonmark.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/lib/index.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "node_modules/markdown-it/index.js": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
+  ],
+  "~icons/ci/edit": [
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "src/pages/posts/[...Post].vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "src/pages/posts/[...Post].vue": [
-    "/assets/_...Post_.043271aa.js"
+    "/assets/_...Post_.cc8d0012.js",
+    "/assets/[...Post].01139eb4.css"
   ],
   "src/pages/posts/employment-history.md": [
-    "/assets/employment-history.d3247a2b.js"
+    "/assets/employment-history.2ad5abaf.js"
   ],
   "src/pages/posts/todos.md": [
-    "/assets/todos.20820a65.js"
+    "/assets/todos.b132f7fa.js"
   ]
 }
