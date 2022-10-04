@@ -140,8 +140,7 @@ const getPost = async () => {
       result.id = 1
       totalPosts.set(1)
     }
-    currentPost.set(result);
-    console.log(currentPost.get())
+    currentPost.set(result);    
   }
       
   return currentPost.get()
