@@ -14,7 +14,7 @@
           :model-value="currentPost.get()"     
           @edit="editPost"
           @create="createPost"      
-          @save="savePost"
+          @save="updatePost"
           @delete="deletePost"
           :allow-edit="admin"
           :is-edit-mode="isEditMode.get()"
@@ -31,13 +31,16 @@
 
 <script setup lang="ts">
 import { onMounted, ref, reactive } from "vue"
-import { QueryPosts, UpdatePost, CreatePost, DeletePost, Post } from "@/dtos"
-import { client } from "@/api"
+import { Post } from "@/dtos"
 import marked from "markdown-it"
 import { useAttrs } from 'vue'
 import { useRouter } from "vue-router"
 import { auth } from "@/auth"
 import Edit from "~icons/ci/edit/"
+import { usePostsStore } from "@/stores/posts"
+
+const store = usePostsStore()
+store.refreshPosts()
 
 type FrontMatter = {
   title: string
@@ -124,88 +127,52 @@ const totalPosts = reactive({
   }
 })
 
-const getPost = async () => {    
-  const api = await client.api(new QueryPosts())  
-  totalPosts.set(Math.max.apply(null, api.response.results.map(x => x.id)))
-  let result = api.response.results.filter(p => p.path === attrs.Post)[0]
-  if(api.succeeded && result){
-    var md = new marked()
-    renderedMdText.set(md.render(result.mdText))    
-    frontmatterValue.set({ 
-        title: result.title, 
-        summary: result.summary
-      })
-    currentPost.set(result);    
-  }
-      
-  return currentPost.get()
-}
-
-const savePost = async () => {  
-  let request = new UpdatePost(
-  {  
-    id: post.value.id,
-    mdText: post.value.mdText,
-    title: post.value.title,
-    path: post.value.path,
-    summary: post.value.summary,
-  })
-  await client.api(request)  
+const updatePost = async () => {  
+  await store.updatePost(post.value)
   router.push(`/posts/${post.value.path}`)
-  isEditMode.set(!isEditMode.get())
+  await exitEditState()
 }
 
 const editPost = async () => {  
-  await getPost()
-  isEditMode.set(!isEditMode.get())
-  //if turning edit mode off or loading the page
+  isEditMode.set(!isEditMode.get())  
   if(!isEditMode.get()) {    
     var md = new marked()
     var renderedMd = md.render(currentPost.get().mdText)
     renderedMdText.set(renderedMd)
   }
-  currentPost.set({
-    id: post.value.id,
-    mdText: post.value.mdText,
-    title: post.value.title,
-    path: post.value.path,
-    summary: post.value.summary,
-  })
 }
 
 const createPost = async () => {  
-  let request = new CreatePost({
-    id: totalPosts.get() + 1,
-    mdText: post.value.mdText,
-    title: post.value.title,
-    path: post.value.path,
-    summary: post.value.summary,
-  })
-
-  await client.api(request)  
+  await store.addPost(currentPost.get())
   router.push(`/posts/${post.value.path}`)
-  isEditMode.set(false)  
-  isCreateMode.set(false)
+  await exitEditState()
 }
 
 const deletePost = async () => {  
-  let request = new DeletePost({
-    id: post.value.id
-  })
-
-  await client.api(request)  
+  await store.removePost(post.value.id)
   router.push('/posts')
+  await exitEditState()
+}
+
+const exitEditState = async () => {  
   isEditMode.set(false)  
   isCreateMode.set(false)
 }
 
 onMounted(async () => {  
-  await getPost()
-  isEditMode.set(false)  
-  isCreateMode.set(false)
+  await exitEditState()
   if (router.currentRoute.value.params.Post === 'create') {    
     isCreateMode.set(true)   
-    currentPost.set({ id: totalPosts.get(), title: '', summary: '', path: '', mdText: '' });
+    currentPost.set({ id: 0, title: '', summary: '', path: '', mdText: '' });
+  } else {
+    currentPost.set(await store.getPost(attrs.Post));    
+    var md = new marked()
+    var renderedMd = md.render(currentPost.get().mdText)
+    renderedMdText.set(renderedMd)
+    frontmatterValue.set({ 
+        title: currentPost.get().title, 
+        summary: currentPost.get().summary
+      })    
   }
 })
 
