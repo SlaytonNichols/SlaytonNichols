@@ -3,7 +3,7 @@ using ServiceStack.OrmLite;
 
 namespace SlaytonNichols.Migrations
 {
-    public class Migration1040 : MigrationBase
+    public class Migration1090 : MigrationBase
     {
         public class Post : AuditBase
         {
@@ -34,6 +34,8 @@ namespace SlaytonNichols.Migrations
                 CreatedDate = DateTime.UtcNow,
                 ModifiedBy = "Slayton Nichols",
                 ModifiedDate = DateTime.UtcNow,
+                // DeletedBy = "Slayton Nichols",
+                // DeletedDate = DateTime.UtcNow,
             });
 
         public override void Down()

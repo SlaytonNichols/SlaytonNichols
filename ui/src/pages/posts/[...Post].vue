@@ -53,7 +53,6 @@ const editMode = ref<Boolean>()
 const createMode = ref<Boolean>()
 const attrs = useAttrs()
 const post = ref<Post>()
-const postsCount = ref<number>()
 const router = useRouter()
 const admin = auth?.value?.roles.indexOf('Admin') >= 0
 
@@ -113,17 +112,6 @@ const frontmatterValue = reactive({
   // setter
   set(newValue: FrontMatter) {    
     frontmatter.value = newValue
-  }
-})
-
-const totalPosts = reactive({
-  // getter
-  get() {
-    return postsCount.value
-  },
-  // setter
-  set(newValue: number) {    
-    postsCount.value = newValue
   }
 })
 

@@ -49,6 +49,7 @@ namespace SlaytonNichols.ServiceModel
     [AutoApply(Behavior.AuditModify)]
     public class UpdatePost : IPatchDb<Post>, IReturn<IdResponse>
     {
+        [AutoIncrement]
         public int Id { get; set; }
         public string MdText { get; set; }
         public string Title { get; set; }
@@ -62,6 +63,7 @@ namespace SlaytonNichols.ServiceModel
     [AutoApply(Behavior.AuditSoftDelete)]
     public class DeletePost : IDeleteDb<Post>, IReturnVoid
     {
+        [AutoIncrement]
         public int Id { get; set; }
     }
 }
