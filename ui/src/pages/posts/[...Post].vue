@@ -135,11 +135,6 @@ const getPost = async () => {
         title: result.title, 
         summary: result.summary
       })
-    //TODO: This is ridiculous but I don't feel like figuring out why servicestack is throwing an OptimisticConcurrencyException
-    if(totalPosts.get() === 0) {
-      result.id = 1
-      totalPosts.set(1)
-    }
     currentPost.set(result);    
   }
       
