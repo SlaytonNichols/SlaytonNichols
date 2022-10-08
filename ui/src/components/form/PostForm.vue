@@ -6,7 +6,7 @@
       </button>
       <button title="draft" type="button" class="mr-2">
         <Publish v-if="props.modelValue.draft && !props.isCreateMode" @click="$emit('draft')" class="w-8 h-8"/>
-        <Draft v-else-if="!props.isCreateMode" @click="$emit('draft')" class="w-8 h-8"/>
+        <Draft v-else-if="!props.modelValue.draft && !props.isCreateMode" @click="$emit('draft')" class="w-8 h-8"/>
       </button>
       <button title="submit" type="submit">
         <Add @click="$emit('create');" v-if="props.isCreateMode" class="w-8 h-8"/>
@@ -56,8 +56,8 @@ import { Post } from "@/dtos"
 import Save from "~icons/fluent/save-20-filled/"
 import Add from "~icons/bxs/add-to-queue/"
 import Delete from "~icons/fluent/delete-20-filled/"
-import Draft from "~icons/ri/draft-fill/"
-import Publish from "~icons/material-symbols/publish-rounded/"
+import Draft from "~icons/material-symbols/unpublished-rounded"
+import Publish from "~icons/material-symbols/published-with-changes"
 
 type FrontMatter = {
   title: string
