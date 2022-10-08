@@ -1,5 +1,5 @@
 /* Options:
-Date: 2022-10-08 10:02:19
+Date: 2022-10-08 12:57:12
 Version: 6.21
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://localhost:5001
@@ -88,6 +88,7 @@ export class Post extends AuditBase
     public title?: string;
     public path?: string;
     public summary?: string;
+    public draft?: boolean;
 
     public constructor(init?: Partial<Post>) { super(init); (Object as any).assign(this, init); }
 }
@@ -304,6 +305,7 @@ export class CreatePost implements IReturn<IdResponse>, ICreateDb<Post>
     public title?: string;
     public path?: string;
     public summary?: string;
+    public draft?: boolean;
 
     public constructor(init?: Partial<CreatePost>) { (Object as any).assign(this, init); }
     public getTypeName() { return 'CreatePost'; }
@@ -323,6 +325,7 @@ export class UpdatePost implements IReturn<IdResponse>, IPatchDb<Post>
     public title?: string;
     public path?: string;
     public summary?: string;
+    public draft?: boolean;
 
     public constructor(init?: Partial<UpdatePost>) { (Object as any).assign(this, init); }
     public getTypeName() { return 'UpdatePost'; }

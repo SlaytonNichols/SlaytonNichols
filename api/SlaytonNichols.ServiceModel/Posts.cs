@@ -15,6 +15,7 @@ namespace SlaytonNichols.ServiceModel
         public string Title { get; set; }
         public string Path { get; set; }
         public string Summary { get; set; }
+        public bool Draft { get; set; }
     }
 
     [Tag("posts"), Description("Find posts")]
@@ -43,6 +44,7 @@ namespace SlaytonNichols.ServiceModel
         public string Title { get; set; }
         public string Path { get; set; }
         public string Summary { get; set; }
+        public bool Draft { get; set; }
     }
 
     [Tag("posts"), Description("Update an existing post")]
@@ -56,6 +58,7 @@ namespace SlaytonNichols.ServiceModel
         public string Title { get; set; }
         public string Path { get; set; }
         public string Summary { get; set; }
+        public bool Draft { get; set; }
     }
 
     [Tag("posts"), Description("Delete a Post")]
