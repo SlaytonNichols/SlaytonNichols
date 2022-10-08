@@ -133,7 +133,7 @@ const editPost = async () => {
 
 const createPost = async () => {  
   await store.addPost(currentPost.get())
-  router.push(`/posts/${post.value.path}`)
+  router.push(`/posts/${post.value.path}`)  
   await exitEditState()
 }
 
@@ -144,7 +144,8 @@ const deletePost = async () => {
 }
 
 const draftPost = async () => {  
-  await store.draftPost(post.value.path)
+  await store.toggleDraftPost(post.value.path)
+  currentPost.set(await store.getPost(post.value.path))
 }
 
 const exitEditState = async () => {  

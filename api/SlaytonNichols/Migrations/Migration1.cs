@@ -3,7 +3,7 @@ using ServiceStack.OrmLite;
 
 namespace SlaytonNichols.Migrations
 {
-    public class Migration1090 : MigrationBase
+    public class Migration1 : MigrationBase
     {
         public override void Up()
         {
@@ -44,12 +44,6 @@ IF NOT EXISTS(SELECT 1 FROM sys.columns
 BEGIN
 	ALTER TABLE [dbo].[Post] ADD Draft BIT CONSTRAINT DF_Post_Draft DEFAULT ((0)) NOT NULL
 END
-            ");
-
-            Db.ExecuteSql(@"
-UPDATE m
-SET m.Name = NULL
-FROM dbo.Migration m
             ");
         }
     }

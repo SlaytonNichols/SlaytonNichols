@@ -15,7 +15,7 @@ export const usePostsStore = defineStore('posts', () => {
     // Actions
     const getPost = async (path: string) => {
         await refreshPosts()
-        return posts.value.filter(p => p.path === path)[0]
+        return posts.value.find(p => p.path === path)
     }
     const refreshPosts = async (errorStatus?: ResponseStatus) => {
         error.value = errorStatus
@@ -54,16 +54,17 @@ export const usePostsStore = defineStore('posts', () => {
         let api = await client.api(new DeletePost({ id }))
         await refreshPosts(api.error)
     }
-    const draftPost = async (path: string) => {
-        let postUpdate = await getPost(path)
-        postUpdate.draft = !postUpdate.draft
-        await updatePost(postUpdate)
+    const toggleDraftPost = async (path: string) => {
+        const postUpdate = posts.value.find(p => p.path === path)
+        postUpdate!.draft = postUpdate!.draft ? false : true
+        let api = await client.api(new UpdatePost(postUpdate))
+        await refreshPosts(api.error)
     }
 
     return {
         error,
         allPosts,
-        draftPost,
+        toggleDraftPost,
         getPost,
         refreshPosts,
         addPost,
