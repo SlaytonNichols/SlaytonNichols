@@ -1,5 +1,5 @@
 /* Options:
-Date: 2022-10-08 09:36:50
+Date: 2022-10-08 10:02:19
 Version: 6.21
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://localhost:5001
@@ -129,6 +129,27 @@ export class ResponseStatus
     public meta?: { [index: string]: string; };
 
     public constructor(init?: Partial<ResponseStatus>) { (Object as any).assign(this, init); }
+}
+
+// @DataContract
+export class QueryResponse<T>
+{
+    // @DataMember(Order=1)
+    public offset?: number;
+
+    // @DataMember(Order=2)
+    public total?: number;
+
+    // @DataMember(Order=3)
+    public results?: T[];
+
+    // @DataMember(Order=4)
+    public meta?: { [index: string]: string; };
+
+    // @DataMember(Order=5)
+    public responseStatus?: ResponseStatus;
+
+    public constructor(init?: Partial<QueryResponse<T>>) { (Object as any).assign(this, init); }
 }
 
 // @DataContract
@@ -262,14 +283,14 @@ export class RegisterResponse implements IHasSessionId, IHasBearerToken
 */
 // @Route("/posts", "GET")
 // @Route("/posts/{Path}", "GET")
-export class QueryPosts implements IReturn<IdResponse>
+export class QueryPosts implements IReturn<QueryResponse<Post>>
 {
     public path?: string;
 
     public constructor(init?: Partial<QueryPosts>) { (Object as any).assign(this, init); }
     public getTypeName() { return 'QueryPosts'; }
     public getMethod() { return 'GET'; }
-    public createResponse() { return new IdResponse(); }
+    public createResponse() { return new QueryResponse<Post>(); }
 }
 
 /**

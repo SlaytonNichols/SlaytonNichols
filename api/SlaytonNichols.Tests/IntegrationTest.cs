@@ -62,11 +62,11 @@ namespace SlaytonNichols.Tests
         public IServiceClient CreateClient() => new JsonServiceClient(BaseUri);
 
         [Test]
-        public void Can_call_Posts_Service()
+        public async Task Can_call_Posts_Service()
         {
             var client = CreateClient();
 
-            var response = client.Get(new QueryPosts { Path = "test" });
+            var response = (QueryResponse<Post>)(await client.GetAsync(new QueryPosts { Path = "test" }));
 
             Assert.That(response.Results.FirstOrDefault().Path, Is.EqualTo("test"));
         }

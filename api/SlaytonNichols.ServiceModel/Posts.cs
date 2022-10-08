@@ -21,7 +21,7 @@ namespace SlaytonNichols.ServiceModel
     [Route("/posts", "GET")]
     [Route("/posts/{Path}", "GET")]
     [AutoApply(Behavior.AuditQuery)]
-    public class QueryPosts : IQueryDb<Post>, IReturn<IdResponse>
+    public class QueryPosts : IQueryDb<Post>, IReturn<QueryResponse<Post>>
     {
         public string? Path { get; set; }
         int? IQuery.Skip { get; set; }
