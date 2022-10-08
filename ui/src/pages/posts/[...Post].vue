@@ -16,6 +16,7 @@
           @create="createPost"      
           @save="updatePost"
           @delete="deletePost"
+          @draft="draftPost"
           :allow-edit="admin"
           :is-edit-mode="isEditMode.get()"
           :is-create-mode="isCreateMode.get()"   
@@ -23,7 +24,7 @@
     </div> 
     <div v-if="admin" class="mb-4 mt-4 mr-4">
       <button type="button" title="edit">
-        <Edit @click="editPost" v-if="!isEditMode.get() && !isCreateMode.get()" />        
+        <Edit @click="editPost" v-if="!isEditMode.get() && !isCreateMode.get()" class="w-8 h-8" />        
       </button>
     </div>
   </div>
@@ -140,6 +141,10 @@ const deletePost = async () => {
   await store.removePost(post.value.id)
   router.push('/posts')
   await exitEditState()
+}
+
+const draftPost = async () => {  
+  await store.draftPost(post.value.path)
 }
 
 const exitEditState = async () => {  

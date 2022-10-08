@@ -13,7 +13,7 @@
       </div>
       <div v-if="isAdmin" class="m-4 justify-end">
         <button @click="createPost">
-          <Add />
+          <Add class="w-8 h-8" />
         </button>      
       </div>
     </main>

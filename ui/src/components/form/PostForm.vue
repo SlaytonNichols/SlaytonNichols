@@ -2,11 +2,15 @@
   <api-form class="flex flex-col ml-4 mb-4" v-if="props.isEditMode || props.isCreateMode">
     <div class="flex-align-self-end">
       <button title="delete" v-if="props.isEditMode" type="submit" class="mr-2">
-        <Delete @click="$emit('delete')"/>
+        <Delete @click="$emit('delete')" class="w-8 h-8"/>
+      </button>
+      <button title="draft" type="button" class="mr-2">
+        <Publish v-if="props.modelValue.draft && !props.isCreateMode" @click="$emit('draft')" class="w-8 h-8"/>
+        <Draft v-else-if="!props.isCreateMode" @click="$emit('draft')" class="w-8 h-8"/>
       </button>
       <button title="submit" type="submit">
-        <Add @click="$emit('create');" v-if="props.isCreateMode"/>
-        <Save @click="$emit('save')" v-else-if="props.isEditMode"/>
+        <Add @click="$emit('create');" v-if="props.isCreateMode" class="w-8 h-8"/>
+        <Save @click="$emit('save')" v-else-if="props.isEditMode" class="w-8 h-8"/>
       </button>
     </div>
     <div>
@@ -52,6 +56,8 @@ import { Post } from "@/dtos"
 import Save from "~icons/fluent/save-20-filled/"
 import Add from "~icons/bxs/add-to-queue/"
 import Delete from "~icons/fluent/delete-20-filled/"
+import Draft from "~icons/ri/draft-fill/"
+import Publish from "~icons/material-symbols/publish-rounded/"
 
 type FrontMatter = {
   title: string

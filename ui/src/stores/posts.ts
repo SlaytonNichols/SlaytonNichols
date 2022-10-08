@@ -38,8 +38,7 @@ export const usePostsStore = defineStore('posts', () => {
         await refreshPosts(api.error)
     }
     const updatePost = async (post?: Post) => {
-        // const existingPost = posts.value.find(x => x.id == id)!
-        let updatedPost = {
+        let postUpdate = {
             id: post?.id,
             mdText: post?.mdText,
             title: post?.title,
@@ -47,7 +46,7 @@ export const usePostsStore = defineStore('posts', () => {
             summary: post?.summary,
             draft: post?.draft
         }
-        let api = await client.api(new UpdatePost(updatedPost))
+        let api = await client.api(new UpdatePost(postUpdate))
         await refreshPosts(api.error)
     }
     const removePost = async (id?: number) => {
@@ -55,10 +54,16 @@ export const usePostsStore = defineStore('posts', () => {
         let api = await client.api(new DeletePost({ id }))
         await refreshPosts(api.error)
     }
+    const draftPost = async (path: string) => {
+        let postUpdate = await getPost(path)
+        postUpdate.draft = !postUpdate.draft
+        await updatePost(postUpdate)
+    }
 
     return {
         error,
         allPosts,
+        draftPost,
         getPost,
         refreshPosts,
         addPost,

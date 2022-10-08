@@ -24,8 +24,6 @@ services:
     environment:
       ConnectionStrings__DefaultConnection: ${DEFAULTCONNECTION}
       AuthKeyBase64: ${AUTHKEYBASE64}
-    labels:
-      com.datadoghq.ad.logs: '[{"source": "docker", "service": "${APP_NAME}-migration"}]'
     command: --AppTasks=migrate
   datadog:
     image: gcr.io/datadoghq/agent:7
