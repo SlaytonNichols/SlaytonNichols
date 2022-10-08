@@ -55,12 +55,17 @@ onMounted(async () => {
       id: result.id,
       path: '/posts/' + result.path, 
       title: result.title, 
+      draft: result.draft,
       frontmatter: { 
         title: result.title, 
         summary: result.summary
       } 
     })
-  });  
+  });
+
+  if(!isAdmin) {
+    posts.value = posts.value.filter(x => !x.draft)
+  }  
 })
 
 </script>

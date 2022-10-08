@@ -31,6 +31,7 @@ export const usePostsStore = defineStore('posts', () => {
             title: newPost?.title,
             path: newPost?.path,
             summary: newPost?.summary,
+            draft: newPost?.draft
         }
         posts.value.push(new Post(post))
         let api = await client.api(new CreatePost(post))
@@ -44,6 +45,7 @@ export const usePostsStore = defineStore('posts', () => {
             title: post?.title,
             path: post?.path,
             summary: post?.summary,
+            draft: post?.draft
         }
         let api = await client.api(new UpdatePost(updatedPost))
         await refreshPosts(api.error)
