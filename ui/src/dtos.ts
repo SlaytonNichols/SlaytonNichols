@@ -1,5 +1,5 @@
 /* Options:
-Date: 2022-10-08 12:57:12
+Date: 2022-10-08 16:41:18
 Version: 6.21
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://localhost:5001
@@ -40,7 +40,7 @@ export interface ICreateDb<Table>
 {
 }
 
-export interface IPatchDb<Table>
+export interface IUpdateDb<Table>
 {
 }
 
@@ -318,7 +318,7 @@ export class CreatePost implements IReturn<IdResponse>, ICreateDb<Post>
 */
 // @Route("/posts/{Id}", "PATCH")
 // @ValidateRequest(Validator="HasRole(`Admin`)")
-export class UpdatePost implements IReturn<IdResponse>, IPatchDb<Post>
+export class UpdatePost implements IReturn<IdResponse>, IUpdateDb<Post>
 {
     public id?: number;
     public mdText?: string;

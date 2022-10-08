@@ -28,18 +28,18 @@ public class PostsServices : Service
 
     public async Task<object> Post(CreatePost query)
     {
-        var response = await AutoQuery.CreateAsync<Post>(query, base.Request);
+        var response = await AutoQuery.CreateAsync(query, base.Request);
         return response;
     }
 
     public async Task<object> Patch(UpdatePost query)
     {
-        var response = await AutoQuery.PatchAsync<Post>(query, base.Request);
+        var response = await AutoQuery.UpdateAsync(query, base.Request);
         return response;
     }
 
     public async Task Delete(DeletePost query)
     {
-        _ = await AutoQuery.DeleteAsync<Post>(query, base.Request);
+        _ = await AutoQuery.DeleteAsync(query, base.Request);
     }
 }

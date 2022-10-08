@@ -51,7 +51,7 @@ namespace SlaytonNichols.ServiceModel
     [Route("/posts/{Id}", "PATCH")]
     [ValidateHasRole("Admin")]
     [AutoApply(Behavior.AuditModify)]
-    public class UpdatePost : IPatchDb<Post>, IReturn<IdResponse>
+    public class UpdatePost : IUpdateDb<Post>, IReturn<IdResponse>
     {
         public int Id { get; set; }
         public string MdText { get; set; }
