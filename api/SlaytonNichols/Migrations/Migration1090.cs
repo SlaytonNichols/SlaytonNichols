@@ -7,7 +7,6 @@ namespace SlaytonNichols.Migrations
     {
         public override void Up()
         {
-
             Db.ExecuteSql(@"
 IF NOT EXISTS(SELECT 1 FROM sys.tables t where t.name = 'Post')
 BEGIN
