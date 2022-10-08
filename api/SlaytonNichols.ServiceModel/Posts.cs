@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ServiceStack;
 using ServiceStack.DataAnnotations;
 
@@ -20,13 +21,16 @@ namespace SlaytonNichols.ServiceModel
     [Route("/posts", "GET")]
     [Route("/posts/{Path}", "GET")]
     [AutoApply(Behavior.AuditQuery)]
-    public class QueryPosts : QueryDb<Post>
+    public class QueryPosts : IQueryDb<Post>, IReturn<IdResponse>
     {
         public string? Path { get; set; }
-    }
-
-    public class QueryPostsResponse : Post
-    {
+        int? IQuery.Skip { get; set; }
+        int? IQuery.Take { get; set; }
+        string IQuery.OrderBy { get; set; }
+        string IQuery.OrderByDesc { get; set; }
+        string IQuery.Include { get; set; }
+        string IQuery.Fields { get; set; }
+        Dictionary<string, string> IMeta.Meta { get; set; }
     }
 
     [Tag("posts"), Description("Create a new post")]
@@ -35,8 +39,6 @@ namespace SlaytonNichols.ServiceModel
     [AutoApply(Behavior.AuditCreate)]
     public class CreatePost : ICreateDb<Post>, IReturn<IdResponse>
     {
-        [AutoIncrement]
-        public int Id { get; set; }
         public string MdText { get; set; }
         public string Title { get; set; }
         public string Path { get; set; }
@@ -49,7 +51,6 @@ namespace SlaytonNichols.ServiceModel
     [AutoApply(Behavior.AuditModify)]
     public class UpdatePost : IPatchDb<Post>, IReturn<IdResponse>
     {
-        [AutoIncrement]
         public int Id { get; set; }
         public string MdText { get; set; }
         public string Title { get; set; }
@@ -63,7 +64,6 @@ namespace SlaytonNichols.ServiceModel
     [AutoApply(Behavior.AuditSoftDelete)]
     public class DeletePost : IDeleteDb<Post>, IReturnVoid
     {
-        [AutoIncrement]
         public int Id { get; set; }
     }
 }

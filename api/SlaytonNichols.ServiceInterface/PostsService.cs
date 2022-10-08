@@ -19,12 +19,27 @@ public class PostsServices : Service
     // }
 
     // Async
-    public async Task<QueryResponse<Post>> Get(QueryPosts query)
+    public async Task<object> Get(QueryPosts query)
     {
-        // _logger.LogInformation("Test Log");
-        using var db = AutoQuery.GetDb(query, base.Request);
-        var q = AutoQuery.CreateQuery(query, base.Request, db);
-        var response = await AutoQuery.ExecuteAsync(query, q, base.Request, db);
+        var q = AutoQuery.CreateQuery(query, base.Request);
+        var response = await AutoQuery.ExecuteAsync(query, q, base.Request);
         return response;
+    }
+
+    public async Task<object> Post(CreatePost query)
+    {
+        var response = await AutoQuery.CreateAsync<Post>(query, base.Request);
+        return response;
+    }
+
+    public async Task<object> Patch(UpdatePost query)
+    {
+        var response = await AutoQuery.PatchAsync<Post>(query, base.Request);
+        return response;
+    }
+
+    public async Task Delete(DeletePost query)
+    {
+        _ = await AutoQuery.DeleteAsync<Post>(query, base.Request);
     }
 }

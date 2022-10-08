@@ -23,10 +23,12 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router"
 import { onMounted, ref } from "vue"
-import { Post, QueryPosts } from "@/dtos"
-import { client } from "@/api"
+import { Post } from "@/dtos"
 import Add from "~icons/bxs/add-to-queue/"
 import { auth } from "@/auth"
+import { usePostsStore } from "@/stores/posts"
+
+const store = usePostsStore()
 
 type FrontMatter = {
   title: string
@@ -46,28 +48,19 @@ const createPost = async () => {
   router.push({path: '/posts/create'})
 }
 
-const refreshPosts = async () => {
-  let apiRoutes = []
-  const api = await client.api(new QueryPosts())
-    
-  if(api.succeeded && api.response!.results){    
-    apiRoutes = api.response.results.forEach(result => {
-      posts.value.push({ 
-        id: result.id,
-        path: '/posts/' + result.path, 
-        title: result.title, 
-        frontmatter: { 
-          title: result.title, 
-          summary: result.summary
-        } 
-      })
-    });
-  }
-  return apiRoutes  
-}
-
 onMounted(async () => {  
-  await refreshPosts()  
+  await store.refreshPosts()  
+  store.allPosts.forEach(result => {
+    posts.value.push({ 
+      id: result.id,
+      path: '/posts/' + result.path, 
+      title: result.title, 
+      frontmatter: { 
+        title: result.title, 
+        summary: result.summary
+      } 
+    })
+  });  
 })
 
 </script>
