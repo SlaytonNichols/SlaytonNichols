@@ -56,8 +56,8 @@ import { Post } from "@/dtos"
 import Save from "~icons/fluent/save-20-filled/"
 import Add from "~icons/bxs/add-to-queue/"
 import Delete from "~icons/fluent/delete-20-filled/"
-import Draft from "~icons/material-symbols/unpublished-rounded/"
-import Publish from "~icons/material-symbols/published-with-changes/"
+import Draft from "~icons/carbon/rule-draft/"
+import Publish from "~icons/mdi/publish/"
 
 type FrontMatter = {
   title: string
