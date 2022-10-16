@@ -17,16 +17,6 @@ services:
       AuthKeyBase64: ${AUTHKEYBASE64}
     labels:
       com.datadoghq.ad.logs: '[{"source": "docker", "service": "${APP_NAME}"}]'
-  "${APP_NAME}-migration":
-    image: ghcr.io/${IMAGE_REPO}:${RELEASE_VERSION}
-    restart: "no"
-    profiles:
-      - migration
-    environment:
-      ConnectionStrings__DefaultConnection: ${DEFAULTCONNECTION}
-      ConnectionStrings__MONGO: ${MONGO}
-      AuthKeyBase64: ${AUTHKEYBASE64}
-    command: --AppTasks=migrate
   datadog:
     image: gcr.io/datadoghq/agent:7
     pid: host
