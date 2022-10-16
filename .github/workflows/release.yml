@@ -94,6 +94,8 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ env.image_repository_name }}:${{ env.TAG_NAME }}
+          secrets: |
+            "github_token=${{ secrets.GITHUB_TOKEN }}"
 
       # Deploy UI to GitHub Pages
       - name: Deploy to GitHub Pages        
