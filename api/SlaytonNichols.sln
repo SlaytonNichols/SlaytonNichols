@@ -4,12 +4,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlaytonNichols", "SlaytonNichols\SlaytonNichols.csproj", "{5F817400-1A3A-48DF-98A6-E7E5A3DC762F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlaytonNichols.ServiceInterface", "SlaytonNichols.ServiceInterface\SlaytonNichols.ServiceInterface.csproj", "{5B8FFF01-1E0B-477D-9D7F-93016C128B23}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlaytonNichols.ServiceModel", "SlaytonNichols.ServiceModel\SlaytonNichols.ServiceModel.csproj", "{0127B6CA-1B79-46A6-8307-B36836D107F0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlaytonNichols.Tests", "SlaytonNichols.Tests\SlaytonNichols.Tests.csproj", "{455EC1EF-134F-4CD4-9C78-E813E4E6D8F6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
