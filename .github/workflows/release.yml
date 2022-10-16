@@ -87,7 +87,7 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.2.2
         env:
-          PAT: ${{ secrets.GITHUB_TOKEN }}
+          PAT: ${{ secrets.PAT }}
         if: ${{ github.event.inputs.version == '' || github.event.inputs.version == 'latest' }}
         with:
           file: Dockerfile
