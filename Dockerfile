@@ -2,8 +2,9 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /app
 
 COPY ./api .
+RUN dotnet nuget add source "https://api.nuget.org/v3/index.json" -n nuget.org
 RUN dotnet nuget add source "https://nuget.pkg.github.com/SlaytonNichols/index.json" \
-    --name "release" --username "SlaytonNichols" --store-password-in-clear-text  --password "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"
+    --name "release" --username "SlaytonNichols" --store-password-in-clear-text  --password "$PAT"
 RUN dotnet restore
 
 WORKDIR /app/SlaytonNichols
