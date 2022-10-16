@@ -16,30 +16,5 @@ public class AppHost : AppHostBase, IHostingStartup
 
     public AppHost() : base("SlaytonNichols", typeof(PostEndpoint).Assembly) { }
 
-    public override void Configure(Container container)
-    {
-        Plugins.Add(new OpenApiFeature());
-        Plugins.Add(new PostmanFeature());
-        //ServiceStack
-        SetConfig(new HostConfig
-        {
-        });
-        Plugins.Add(new SpaFeature
-        {
-            EnableSpaFallback = true
-        });
-        ConfigurePlugin<UiFeature>(feature =>
-        {
-        });
-        Plugins.Add(new AdminUsersFeature());
-
-
-        Plugins.Add(new CorsFeature(allowOriginWhitelist: new[]{
-            "http://localhost:5000",
-            "http://localhost:3000",
-            "http://localhost:5173",
-            "https://localhost:5001",
-            "https://" + Environment.GetEnvironmentVariable("DEPLOY_CDN")
-        }, allowCredentials: true));
-    }
+    public override void Configure(Container container) { }
 }
