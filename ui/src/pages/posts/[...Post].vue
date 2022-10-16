@@ -157,7 +157,7 @@ onMounted(async () => {
   await exitEditState()
   if (router.currentRoute.value.params.Post === 'create') {    
     isCreateMode.set(true)   
-    currentPost.set({ id: 0, title: '', summary: '', path: '', mdText: '', draft: true });
+    currentPost.set({ id: '', title: '', summary: '', path: '', mdText: '', draft: true });
   } else {
     currentPost.set(await store.getPost(attrs.Post));    
     var md = new marked()

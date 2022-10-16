@@ -21,7 +21,7 @@ export const usePostsStore = defineStore('posts', () => {
         error.value = errorStatus
         const api = await client.api(new QueryPosts())
         if (api.succeeded) {
-            posts.value = api.response!.results ?? []
+            posts.value = api.response ?? []
         }
     }
     const addPost = async (newPost: Post) => {
@@ -49,7 +49,7 @@ export const usePostsStore = defineStore('posts', () => {
         let api = await client.api(new UpdatePost(postUpdate))
         await refreshPosts(api.error)
     }
-    const removePost = async (id?: number) => {
+    const removePost = async (id?: string) => {
         posts.value = posts.value.filter(x => x.id != id)
         let api = await client.api(new DeletePost({ id }))
         await refreshPosts(api.error)

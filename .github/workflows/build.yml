@@ -27,5 +27,3 @@ jobs:
         include-prerelease: true
     - name: Build
       run: dotnet build ./api
-    - name: Test
-      run: dotnet test ./api/SlaytonNichols.Tests

@@ -13,6 +13,7 @@ services:
       DEPLOY_API: ${DEPLOY_API}
       DEPLOY_CDN: ${DEPLOY_CDN}
       ConnectionStrings__DefaultConnection: ${DEFAULTCONNECTION}
+      ConnectionStrings__MONGO: ${MONGO}
       AuthKeyBase64: ${AUTHKEYBASE64}
     labels:
       com.datadoghq.ad.logs: '[{"source": "docker", "service": "${APP_NAME}"}]'
@@ -23,6 +24,7 @@ services:
       - migration
     environment:
       ConnectionStrings__DefaultConnection: ${DEFAULTCONNECTION}
+      ConnectionStrings__MONGO: ${MONGO}
       AuthKeyBase64: ${AUTHKEYBASE64}
     command: --AppTasks=migrate
   datadog:

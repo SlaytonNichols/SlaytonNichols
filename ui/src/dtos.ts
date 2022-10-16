@@ -1,6 +1,6 @@
 /* Options:
-Date: 2022-10-08 16:41:18
-Version: 6.21
+Date: 2022-10-15 20:42:48
+Version: 6.40
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://localhost:5001
 
@@ -34,18 +34,6 @@ export interface IHasSessionId
 export interface IHasBearerToken
 {
     bearerToken?: string;
-}
-
-export interface ICreateDb<Table>
-{
-}
-
-export interface IUpdateDb<Table>
-{
-}
-
-export interface IDeleteDb<Table>
-{
 }
 
 export interface IPost
@@ -83,7 +71,7 @@ export class AuditBase
 */
 export class Post extends AuditBase
 {
-    public id?: number;
+    public id?: string;
     public mdText?: string;
     public title?: string;
     public path?: string;
@@ -130,27 +118,6 @@ export class ResponseStatus
     public meta?: { [index: string]: string; };
 
     public constructor(init?: Partial<ResponseStatus>) { (Object as any).assign(this, init); }
-}
-
-// @DataContract
-export class QueryResponse<T>
-{
-    // @DataMember(Order=1)
-    public offset?: number;
-
-    // @DataMember(Order=2)
-    public total?: number;
-
-    // @DataMember(Order=3)
-    public results?: T[];
-
-    // @DataMember(Order=4)
-    public meta?: { [index: string]: string; };
-
-    // @DataMember(Order=5)
-    public responseStatus?: ResponseStatus;
-
-    public constructor(init?: Partial<QueryResponse<T>>) { (Object as any).assign(this, init); }
 }
 
 // @DataContract
@@ -284,14 +251,14 @@ export class RegisterResponse implements IHasSessionId, IHasBearerToken
 */
 // @Route("/posts", "GET")
 // @Route("/posts/{Path}", "GET")
-export class QueryPosts implements IReturn<QueryResponse<Post>>
+export class QueryPosts implements IReturn<Post[]>
 {
     public path?: string;
 
     public constructor(init?: Partial<QueryPosts>) { (Object as any).assign(this, init); }
     public getTypeName() { return 'QueryPosts'; }
     public getMethod() { return 'GET'; }
-    public createResponse() { return new QueryResponse<Post>(); }
+    public createResponse() { return new Array<Post>(); }
 }
 
 /**
@@ -299,7 +266,7 @@ export class QueryPosts implements IReturn<QueryResponse<Post>>
 */
 // @Route("/posts", "POST")
 // @ValidateRequest(Validator="HasRole(`Admin`)")
-export class CreatePost implements IReturn<IdResponse>, ICreateDb<Post>
+export class CreatePost implements IReturn<IdResponse>
 {
     public mdText?: string;
     public title?: string;
@@ -318,9 +285,9 @@ export class CreatePost implements IReturn<IdResponse>, ICreateDb<Post>
 */
 // @Route("/posts/{Id}", "PATCH")
 // @ValidateRequest(Validator="HasRole(`Admin`)")
-export class UpdatePost implements IReturn<IdResponse>, IUpdateDb<Post>
+export class UpdatePost implements IReturn<IdResponse>
 {
-    public id?: number;
+    public id?: string;
     public mdText?: string;
     public title?: string;
     public path?: string;
@@ -338,9 +305,9 @@ export class UpdatePost implements IReturn<IdResponse>, IUpdateDb<Post>
 */
 // @Route("/posts/{Id}", "DELETE")
 // @ValidateRequest(Validator="HasRole(`Admin`)")
-export class DeletePost implements IReturnVoid, IDeleteDb<Post>
+export class DeletePost implements IReturnVoid
 {
-    public id?: number;
+    public id?: string;
 
     public constructor(init?: Partial<DeletePost>) { (Object as any).assign(this, init); }
     public getTypeName() { return 'DeletePost'; }

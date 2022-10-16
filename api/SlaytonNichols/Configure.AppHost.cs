@@ -1,8 +1,7 @@
 using Funq;
 using ServiceStack;
+using ServiceStack.Admin;
 using ServiceStack.Api.OpenApi;
-using SlaytonNichols.ServiceInterface;
-
 using System.Text.Encodings.Web;
 
 [assembly: HostingStartup(typeof(SlaytonNichols.AppHost))]
@@ -28,7 +27,7 @@ public class AppHost : AppHostBase, IHostingStartup
             });
         });
 
-    public AppHost() : base("SlaytonNichols", typeof(PostsServices).Assembly) { }
+    public AppHost() : base("SlaytonNichols", typeof(Post).Assembly) { }
 
     public override void Configure(Container container)
     {
@@ -57,8 +56,7 @@ public class AppHost : AppHostBase, IHostingStartup
 
         ConfigurePlugin<UiFeature>(feature =>
         {
-            feature.Info.BrandIcon.Uri = "/assets/img/logo.svg";
-            feature.Info.BrandIcon.Cls = "inline-block w-8 h-8 mr-2";
         });
+        Plugins.Add(new AdminUsersFeature());
     }
 }
