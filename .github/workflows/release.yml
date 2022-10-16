@@ -75,15 +75,6 @@ jobs:
             echo "TAG_NAME=${{ github.event.inputs.version }}" >> $GITHUB_ENV
           fi;
 
-      # Add nuget source
-      - name: Add nuget source
-        uses: actions/setup-dotnet@v1
-        run: |
-          dotnet nuget add source "https://nuget.pkg.github.com/SlaytonNichols/index.json" --name "github" \
-          --username "SlaytonNichols" \
-          --store-password-in-clear-text --password ${{ secrets.GITHUB_TOKEN }}
-        working-directory: ./api/SlaytonNichols
-
       # Authenticate, build and push to GitHub Container Registry (ghcr.io)
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -101,6 +92,8 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ env.image_repository_name }}:${{ env.TAG_NAME }}
+          secrets: |
+            "github_token=${{ secrets.GITHUB_TOKEN }}"
 
       # Deploy UI to GitHub Pages
       - name: Deploy to GitHub Pages        
