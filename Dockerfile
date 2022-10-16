@@ -4,7 +4,7 @@ WORKDIR /app
 COPY ./api .
 RUN dotnet nuget add source "https://nuget.pkg.github.com/SlaytonNichols/index.json" \
     --name "release-github" --username "SlaytonNichols" \
-    --store-password-in-clear-text --password "$PAT"
+    --store-password-in-clear-text -p "$PAT"
 RUN dotnet restore
 
 WORKDIR /app/SlaytonNichols
