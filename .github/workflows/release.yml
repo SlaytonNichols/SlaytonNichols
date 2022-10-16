@@ -74,7 +74,7 @@ jobs:
           if [ "${{ github.event.inputs.version }}" != "" ]; then
             echo "TAG_NAME=${{ github.event.inputs.version }}" >> $GITHUB_ENV
           fi;
-          
+
       # Add nuget source
       - name: Add nuget source
         uses: actions/setup-dotnet@v1
@@ -82,6 +82,7 @@ jobs:
           dotnet nuget add source "https://nuget.pkg.github.com/SlaytonNichols/index.json" --name "github" \
           --username "SlaytonNichols" \
           --store-password-in-clear-text --password ${{ secrets.GITHUB_TOKEN }}
+        working-directory: ./api/SlaytonNichols
 
       # Authenticate, build and push to GitHub Container Registry (ghcr.io)
       - name: Login to GitHub Container Registry
