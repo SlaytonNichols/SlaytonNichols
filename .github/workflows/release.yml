@@ -60,14 +60,6 @@ jobs:
           npm run build
           [[ -f ./post.build.js ]] && node ./post.build.js
         working-directory: ./ui
-      
-      # Add nuget source
-      - name: Add nuget source
-        uses: actions/setup-dotnet@v1
-        run: |
-          dotnet nuget add source "https://nuget.pkg.github.com/SlaytonNichols/index.json" --name "github" \
-          --username "SlaytonNichols" \
-          --store-password-in-clear-text --password ${{ secrets.GITHUB_TOKEN }}
 
       # Assign environment variables used in subsequent steps
       - name: repository name fix
