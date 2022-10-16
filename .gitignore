@@ -48,3 +48,4 @@ obj/
 bin/
 **/appsettings.Development.json
 ./api/SlaytonNichols/appsettings.Development.json
+./api/nuget.config

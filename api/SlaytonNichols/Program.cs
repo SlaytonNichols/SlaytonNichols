@@ -1,15 +1,8 @@
-using SlaytonNichols.Service.Core.UseCases.CreatePostUseCase;
-using SlaytonNichols.Service.Core.UseCases.DeletePostUseCase;
-using SlaytonNichols.Service.Core.UseCases.GetPostsUseCase;
-using SlaytonNichols.Service.Core.UseCases.UpdatePostUseCase;
-using SlaytonNichols.Service.Infrastructure.MongoDb.Repositories;
+using SlaytonNichols.Posts.Service;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));
-builder.Services.AddSingleton<IGetPostsUseCase, GetPostsUseCase>();
-builder.Services.AddSingleton<ICreatePostUseCase, CreatePostUseCase>();
-builder.Services.AddSingleton<IUpdatePostUseCase, UpdatePostUseCase>();
-builder.Services.AddSingleton<IDeletePostUseCase, DeletePostUseCase>();
+
+builder.Services.AddPostsService();
 
 var app = builder.Build();
 

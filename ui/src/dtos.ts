@@ -1,5 +1,5 @@
 /* Options:
-Date: 2022-10-15 21:14:35
+Date: 2022-10-16 09:51:41
 Version: 6.40
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://localhost:5001
@@ -40,36 +40,60 @@ export interface IPost
 {
 }
 
-// @DataContract
-export class AuditBase
+export class GetPostsRequest
 {
-    // @DataMember(Order=1)
-    public createdDate?: string;
+    public path?: string;
 
-    // @DataMember(Order=2)
-    // @Required()
-    public createdBy?: string;
+    public constructor(init?: Partial<GetPostsRequest>) { (Object as any).assign(this, init); }
+}
 
-    // @DataMember(Order=3)
-    public modifiedDate?: string;
+export class Document implements IDocument
+{
+    public id?: string;
+    public createdAt?: string;
 
-    // @DataMember(Order=4)
-    // @Required()
-    public modifiedBy?: string;
+    public constructor(init?: Partial<Document>) { (Object as any).assign(this, init); }
+}
 
-    // @DataMember(Order=5)
-    public deletedDate?: string;
+export class Post extends Document
+{
+    public mdText?: string;
+    public title?: string;
+    public path?: string;
+    public summary?: string;
+    public draft?: boolean;
 
-    // @DataMember(Order=6)
-    public deletedBy?: string;
+    public constructor(init?: Partial<Post>) { super(init); (Object as any).assign(this, init); }
+}
 
-    public constructor(init?: Partial<AuditBase>) { (Object as any).assign(this, init); }
+export class CreatePostRequest extends Post
+{
+
+    public constructor(init?: Partial<CreatePostRequest>) { super(init); (Object as any).assign(this, init); }
+}
+
+export interface IDocument
+{
+    id?: string;
+    createdAt?: string;
+}
+
+export class UpdatePostRequest extends Post
+{
+
+    public constructor(init?: Partial<UpdatePostRequest>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class DeletePostRequest extends Post
+{
+
+    public constructor(init?: Partial<DeletePostRequest>) { super(init); (Object as any).assign(this, init); }
 }
 
 /**
 * Blog post
 */
-export class Post extends AuditBase
+export class PostEndpoint
 {
     public id?: string;
     public mdText?: string;
@@ -78,7 +102,7 @@ export class Post extends AuditBase
     public summary?: string;
     public draft?: boolean;
 
-    public constructor(init?: Partial<Post>) { super(init); (Object as any).assign(this, init); }
+    public constructor(init?: Partial<PostEndpoint>) { (Object as any).assign(this, init); }
 }
 
 // @DataContract
@@ -118,6 +142,27 @@ export class ResponseStatus
     public meta?: { [index: string]: string; };
 
     public constructor(init?: Partial<ResponseStatus>) { (Object as any).assign(this, init); }
+}
+
+// @DataContract
+export class QueryResponse<PostEndpoint>
+{
+    // @DataMember(Order=1)
+    public offset?: number;
+
+    // @DataMember(Order=2)
+    public total?: number;
+
+    // @DataMember(Order=3)
+    public results?: PostEndpoint[];
+
+    // @DataMember(Order=4)
+    public meta?: { [index: string]: string; };
+
+    // @DataMember(Order=5)
+    public responseStatus?: ResponseStatus;
+
+    public constructor(init?: Partial<QueryResponse<PostEndpoint>>) { (Object as any).assign(this, init); }
 }
 
 // @DataContract
@@ -251,14 +296,13 @@ export class RegisterResponse implements IHasSessionId, IHasBearerToken
 */
 // @Route("/posts", "GET")
 // @Route("/posts/{Path}", "GET")
-export class QueryPosts implements IReturn<Post[]>
+export class QueryPosts extends GetPostsRequest implements IReturn<QueryResponse<PostEndpoint>>
 {
-    public path?: string;
 
-    public constructor(init?: Partial<QueryPosts>) { (Object as any).assign(this, init); }
+    public constructor(init?: Partial<QueryPosts>) { super(init); (Object as any).assign(this, init); }
     public getTypeName() { return 'QueryPosts'; }
     public getMethod() { return 'GET'; }
-    public createResponse() { return new Array<Post>(); }
+    public createResponse() { return new QueryResponse<PostEndpoint>(); }
 }
 
 /**
@@ -266,15 +310,10 @@ export class QueryPosts implements IReturn<Post[]>
 */
 // @Route("/posts", "POST")
 // @ValidateRequest(Validator="HasRole(`Admin`)")
-export class CreatePost implements IReturn<IdResponse>
+export class CreatePost extends CreatePostRequest implements IReturn<IdResponse>
 {
-    public mdText?: string;
-    public title?: string;
-    public path?: string;
-    public summary?: string;
-    public draft?: boolean;
 
-    public constructor(init?: Partial<CreatePost>) { (Object as any).assign(this, init); }
+    public constructor(init?: Partial<CreatePost>) { super(init); (Object as any).assign(this, init); }
     public getTypeName() { return 'CreatePost'; }
     public getMethod() { return 'POST'; }
     public createResponse() { return new IdResponse(); }
@@ -285,16 +324,10 @@ export class CreatePost implements IReturn<IdResponse>
 */
 // @Route("/posts/{Id}", "PATCH")
 // @ValidateRequest(Validator="HasRole(`Admin`)")
-export class UpdatePost implements IReturn<IdResponse>
+export class UpdatePost extends UpdatePostRequest implements IReturn<IdResponse>
 {
-    public id?: string;
-    public mdText?: string;
-    public title?: string;
-    public path?: string;
-    public summary?: string;
-    public draft?: boolean;
 
-    public constructor(init?: Partial<UpdatePost>) { (Object as any).assign(this, init); }
+    public constructor(init?: Partial<UpdatePost>) { super(init); (Object as any).assign(this, init); }
     public getTypeName() { return 'UpdatePost'; }
     public getMethod() { return 'PATCH'; }
     public createResponse() { return new IdResponse(); }
@@ -305,11 +338,10 @@ export class UpdatePost implements IReturn<IdResponse>
 */
 // @Route("/posts/{Id}", "DELETE")
 // @ValidateRequest(Validator="HasRole(`Admin`)")
-export class DeletePost implements IReturnVoid
+export class DeletePost extends DeletePostRequest implements IReturnVoid
 {
-    public id?: string;
 
-    public constructor(init?: Partial<DeletePost>) { (Object as any).assign(this, init); }
+    public constructor(init?: Partial<DeletePost>) { super(init); (Object as any).assign(this, init); }
     public getTypeName() { return 'DeletePost'; }
     public getMethod() { return 'DELETE'; }
     public createResponse() {}

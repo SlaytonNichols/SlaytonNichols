@@ -1,4 +1,4 @@
-namespace SlaytonNichols.Service.Core.Dtos
+namespace SlaytonNichols.Posts.Service.Core.Dtos
 {
     public class GetPostsRequest
     {

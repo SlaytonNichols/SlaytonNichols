@@ -1,11 +1,12 @@
-using SlaytonNichols.Service.Infrastructure.MongoDb.Entities;
+
 using SlaytonNichols;
 using MongoDB.Driver;
-using SlaytonNichols.Service.Core.Dtos;
-using SlaytonNichols.Service.Infrastructure.MongoDb.Repositories;
+using SlaytonNichols.Posts.Service.Core.Dtos;
+using SlaytonNichols.Posts.Service.Infrastructure.MongoDb.Repositories;
 using MongoDB.Bson;
+using SlaytonNichols.Posts.Service.Domain.Documents;
 
-namespace SlaytonNichols.Service.Core.UseCases.CreatePostUseCase
+namespace SlaytonNichols.Posts.Service.Core.UseCases.CreatePostUseCase
 {
     public class CreatePostUseCase : ICreatePostUseCase
     {

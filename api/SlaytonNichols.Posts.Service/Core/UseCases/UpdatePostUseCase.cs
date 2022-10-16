@@ -1,11 +1,11 @@
-using SlaytonNichols.Service.Infrastructure.MongoDb.Entities;
 using SlaytonNichols;
 using MongoDB.Driver;
-using SlaytonNichols.Service.Core.Dtos;
+using SlaytonNichols.Posts.Service.Core.Dtos;
 using MongoDB.Bson;
-using SlaytonNichols.Service.Infrastructure.MongoDb.Repositories;
+using SlaytonNichols.Posts.Service.Infrastructure.MongoDb.Repositories;
+using SlaytonNichols.Posts.Service.Domain.Documents;
 
-namespace SlaytonNichols.Service.Core.UseCases.UpdatePostUseCase
+namespace SlaytonNichols.Posts.Service.Core.UseCases.UpdatePostUseCase
 {
     public class UpdatePostUseCase : IUpdatePostUseCase
     {

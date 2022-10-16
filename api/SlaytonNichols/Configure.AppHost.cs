@@ -2,6 +2,7 @@ using Funq;
 using ServiceStack;
 using ServiceStack.Admin;
 using ServiceStack.Api.OpenApi;
+using SlaytonNichols.Services;
 using System.Text.Encodings.Web;
 
 [assembly: HostingStartup(typeof(SlaytonNichols.AppHost))]
@@ -27,7 +28,7 @@ public class AppHost : AppHostBase, IHostingStartup
             });
         });
 
-    public AppHost() : base("SlaytonNichols", typeof(Post).Assembly) { }
+    public AppHost() : base("SlaytonNichols", typeof(PostEndpoint).Assembly) { }
 
     public override void Configure(Container container)
     {
