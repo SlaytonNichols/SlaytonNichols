@@ -16,17 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
-    <PackageReference Include="ServiceStack" Version="6.*" />
-    <PackageReference Include="ServiceStack.Api.OpenApi.Core" Version="6.3.0" />
-    <PackageReference Include="ServiceStack.Authentication.MongoDb" Version="6.4.0" />
-    <PackageReference Include="ServiceStack.Client" Version="6.*" />
-    <PackageReference Include="ServiceStack.OrmLite.Sqlite" Version="6.*" />
-    <PackageReference Include="ServiceStack.OrmLite.SqlServer" Version="6.3.0" />
-    <PackageReference Include="ServiceStack.Server" Version="6.*" />
-    <PackageReference Include="ServiceStack.Text" Version="6.*" />
-    <PackageReference Include="ServiceStack.Api.OpenApi" Version="6.3.0" />
-
+    <PackageReference Include="SlaytonNichols.Common" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
