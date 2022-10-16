@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /app
 
 COPY ./api .
-RUN dotnet nuget add source "https://nuget.pkg.github.com/SlaytonNichols/index.json" --name "release-github" --username "SlaytonNichols" --store-password-in-clear-text --password ${PAT}
+RUN dotnet nuget add source "https://nuget.pkg.github.com/SlaytonNichols/index.json" --name "release-github" --username "SlaytonNichols" --store-password-in-clear-text --password "${PAT}"
 # CMD ["sh", "-c", "dotnet nuget add source 'https://nuget.pkg.github.com/SlaytonNichols/index.json' --name 'release-github' --username 'SlaytonNichols' --store-password-in-clear-text --password ${PAT}"]
 RUN dotnet restore
 
