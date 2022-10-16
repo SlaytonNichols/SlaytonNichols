@@ -20,7 +20,7 @@ public class MongoRepository<TDocument> : IMongoRepository<TDocument>
         return ((BsonCollectionAttribute)documentType.GetCustomAttributes(
                 typeof(BsonCollectionAttribute),
                 true)
-            .FirstOrDefault())?.CollectionName;
+            .FirstOrDefault()).CollectionName;
     }
 
     public virtual IQueryable<TDocument> AsQueryable()

@@ -3,6 +3,7 @@ using SlaytonNichols;
 using MongoDB.Driver;
 using SlaytonNichols.Service.Core.Dtos;
 using SlaytonNichols.Service.Infrastructure.MongoDb.Repositories;
+using MongoDB.Bson;
 
 namespace SlaytonNichols.Service.Core.UseCases.CreatePostUseCase
 {
@@ -14,9 +15,10 @@ namespace SlaytonNichols.Service.Core.UseCases.CreatePostUseCase
             _posts = posts;
         }
 
-        public async Task ExecuteAsync(CreatePostRequest request)
+        public async Task<ObjectId?> ExecuteAsync(CreatePostRequest request)
         {
             await _posts.InsertOneAsync(request);
+            return _posts.AsQueryable().ToList().Where(x => x.Id == request.Id).FirstOrDefault()?.Id;
         }
     }
 }

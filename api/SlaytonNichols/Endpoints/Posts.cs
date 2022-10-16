@@ -12,7 +12,7 @@ namespace SlaytonNichols;
 [Notes("Captures a post")]
 public class Post : AuditBase
 {
-    public ObjectId Id { get; set; }
+    public string Id { get; set; }
     public string MdText { get; set; }
     public string Title { get; set; }
     public string Path { get; set; }
@@ -48,7 +48,7 @@ public class CreatePost : IReturn<IdResponse>
 [AutoApply(Behavior.AuditModify)]
 public class UpdatePost : IReturn<IdResponse>
 {
-    public ObjectId Id { get; set; }
+    public string Id { get; set; }
     public string MdText { get; set; }
     public string Title { get; set; }
     public string Path { get; set; }
@@ -62,7 +62,7 @@ public class UpdatePost : IReturn<IdResponse>
 [AutoApply(Behavior.AuditSoftDelete)]
 public class DeletePost : IReturnVoid
 {
-    public ObjectId Id { get; set; }
+    public string Id { get; set; }
 }
 
 public class PostsServices : ServiceStack.Service
@@ -108,8 +108,8 @@ public class PostsServices : ServiceStack.Service
             Title = query.Title
         };
 
-        await _createPostUseCase.ExecuteAsync(request);
-        return new HttpResult(request, System.Net.HttpStatusCode.Created);
+        var id = await _createPostUseCase.ExecuteAsync(request);
+        return new IdResponse { Id = id.ToString() };
     }
 
     public async Task<object> Patch(UpdatePost query)
@@ -121,7 +121,7 @@ public class PostsServices : ServiceStack.Service
             Title = query.Title,
             MdText = query.MdText,
             Draft = query.Draft,
-            Id = query.Id
+            Id = new ObjectId(query.Id)
         };
         await _updatePostUseCase.ExecuteAsync(request);
 
@@ -132,7 +132,7 @@ public class PostsServices : ServiceStack.Service
     {
         var request = new DeletePostRequest
         {
-            Id = query.Id
+            Id = new ObjectId(query.Id)
         };
         await _deletePostUseCase.ExecuteAsync(request);
 
