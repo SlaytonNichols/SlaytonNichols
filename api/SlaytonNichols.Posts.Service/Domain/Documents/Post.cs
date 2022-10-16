@@ -1,6 +1,6 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using SlaytonNichols.Posts.Service.Infrastructure.MongoDb;
+using SlaytonNichols.Common.Infrastructure.MongoDb;
 using System;
 
 namespace SlaytonNichols.Posts.Service.Domain.Documents;

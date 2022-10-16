@@ -1,10 +1,9 @@
 
-using SlaytonNichols;
 using MongoDB.Driver;
 using SlaytonNichols.Posts.Service.Core.Dtos;
-using SlaytonNichols.Posts.Service.Infrastructure.MongoDb.Repositories;
 using MongoDB.Bson;
 using SlaytonNichols.Posts.Service.Domain.Documents;
+using SlaytonNichols.Common.Infrastructure.MongoDb.Repositories;
 
 namespace SlaytonNichols.Posts.Service.Core.UseCases.CreatePostUseCase
 {

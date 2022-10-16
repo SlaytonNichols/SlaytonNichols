@@ -2,10 +2,10 @@ using SlaytonNichols.Posts.Service.Core.UseCases.CreatePostUseCase;
 using SlaytonNichols.Posts.Service.Core.UseCases.DeletePostUseCase;
 using SlaytonNichols.Posts.Service.Core.UseCases.GetPostsUseCase;
 using SlaytonNichols.Posts.Service.Core.UseCases.UpdatePostUseCase;
-using SlaytonNichols.Posts.Service.Infrastructure.MongoDb.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
 using SlaytonNichols.Posts.Service.Domain.Documents;
+using SlaytonNichols.Common.Infrastructure.MongoDb.Repositories;
 
 namespace SlaytonNichols.Posts.Service;
 
