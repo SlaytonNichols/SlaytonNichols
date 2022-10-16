@@ -1,8 +1,11 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /app
 
+
 COPY ./api .
-RUN dotnet nuget add source "https://nuget.pkg.github.com/SlaytonNichols/index.json" --name "release-github" --username "SlaytonNichols" --store-password-in-clear-text --password ${github_token}
+RUN --mount=type=secret,id=github_token \
+    cat /run/secrets/github_token
+RUN dotnet nuget add source "https://nuget.pkg.github.com/SlaytonNichols/index.json" --name "release-github" --username "SlaytonNichols" --store-password-in-clear-text --password $github_token
 RUN dotnet restore
 
 WORKDIR /app/SlaytonNichols
