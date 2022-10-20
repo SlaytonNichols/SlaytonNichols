@@ -17,7 +17,16 @@ namespace SlaytonNichols.Posts.Service.Core.UseCases.CreatePostUseCase
 
         public async Task<ObjectId?> ExecuteAsync(CreatePostRequest request)
         {
-            await _posts.InsertOneAsync(request);
+            var post = new Post
+            {
+                MdText = request.MdText,
+                Title = request.Title,
+                Path = request.Path,
+                Summary = request.Summary,
+                Draft = request.Draft
+            };
+
+            await _posts.InsertOneAsync(post);
             return _posts.AsQueryable().ToList().Where(x => x.Id == request.Id).FirstOrDefault()?.Id;
         }
     }

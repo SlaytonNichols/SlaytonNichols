@@ -71,7 +71,7 @@ onMounted(async () => {
   loading.set(true)
   await store.refreshPosts()  
   store.allPosts.forEach(result => {
-    posts.value.push({ 
+    posts.value.unshift({ 
       id: result.id,
       path: '/posts/' + result.path, 
       title: result.title, 
@@ -82,7 +82,6 @@ onMounted(async () => {
       } 
     })
   });
-
   if(!isAdmin) {
     posts.value = posts.value.filter(x => !x.draft)
   }  

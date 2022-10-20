@@ -14,6 +14,15 @@ namespace SlaytonNichols.Posts.Service.Core.UseCases.UpdatePostUseCase
 
         public async Task ExecuteAsync(UpdatePostRequest request)
         {
+            var post = new Post
+            {
+                Id = request.Id,
+                MdText = request.MdText,
+                Title = request.Title,
+                Path = request.Path,
+                Summary = request.Summary,
+                Draft = request.Draft
+            };
             await _posts.ReplaceOneAsync(request);
         }
 
