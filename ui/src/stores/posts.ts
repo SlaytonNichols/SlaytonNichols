@@ -17,11 +17,19 @@ export const usePostsStore = defineStore('posts', () => {
         await refreshPosts()
         return posts.value.find(p => p.path === path)
     }
+    const postsOrdered = async () => {
+        //place favorite posts at the top, TODO: replace with tags
+        let favorites = ["todos"]
+        let favoritPosts = posts.value.filter(x => favorites.includes(x.path!));
+        let otherPosts = posts.value.filter(x => !favorites.includes(x.path!));
+        return favoritPosts.concat(otherPosts)
+    }
     const refreshPosts = async (errorStatus?: ResponseStatus) => {
         error.value = errorStatus
         const api = await client.api(new QueryPosts())
         if (api.succeeded) {
             posts.value = api.response ?? []
+            posts.value = await postsOrdered()
         }
     }
     const addPost = async (newPost: Post) => {
@@ -70,6 +78,7 @@ export const usePostsStore = defineStore('posts', () => {
         addPost,
         removePost,
         updatePost,
+        postsOrdered
     }
 })
 
