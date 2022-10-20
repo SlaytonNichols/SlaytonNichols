@@ -82,6 +82,13 @@ onMounted(async () => {
       } 
     })
   });
+
+  //place favorite posts at the top, TODO: replace with tags
+  let favorites = ["todos"]  
+  let favoritPosts = posts.value.filter(x => favorites.includes(x.path));
+  let otherPosts = posts.value.filter(x => !favorites.includes(x.path));
+  posts.value = favoritPosts.concat(otherPosts)
+
   if(!isAdmin) {
     posts.value = posts.value.filter(x => !x.draft)
   }  
