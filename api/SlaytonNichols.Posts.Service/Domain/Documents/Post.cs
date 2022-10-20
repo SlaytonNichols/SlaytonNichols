@@ -6,6 +6,7 @@ using System;
 namespace SlaytonNichols.Posts.Service.Domain.Documents;
 
 [BsonCollectionAttribute("Posts")]
+[BsonDiscriminator("Post")]
 public class Post : Document
 {
     public string MdText { get; set; }

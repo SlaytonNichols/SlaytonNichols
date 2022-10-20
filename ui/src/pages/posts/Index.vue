@@ -6,7 +6,7 @@
         <form-loading
           class="justify-center"
           v-if="loading.get()"
-          :loading="loading"
+          :loading="loading.get()"
           :icon="true"
           text=""
         />
