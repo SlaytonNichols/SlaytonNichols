@@ -3,6 +3,13 @@
     <main class="flex">
       <div class="px-5 flex-grow mt-10">
         <AppBreadcrumb class="my-4 justify-center" name="Blog" />
+        <form-loading
+          class="justify-center"
+          v-if="loading.get()"
+          :loading="loading"
+          :icon="true"
+          text=""
+        />
         <div v-for="route in posts" class="flex mb-8 justify-center flex-col align-center">
           <router-link class="text-2xl hover:text-green-600" :to="route.path">{{ route.frontmatter.title }}
           </router-link>
@@ -22,7 +29,7 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router"
-import { onMounted, ref } from "vue"
+import { onMounted, reactive, ref } from "vue"
 import { Post } from "@/dtos"
 import Add from "~icons/bxs/add-to-queue/"
 import { auth } from "@/auth"
@@ -37,6 +44,18 @@ type FrontMatter = {
 }
 const isAdmin = auth?.value?.roles.indexOf('Admin') >= 0
 const posts = ref<Post[]>([])
+const isLoading = ref<Boolean>()
+const loading = reactive({
+  // getter
+  get() {
+    return isLoading.value
+  },
+  // setter
+  set(newValue: Boolean) {
+    
+    isLoading.value = newValue
+  }
+})
 const router = useRouter()  
 posts.value = router.getRoutes()
   .filter(r => r.path.startsWith("/posts/") && r.meta?.frontmatter)
@@ -49,6 +68,7 @@ const createPost = async () => {
 }
 
 onMounted(async () => {  
+  loading.set(true)
   await store.refreshPosts()  
   store.allPosts.forEach(result => {
     posts.value.push({ 
@@ -66,6 +86,7 @@ onMounted(async () => {
   if(!isAdmin) {
     posts.value = posts.value.filter(x => !x.draft)
   }  
+  loading.set(false)
 })
 
 </script>

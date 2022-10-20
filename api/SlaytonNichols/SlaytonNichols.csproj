@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SlaytonNichols.Common" Version="1.0.6" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SlaytonNichols.Posts.Service\SlaytonNichols.Posts.Service.csproj" />
   </ItemGroup>
 </Project>
