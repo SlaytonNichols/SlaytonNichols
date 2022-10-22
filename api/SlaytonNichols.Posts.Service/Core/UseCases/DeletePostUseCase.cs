@@ -1,6 +1,6 @@
 using SlaytonNichols.Posts.Service.Core.Dtos;
-using SlaytonNichols.Posts.Service.Domain.Documents;
 using SlaytonNichols.Common.Infrastructure.MongoDb.Repositories;
+using SlaytonNichols.Posts.Service.Infrastructure.Data.Documents;
 
 namespace SlaytonNichols.Posts.Service.Core.UseCases.DeletePostUseCase;
 public class DeletePostUseCase : IDeletePostUseCase
@@ -13,7 +13,7 @@ public class DeletePostUseCase : IDeletePostUseCase
 
     public async Task ExecuteAsync(DeletePostRequest request)
     {
-        await _posts.DeleteOneAsync(x => x.Id == request.Id);
+        await _posts.DeleteByIdAsync(request.Id);
     }
 
 }

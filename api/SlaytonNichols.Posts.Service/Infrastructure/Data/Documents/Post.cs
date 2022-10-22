@@ -1,7 +1,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using SlaytonNichols.Common.Infrastructure.MongoDb;
 
-namespace SlaytonNichols.Posts.Service.Domain.Documents;
+namespace SlaytonNichols.Posts.Service.Infrastructure.Data.Documents;
 
 [BsonCollectionAttribute("Posts")]
 [BsonDiscriminator("Post")]
