@@ -16,7 +16,7 @@ services:
       ConnectionStrings__MONGO: ${MONGO}
       AuthKeyBase64: ${AUTHKEYBASE64}
     labels:
-      com.datadoghq.ad.logs: '[{ "source": "docker", "service": "${APP_NAME}", "log_processing_rules": "[{ "type": "mask_sequences", "name": "replace log level attribute", "replace_placeholder": "level:", "pattern": "/LogLevel/i" }]"}]'
+      com.datadoghq.ad.logs: '[{"source": "docker", "service": "${APP_NAME}"}]'
   datadog:
     image: gcr.io/datadoghq/agent:7
     pid: host

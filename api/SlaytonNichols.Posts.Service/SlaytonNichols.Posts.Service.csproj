@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SlaytonNichols.Common" Version="1.0.18" />
+    <PackageReference Include="SlaytonNichols.Common" Version="1.0.19" />
   </ItemGroup>
+  <!-- <ItemGroup>
+    <ProjectReference Include="..\..\..\SlaytonNichols.Common\SlaytonNichols.Common.csproj" />
+  </ItemGroup> -->
 
 </Project>
