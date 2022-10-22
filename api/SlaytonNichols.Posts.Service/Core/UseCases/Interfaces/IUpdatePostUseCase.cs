@@ -1,10 +1,7 @@
-using SlaytonNichols;
 using SlaytonNichols.Posts.Service.Core.Dtos;
 
-namespace SlaytonNichols.Posts.Service.Core.UseCases.UpdatePostUseCase
+namespace SlaytonNichols.Posts.Service.Core.UseCases.UpdatePostUseCase;
+public interface IUpdatePostUseCase
 {
-    public interface IUpdatePostUseCase
-    {
-        Task ExecuteAsync(UpdatePostRequest request);
-    }
+    Task ExecuteAsync(UpdatePostRequest request);
 }

@@ -1,5 +1,5 @@
 /* Options:
-Date: 2022-10-16 09:51:41
+Date: 2022-10-22 13:00:31
 Version: 6.40
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://localhost:5001
@@ -90,21 +90,6 @@ export class DeletePostRequest extends Post
     public constructor(init?: Partial<DeletePostRequest>) { super(init); (Object as any).assign(this, init); }
 }
 
-/**
-* Blog post
-*/
-export class PostEndpoint
-{
-    public id?: string;
-    public mdText?: string;
-    public title?: string;
-    public path?: string;
-    public summary?: string;
-    public draft?: boolean;
-
-    public constructor(init?: Partial<PostEndpoint>) { (Object as any).assign(this, init); }
-}
-
 // @DataContract
 export class ResponseError
 {
@@ -145,7 +130,7 @@ export class ResponseStatus
 }
 
 // @DataContract
-export class QueryResponse<PostEndpoint>
+export class QueryResponse<T>
 {
     // @DataMember(Order=1)
     public offset?: number;
@@ -154,7 +139,7 @@ export class QueryResponse<PostEndpoint>
     public total?: number;
 
     // @DataMember(Order=3)
-    public results?: PostEndpoint[];
+    public results?: T[];
 
     // @DataMember(Order=4)
     public meta?: { [index: string]: string; };
@@ -162,19 +147,13 @@ export class QueryResponse<PostEndpoint>
     // @DataMember(Order=5)
     public responseStatus?: ResponseStatus;
 
-    public constructor(init?: Partial<QueryResponse<PostEndpoint>>) { (Object as any).assign(this, init); }
+    public constructor(init?: Partial<QueryResponse<T>>) { (Object as any).assign(this, init); }
 }
 
-// @DataContract
-export class IdResponse
+export class GetPostsResponse extends QueryResponse<Post>
 {
-    // @DataMember(Order=1)
-    public id?: string;
 
-    // @DataMember(Order=2)
-    public responseStatus?: ResponseStatus;
-
-    public constructor(init?: Partial<IdResponse>) { (Object as any).assign(this, init); }
+    public constructor(init?: Partial<GetPostsResponse>) { super(init); (Object as any).assign(this, init); }
 }
 
 // @DataContract
@@ -296,13 +275,13 @@ export class RegisterResponse implements IHasSessionId, IHasBearerToken
 */
 // @Route("/posts", "GET")
 // @Route("/posts/{Path}", "GET")
-export class QueryPosts extends GetPostsRequest implements IReturn<QueryResponse<PostEndpoint>>
+export class GetPosts extends GetPostsRequest implements IReturn<GetPostsResponse>
 {
 
-    public constructor(init?: Partial<QueryPosts>) { super(init); (Object as any).assign(this, init); }
-    public getTypeName() { return 'QueryPosts'; }
+    public constructor(init?: Partial<GetPosts>) { super(init); (Object as any).assign(this, init); }
+    public getTypeName() { return 'GetPosts'; }
     public getMethod() { return 'GET'; }
-    public createResponse() { return new QueryResponse<PostEndpoint>(); }
+    public createResponse() { return new GetPostsResponse(); }
 }
 
 /**
@@ -310,13 +289,13 @@ export class QueryPosts extends GetPostsRequest implements IReturn<QueryResponse
 */
 // @Route("/posts", "POST")
 // @ValidateRequest(Validator="HasRole(`Admin`)")
-export class CreatePost extends CreatePostRequest implements IReturn<IdResponse>
+export class PostPost extends CreatePostRequest implements IReturnVoid
 {
 
-    public constructor(init?: Partial<CreatePost>) { super(init); (Object as any).assign(this, init); }
-    public getTypeName() { return 'CreatePost'; }
+    public constructor(init?: Partial<PostPost>) { super(init); (Object as any).assign(this, init); }
+    public getTypeName() { return 'PostPost'; }
     public getMethod() { return 'POST'; }
-    public createResponse() { return new IdResponse(); }
+    public createResponse() {}
 }
 
 /**
@@ -324,13 +303,13 @@ export class CreatePost extends CreatePostRequest implements IReturn<IdResponse>
 */
 // @Route("/posts/{Id}", "PATCH")
 // @ValidateRequest(Validator="HasRole(`Admin`)")
-export class UpdatePost extends UpdatePostRequest implements IReturn<IdResponse>
+export class PatchPost extends UpdatePostRequest implements IReturnVoid
 {
 
-    public constructor(init?: Partial<UpdatePost>) { super(init); (Object as any).assign(this, init); }
-    public getTypeName() { return 'UpdatePost'; }
+    public constructor(init?: Partial<PatchPost>) { super(init); (Object as any).assign(this, init); }
+    public getTypeName() { return 'PatchPost'; }
     public getMethod() { return 'PATCH'; }
-    public createResponse() { return new IdResponse(); }
+    public createResponse() {}
 }
 
 /**

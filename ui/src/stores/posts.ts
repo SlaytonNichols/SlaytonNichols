@@ -1,7 +1,7 @@
 import { acceptHMRUpdate, defineStore } from "pinia"
 import { ResponseStatus } from "@servicestack/client"
 import { client } from "@/api"
-import { CreatePost, DeletePost, QueryPosts, Post, UpdatePost } from "@/dtos"
+import { PostPost, DeletePost, GetPosts, Post, PatchPost } from "@/dtos"
 
 export const usePostsStore = defineStore('posts', () => {
     // State
@@ -26,9 +26,9 @@ export const usePostsStore = defineStore('posts', () => {
     }
     const refreshPosts = async (errorStatus?: ResponseStatus) => {
         error.value = errorStatus
-        const api = await client.api(new QueryPosts())
+        const api = await client.api(new GetPosts())
         if (api.succeeded) {
-            posts.value = api.response ?? []
+            posts.value = api.response?.results ?? []
             posts.value = await postsOrdered()
         }
     }
@@ -42,7 +42,7 @@ export const usePostsStore = defineStore('posts', () => {
             draft: newPost?.draft
         }
         posts.value.push(new Post(post))
-        let api = await client.api(new CreatePost(post))
+        let api = await client.api(new PostPost(post))
         await refreshPosts(api.error)
     }
     const updatePost = async (post?: Post) => {
@@ -54,7 +54,7 @@ export const usePostsStore = defineStore('posts', () => {
             summary: post?.summary,
             draft: post?.draft
         }
-        let api = await client.api(new UpdatePost(postUpdate))
+        let api = await client.api(new PatchPost(postUpdate))
         await refreshPosts(api.error)
     }
     const removePost = async (id?: string) => {
@@ -65,7 +65,7 @@ export const usePostsStore = defineStore('posts', () => {
     const toggleDraftPost = async (path: string) => {
         const postUpdate = posts.value.find(p => p.path === path)
         postUpdate!.draft = postUpdate!.draft ? false : true
-        let api = await client.api(new UpdatePost(postUpdate))
+        let api = await client.api(new PatchPost(postUpdate))
         await refreshPosts(api.error)
     }
 

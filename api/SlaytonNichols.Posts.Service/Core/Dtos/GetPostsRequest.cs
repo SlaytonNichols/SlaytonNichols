@@ -1,7 +1,6 @@
-namespace SlaytonNichols.Posts.Service.Core.Dtos
+namespace SlaytonNichols.Posts.Service.Core.Dtos;
+
+public class GetPostsRequest
 {
-    public class GetPostsRequest
-    {
-        public string? Path { get; set; }
-    }
+    public string? Path { get; set; }
 }

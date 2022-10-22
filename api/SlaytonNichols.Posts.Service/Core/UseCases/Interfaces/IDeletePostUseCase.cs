@@ -1,11 +1,7 @@
-
-using SlaytonNichols;
 using SlaytonNichols.Posts.Service.Core.Dtos;
 
-namespace SlaytonNichols.Posts.Service.Core.UseCases.DeletePostUseCase
+namespace SlaytonNichols.Posts.Service.Core.UseCases.DeletePostUseCase;
+public interface IDeletePostUseCase
 {
-    public interface IDeletePostUseCase
-    {
-        Task ExecuteAsync(DeletePostRequest request);
-    }
+    Task ExecuteAsync(DeletePostRequest request);
 }

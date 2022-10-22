@@ -1,7 +1,5 @@
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using SlaytonNichols.Common.Infrastructure.MongoDb;
-using System;
 
 namespace SlaytonNichols.Posts.Service.Domain.Documents;
 
