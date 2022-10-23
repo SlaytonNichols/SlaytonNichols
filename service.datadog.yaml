@@ -1,0 +1,7 @@
+schema-version: v2
+dd-service: SlaytonNichols
+team: personal
+repos: 
+  - name: Source
+    provider: github
+    url: https://github.com/SlaytonNichols/SlaytonNichols
