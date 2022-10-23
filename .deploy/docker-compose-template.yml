@@ -19,7 +19,7 @@ services:
       DD_SERVICE: ${APP_NAME}
       DD_VERSION: ${RELEASE_VERSION}
     labels:
-      com.datadoghq.ad.logs: '[{"source": "docker", "service": "${APP_NAME}"}]'
+      com.datadoghq.ad.logs: '[{"source": "csharp", "service": "${APP_NAME}"}]'
       com.datadoghq.tags.env: 'Production'
       com.datadoghq.tags.service: '${APP_NAME}'
       com.datadoghq.tags.version: '${RELEASE_VERSION}'
@@ -30,6 +30,7 @@ services:
       - DD_API_KEY=${DD_API_KEY}
       - DD_SITE=${DD_SITE}
       - DD_LOGS_ENABLED=true
+      - DD_LOGS_INJECTION=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /proc/:/host/proc:ro
