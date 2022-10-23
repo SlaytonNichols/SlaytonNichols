@@ -31,4 +31,4 @@ jobs:
     - name: Build
       run: |
         dotnet build ./api
-        dotnet test **/*Tests.csproj
+        dotnet test ./api/SlaytonNichols.Posts.Service.Tests
