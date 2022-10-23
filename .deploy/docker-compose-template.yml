@@ -20,6 +20,8 @@ services:
       DD_VERSION: ${RELEASE_VERSION}
       DD_AGENT_HOST: datadog-agent
       DD_TRACE_AGENT_PORT: 8126
+      DD_TRACE_ROUTE_TEMPLATE_RESOURCE_NAMES_ENABLED: "true"
+      DD_RUNTIME_METRICS_ENABLED: "true"
     labels:
       com.datadoghq.ad.logs: '[{"source": "csharp", "service": "${APP_NAME}"}]'
       com.datadoghq.tags.env: 'Production'
@@ -28,8 +30,6 @@ services:
   datadog:
     image: gcr.io/datadoghq/agent:7
     pid: host
-    ports:
-      - "8126:8126"
     environment:
       - DD_API_KEY=${DD_API_KEY}
       - DD_SITE=${DD_SITE}
@@ -37,6 +37,8 @@ services:
       - DD_LOGS_INJECTION=true
       - DD_PROCESS_AGENT_ENABLED=true
       - DD_APPSEC_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /proc/:/host/proc:ro
