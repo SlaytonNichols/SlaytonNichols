@@ -19,7 +19,7 @@ public class CreatePostUseCase : ICreatePostUseCase
 
     public async Task ExecuteAsync(CreatePostRequest request)
     {
-        var mapped = await _mapper.MapCreatePostRequest(request);
+        var mapped = _mapper.MapCreatePostRequest(request);
 
         await _posts.InsertOneAsync(mapped);
     }

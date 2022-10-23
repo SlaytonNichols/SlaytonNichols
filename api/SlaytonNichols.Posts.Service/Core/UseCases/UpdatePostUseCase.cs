@@ -16,7 +16,7 @@ public class UpdatePostUseCase : IUpdatePostUseCase
 
     public async Task ExecuteAsync(UpdatePostRequest request)
     {
-        var mapped = await _mapper.MapUpdatePostRequest(request);
+        var mapped = _mapper.MapUpdatePostRequest(request);
         await _posts.ReplaceOneAsync(mapped);
     }
 }

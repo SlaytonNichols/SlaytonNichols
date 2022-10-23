@@ -6,8 +6,8 @@ namespace SlaytonNichols.Posts.Service.Core.Mappers;
 
 public interface IPostMapper
 {
-    Task<IEnumerable<Post>> Map(IEnumerable<Entity> posts);
-    Task<Post> Map(Entity post);
-    Task<Entity> MapCreatePostRequest(CreatePostRequest post);
-    Task<Entity> MapUpdatePostRequest(UpdatePostRequest request);
+    IEnumerable<Post> Map(IEnumerable<Entity> posts);
+    Post Map(Entity post);
+    Entity MapCreatePostRequest(CreatePostRequest post);
+    Entity MapUpdatePostRequest(UpdatePostRequest request);
 }

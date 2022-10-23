@@ -19,7 +19,7 @@ public class GetPostsUseCase : IGetPostsUseCase
         var posts = await _posts.AsQueryableAsync();
         var response = new GetPostsResponse
         {
-            Results = (await _mapper.Map(posts)).ToList()
+            Results = _mapper.Map(posts).ToList()
         };
 
         return response;

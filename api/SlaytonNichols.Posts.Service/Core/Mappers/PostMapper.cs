@@ -7,49 +7,40 @@ namespace SlaytonNichols.Posts.Service.Core.Mappers;
 
 public class PostMapper : IPostMapper
 {
-    public async Task<IEnumerable<Post>> Map(IEnumerable<Entity> posts)
+    public IEnumerable<Post> Map(IEnumerable<Entity> posts)
     {
         var response = new List<Post>();
         foreach (var post in posts)
-            response.Add(await Map(post));
+            response.Add(Map(post));
         return response;
     }
-    public async Task<Post> Map(Entity post)
+    public Post Map(Entity post) => new Post
     {
-        return new Post
-        {
-            Id = post.Id.ToString(),
-            MdText = post.MdText,
-            Title = post.Title,
-            Path = post.Path,
-            Summary = post.Summary,
-            Draft = post.Draft
-        };
-    }
+        Id = post.Id.ToString(),
+        MdText = post.MdText,
+        Title = post.Title,
+        Path = post.Path,
+        Summary = post.Summary,
+        Draft = post.Draft
+    };
 
-    public async Task<Entity> MapCreatePostRequest(CreatePostRequest request)
+    public Entity MapCreatePostRequest(CreatePostRequest request) => new Entity
     {
-        return new Entity
-        {
-            MdText = request.MdText,
-            Title = request.Title,
-            Path = request.Path,
-            Summary = request.Summary,
-            Draft = request.Draft
-        };
-    }
+        MdText = request.MdText,
+        Title = request.Title,
+        Path = request.Path,
+        Summary = request.Summary,
+        Draft = request.Draft
+    };
 
-    public async Task<Entity> MapUpdatePostRequest(UpdatePostRequest request)
+    public Entity MapUpdatePostRequest(UpdatePostRequest request) => new Entity
     {
-        return new Entity
-        {
-            //TODO: This is a hack. Need to figure out how to map the Id to the ObjectId... Github Copilot wrote that for me.
-            Id = new ObjectId(request.Id),
-            MdText = request.MdText,
-            Title = request.Title,
-            Path = request.Path,
-            Summary = request.Summary,
-            Draft = request.Draft
-        };
-    }
+        //TODO: This is a hack. Need to figure out how to map the Id to the ObjectId... Github Copilot wrote that for me.
+        Id = new ObjectId(request.Id),
+        MdText = request.MdText,
+        Title = request.Title,
+        Path = request.Path,
+        Summary = request.Summary,
+        Draft = request.Draft
+    };
 }
