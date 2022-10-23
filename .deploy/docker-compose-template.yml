@@ -15,6 +15,9 @@ services:
       ConnectionStrings__DefaultConnection: ${DEFAULTCONNECTION}
       ConnectionStrings__MONGO: ${MONGO}
       AuthKeyBase64: ${AUTHKEYBASE64}
+      DD_ENV: 'Production'
+      DD_SERVICE: ${APP_NAME}
+      DD_VERSION: ${RELEASE_VERSION}
     labels:
       com.datadoghq.ad.logs: '[{"source": "docker", "service": "${APP_NAME}"}]'
       com.datadoghq.tags.env: 'Production'
