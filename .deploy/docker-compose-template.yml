@@ -17,6 +17,9 @@ services:
       AuthKeyBase64: ${AUTHKEYBASE64}
     labels:
       com.datadoghq.ad.logs: '[{"source": "docker", "service": "${APP_NAME}"}]'
+      com.datadoghq.tags.env: 'Production'
+      com.datadoghq.tags.service: '${APP_NAME}'
+      com.datadoghq.tags.version: '${RELEASE_VERSION}'
   datadog:
     image: gcr.io/datadoghq/agent:7
     pid: host
