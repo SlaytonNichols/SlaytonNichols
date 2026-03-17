@@ -7,11 +7,10 @@ tags:
   - resume
   - experience
 draft: false
+hidden: true
 ---
 
 ### Senior Software Engineer | Data Platform, InformData (formerly SJV Data), Atlanta, GA — Jun 2023 - Present
-
-Primary focus: national criminal database integration and SOR data pipelines.
 
 - Owned ambiguous production issues end-to-end: reproduced failures, formed hypotheses, validated root causes through data analysis, and iterated on solutions
 - Developed mental models for tracing data flow through distributed systems to isolate where transformations diverge from expected behavior

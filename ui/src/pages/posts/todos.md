@@ -8,6 +8,7 @@ tags:
   - ai
   - trading
 draft: false
+pinned: true
 ---
 ### Currently Working On
 

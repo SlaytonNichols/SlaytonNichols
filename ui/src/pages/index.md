@@ -8,7 +8,7 @@ date: 2026-03-17
 
 ### Who am I?
 
-My name is Slayton Nichols. I grew up in a small part of Southern Appalachia — Western North Carolina and the North Georgia Mountains. I'm passionate about music, building software, and the outdoors.
+My name is Slayton Nichols, I grew up in a small part of Southern Appalachia that most people know as Western North Carolina/The North Georgia Mountains. I am passionate about music, development, and the outdoors.
 
 ### What is this Website?
 
