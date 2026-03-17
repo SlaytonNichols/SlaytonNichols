@@ -1,12 +1,6 @@
 /// <reference types="vite/client" />
 /// <reference types="@types/node" />
 
-// TODO: replace with production URL of .NET App
-
-const DEPLOY_API = 'https://$DEPLOY_API' // e.g. 'https://vue-ssg-api.jamstacks.net'
-const USE_DEV_PROXY = false // Change to use CORS-free dev proxy at: http://localhost:3000/api
-const DEV_API = 'http://localhost:5000'
-
 import { defineConfig } from "vite"
 import * as fs from "fs"
 import * as path from "path"
@@ -21,17 +15,8 @@ import AutoImport from "unplugin-auto-import/vite"
 import Markdown from "vite-plugin-vue-markdown"
 import Inspect from "vite-plugin-inspect"
 
-const isProd = process.env.NODE_ENV === 'production'
-
-// @ts-ignore
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-
-  const buildLocal = command == 'build' && mode == 'development'
-  const API_URL = isProd ? DEPLOY_API : (USE_DEV_PROXY || buildLocal ? '' : DEV_API)
-
-  console.log('defineConfig', command, mode, buildLocal, API_URL)
-
   return ({
     resolve: {
       alias: {
@@ -39,9 +24,8 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     build: {
-      outDir: '../api/SlaytonNichols/wwwroot',
+      outDir: './dist',
     },
-    define: { API_URL: `"${API_URL}"` },
     plugins: [
       Vue({
         include: [/\.vue$/, /\.md$/],
@@ -59,7 +43,7 @@ export default defineConfig(({ command, mode }) => {
             const md = fs.readFileSync(filePath, 'utf-8')
             const { attributes: frontmatter } = matter(md)
             const crumbs = route.component.substring('/src/pages/'.length).split('/').slice(0, -1)
-              .map((name: string) => ({ name, href: `/${name}` }))
+              .map((name: string = "") => ({ name, href: `/${name}` }))
             route.meta = Object.assign(route.meta || {}, { crumbs, frontmatter })
           }
           return route
@@ -93,7 +77,6 @@ export default defineConfig(({ command, mode }) => {
           }),
         ],
         dts: true,
-        // dts: 'src/components.d.ts', // auto-generated component type definitions
       }),
 
       // https://github.com/antfu/unplugin-icons
@@ -104,16 +87,11 @@ export default defineConfig(({ command, mode }) => {
       // Enable Markdown Support https://github.com/mdit-vue/vite-plugin-vue-markdown
       Markdown({
         headEnabled: true,
-        markdownItSetup (md) {
-          // https://prismjs.com/
-          // md.use(Prism)
-        },
         wrapperComponent: 'MarkdownPage'
       }),
 
       // https://github.com/antfu/vite-plugin-inspect
       Inspect({
-        // change this to enable inspect for debugging
         enabled: false,
       }),
     ],
@@ -140,5 +118,4 @@ export default defineConfig(({ command, mode }) => {
       ],
     },
   })
-
 })

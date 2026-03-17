@@ -29,20 +29,14 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router"
-import { onMounted, reactive, ref } from "vue"
-import { Post } from "@/dtos"
-import Add from "~icons/bxs/add-to-queue/"
-import { auth } from "@/auth"
-import { usePostsStore } from "@/stores/posts"
-
-const store = usePostsStore()
+import { computed, ref } from "vue"
 
 type FrontMatter = {
   title: string
   summary?: string
   date?: string
+  tags?: string[]
 }
-const isAdmin = auth?.value?.roles.indexOf('Admin') >= 0
 const posts = ref<Post[]>([])
 const isLoading = ref<Boolean>()
 const loading = reactive({
@@ -59,6 +53,42 @@ const loading = reactive({
 const router = useRouter()  
 posts.value = router.getRoutes()
   .filter(r => r.path.startsWith("/posts/") && r.meta?.frontmatter)
+  .map(r => ({ path: r.path, name: r.name, frontmatter: (r.meta as any)?.frontmatter as FrontMatter }))
+  .filter(r => !r.path.includes("employment-history"))
+  .sort((a, b) => (b.frontmatter.date ?? "")?.localeCompare(a.frontmatter.date ?? ""))
+
+const createPost = async () => {
+  router.push({path: '/posts/create'})
+}
+
+onMounted(async () => {  
+  loading.set(true)
+  await store.refreshPosts()  
+  store.allPosts.forEach(result => {
+    posts.value.push({ 
+      id: result.id,
+      path: '/posts/' + result.path, 
+      title: result.title, 
+      draft: result.draft,
+      frontmatter: { 
+        title: result.title, 
+        summary: result.summary
+      } 
+    })
+  });
+
+  if(!isAdmin) {
+    posts.value = posts.value.filter(x => !x.draft)
+  }  
+  loading.set(false)
+})
+
+</script>
+<style scoped>
+.align-center {
+  align-items: center;
+}
+</style> r.meta?.frontmatter)
   .map(r => ({ path: r.path, name: r.name, frontmatter: (r.meta as any)?.frontmatter as FrontMatter }))
   .filter(r => !r.path.includes("employment-history"))
   .sort((a, b) => (b.frontmatter.date ?? "")?.localeCompare(a.frontmatter.date ?? ""))

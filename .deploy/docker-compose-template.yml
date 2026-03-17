@@ -10,34 +10,3 @@ services:
       VIRTUAL_HOST: ${HOST_DOMAIN}
       LETSENCRYPT_HOST: ${HOST_DOMAIN}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
-      DEPLOY_API: ${DEPLOY_API}
-      DEPLOY_CDN: ${DEPLOY_CDN}
-      ConnectionStrings__DefaultConnection: ${DEFAULTCONNECTION}
-      ConnectionStrings__MONGO: ${MONGO}
-      AuthKeyBase64: ${AUTHKEYBASE64}
-      DD_ENV: 'Production'
-      DD_SERVICE: ${APP_NAME}
-      DD_VERSION: ${RELEASE_VERSION}
-      DD_AGENT_HOST: datadog-agent
-      DD_TRACE_AGENT_PORT: 8126
-      DD_TRACE_ROUTE_TEMPLATE_RESOURCE_NAMES_ENABLED: "true"
-      DD_RUNTIME_METRICS_ENABLED: "true"
-    labels:
-      com.datadoghq.ad.logs: '[{"source": "csharp", "service": "${APP_NAME}"}]'
-      com.datadoghq.tags.env: 'Production'
-      com.datadoghq.tags.service: '${APP_NAME}'
-      com.datadoghq.tags.version: '${RELEASE_VERSION}'
-  datadog:
-    image: gcr.io/datadoghq/agent:7
-    pid: host
-    environment:
-      - DD_API_KEY=${DD_API_KEY}
-      - DD_SITE=${DD_SITE}
-      - DD_LOGS_ENABLED=true
-      - DD_LOGS_INJECTION=true
-      - DD_PROCESS_AGENT_ENABLED=true
-      - DD_APPSEC_ENABLED=true
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /proc/:/host/proc:ro
-      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
