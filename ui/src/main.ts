@@ -1,3 +1,5 @@
+import "@/styles/index.css"
+import "@/styles/main.css"
 import { ViteSSG } from "vite-ssg"
 
 // Auto generated routes by https://github.com/hannoeru/vite-plugin-pages 
