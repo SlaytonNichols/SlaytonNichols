@@ -1,127 +1,131 @@
 <template>
   <div class="min-h-screen">
-    <main class="flex">
-      <div class="px-5 flex-grow mt-10">
+    <main class="flex justify-center">
+      <div class="px-5 max-w-4xl w-full mt-10 mb-16">
         <AppBreadcrumb class="my-4 justify-center" name="Blog" />
-        <form-loading
-          class="justify-center"
-          v-if="loading.get()"
-          :loading="loading.get()"
-          :icon="true"
-          text=""
-        />
-        <div v-for="route in posts" class="flex mb-8 justify-center flex-col align-center">
-          <router-link class="text-2xl hover:text-green-600" :to="route.path">{{ route.frontmatter.title }}
-          </router-link>
-          <p v-if="route.frontmatter.summary" class="text-gray-500">
-            {{ route.frontmatter.summary }}
-          </p>
+
+        <div class="flex flex-wrap justify-center gap-2 mb-8">
+          <button
+            class="px-3 py-1 rounded-full text-sm font-medium transition-colors"
+            :class="selectedTag === null ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'"
+            @click="selectedTag = null"
+          >
+            All
+          </button>
+          <button
+            v-for="tag in availableTags"
+            :key="tag"
+            class="px-3 py-1 rounded-full text-sm font-medium transition-colors"
+            :class="selectedTag === tag ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'"
+            @click="toggleTag(tag)"
+          >
+            #{{ tag }}
+          </button>
         </div>
-      </div>
-      <div v-if="isAdmin" class="m-4 justify-end">
-        <button @click="createPost">
-          <Add class="w-8 h-8" />
-        </button>      
+
+        <div
+          v-for="post in filteredPosts"
+          :key="post.path"
+          class="flex mb-10 justify-center flex-col items-center text-center"
+        >
+          <router-link class="text-2xl hover:text-green-600 font-semibold" :to="post.path">
+            {{ post.frontmatter.title }}
+          </router-link>
+
+          <div class="mt-2 flex flex-wrap items-center justify-center gap-2 text-sm">
+            <span v-if="post.frontmatter.date" class="text-gray-400">
+              {{ formatDate(post.frontmatter.date) }}
+            </span>
+            <span
+              v-if="post.frontmatter.draft"
+              class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300"
+            >
+              Draft
+            </span>
+          </div>
+
+          <p v-if="post.frontmatter.summary" class="text-gray-500 mt-2 max-w-2xl">
+            {{ post.frontmatter.summary }}
+          </p>
+
+          <div v-if="post.frontmatter.tags?.length" class="mt-3 flex flex-wrap justify-center gap-2">
+            <button
+              v-for="tag in post.frontmatter.tags"
+              :key="`${post.path}-${tag}`"
+              class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
+              @click="toggleTag(tag)"
+            >
+              #{{ tag }}
+            </button>
+          </div>
+        </div>
+
+        <div v-if="filteredPosts.length === 0" class="text-center text-gray-500 mt-10">
+          No posts found for this tag.
+        </div>
       </div>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router"
 import { computed, ref } from "vue"
+import { useRouter } from "vue-router"
 
 type FrontMatter = {
   title: string
   summary?: string
   date?: string
   tags?: string[]
+  draft?: boolean
 }
-const posts = ref<Post[]>([])
-const isLoading = ref<Boolean>()
-const loading = reactive({
-  // getter
-  get() {
-    return isLoading.value
-  },
-  // setter
-  set(newValue: Boolean) {
-    
-    isLoading.value = newValue
+
+type PostRoute = {
+  path: string
+  frontmatter: FrontMatter
+}
+
+const router = useRouter()
+const selectedTag = ref<string | null>(null)
+
+const allPosts = computed<PostRoute[]>(() => {
+  return router.getRoutes()
+    .filter(route => route.path.startsWith("/posts/") && route.meta?.frontmatter)
+    .map(route => ({
+      path: route.path,
+      frontmatter: (route.meta as any).frontmatter as FrontMatter,
+    }))
+    .sort((a, b) => {
+      const aDate = a.frontmatter.date ?? ""
+      const bDate = b.frontmatter.date ?? ""
+      return bDate.localeCompare(aDate) || a.path.localeCompare(b.path)
+    })
+})
+
+const availableTags = computed(() => {
+  return Array.from(new Set(allPosts.value.flatMap(post => post.frontmatter.tags ?? []))).sort()
+})
+
+const filteredPosts = computed(() => {
+  if (!selectedTag.value) {
+    return allPosts.value
   }
-})
-const router = useRouter()  
-posts.value = router.getRoutes()
-  .filter(r => r.path.startsWith("/posts/") && r.meta?.frontmatter)
-  .map(r => ({ path: r.path, name: r.name, frontmatter: (r.meta as any)?.frontmatter as FrontMatter }))
-  .filter(r => !r.path.includes("employment-history"))
-  .sort((a, b) => (b.frontmatter.date ?? "")?.localeCompare(a.frontmatter.date ?? ""))
 
-const createPost = async () => {
-  router.push({path: '/posts/create'})
+  return allPosts.value.filter(post => (post.frontmatter.tags ?? []).includes(selectedTag.value!))
+})
+
+const toggleTag = (tag: string) => {
+  selectedTag.value = selectedTag.value === tag ? null : tag
 }
 
-onMounted(async () => {  
-  loading.set(true)
-  await store.refreshPosts()  
-  store.allPosts.forEach(result => {
-    posts.value.push({ 
-      id: result.id,
-      path: '/posts/' + result.path, 
-      title: result.title, 
-      draft: result.draft,
-      frontmatter: { 
-        title: result.title, 
-        summary: result.summary
-      } 
-    })
-  });
+const formatDate = (value: string) => {
+  const date = new Date(`${value}T00:00:00`)
+  if (Number.isNaN(date.getTime())) return value
 
-  if(!isAdmin) {
-    posts.value = posts.value.filter(x => !x.draft)
-  }  
-  loading.set(false)
-})
-
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  })
+}
 </script>
-<style scoped>
-.align-center {
-  align-items: center;
-}
-</style> r.meta?.frontmatter)
-  .map(r => ({ path: r.path, name: r.name, frontmatter: (r.meta as any)?.frontmatter as FrontMatter }))
-  .filter(r => !r.path.includes("employment-history"))
-  .sort((a, b) => (b.frontmatter.date ?? "")?.localeCompare(a.frontmatter.date ?? ""))
-
-const createPost = async () => {
-  router.push({path: '/posts/create'})
-}
-
-onMounted(async () => {  
-  loading.set(true)
-  await store.refreshPosts()  
-  store.allPosts.forEach(result => {
-    posts.value.push({ 
-      id: result.id,
-      path: '/posts/' + result.path, 
-      title: result.title, 
-      draft: result.draft,
-      frontmatter: { 
-        title: result.title, 
-        summary: result.summary
-      } 
-    })
-  });
-
-  if(!isAdmin) {
-    posts.value = posts.value.filter(x => !x.draft)
-  }  
-  loading.set(false)
-})
-
-</script>
-<style scoped>
-.align-center {
-  align-items: center;
-}
-</style>

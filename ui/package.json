@@ -3,26 +3,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite --open --host",
-    "dtos": "cd src && x ts",
     "build": "cross-env NODE_ENV=production vite-ssg build",
     "build:local": "vite-ssg build --mode development",
-    "publish": "npm run build && dotnet publish ../api/SlaytonNichols/SlaytonNichols.csproj -c Release",
     "serve": "vite preview",
-    "typecheck": "vue-tsc --noEmit",
-    "migrate": "cd ../api/SlaytonNichols && dotnet run SlaytonNichols.csproj --AppTasks=migrate",
-    "revert:last": "cd ../api/SlaytonNichols && dotnet run --AppTasks=migrate.revert:last",
-    "revert:all": "cd ../api/SlaytonNichols && dotnet run --AppTasks=migrate.revert:all"
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@datadog/browser-rum": "^4.22.0",
-    "@servicestack/client": "^1.2.1",
-    "@tailwindcss/forms": "^0.5.2",
-    "@tailwindcss/typography": "^0.5.4",
     "@vueuse/core": "^9.1.1",
+    "@vueuse/head": "^0.7.9",
     "nprogress": "^0.2.0",
-    "pinia": "^2.0.21",
-    "swrv": "^1.0.0-beta.8",
-    "vue": "^3.2.38"
+    "vue": "^3.2.38",
+    "vue-router": "^4.1.5"
   },
   "devDependencies": {
     "@iconify-json/bxs": "^1.1.4",
@@ -45,7 +36,6 @@
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/compiler-sfc": "^3.2.38",
     "@vue/server-renderer": "^3.2.38",
-    "@vueuse/head": "^0.7.9",
     "autoprefixer": "^10.4.8",
     "cross-env": "^7.0.3",
     "front-matter": "^4.0.2",
@@ -61,8 +51,8 @@
     "vite-plugin-vue-layouts": "^0.7.0",
     "vite-plugin-vue-markdown": "^0.21.1",
     "vite-ssg": "^0.20.2",
-    "vue-markdown-renderer": "^0.2.7",
-    "vue-router": "^4.1.5",
-    "vue-tsc": "^0.40.5"
+    "vue-tsc": "^0.40.5",
+    "@tailwindcss/forms": "^0.5.2",
+    "@tailwindcss/typography": "^0.5.4"
   }
 }

@@ -1,7 +1,12 @@
 ---
 title: Employment History
-summary: Employment History
+summary: Roles, experience, and delivery history
 date: 2022-09-25
+tags:
+  - career
+  - resume
+  - experience
+draft: false
 ---
 
 ### C# Software Engineer, Cirrus Insight, Raleigh, NC Nov 2021 - Present
