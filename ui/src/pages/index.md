@@ -4,8 +4,6 @@ summary:
 date: 2026-03-17
 ---
 
-## Software Engineer
-
 ### Who am I?
 
 My name is Slayton Nichols, I grew up in a small part of Southern Appalachia that most people know as Western North Carolina/The North Georgia Mountains. I am passionate about music, development, and the outdoors.
