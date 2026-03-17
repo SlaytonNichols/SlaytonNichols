@@ -67,7 +67,7 @@ Run the following command to create a .csproj file for your project, if it does 
 ```sh
 dotnet new console -n <project_name>
 ```
-Add the <PackageReference> element to the .csproj file to specify the package metadata and dependencies. For example:
+Add the `PackageReference` element to the `.csproj` file to specify the package metadata and dependencies. For example:
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
