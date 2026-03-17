@@ -4,7 +4,7 @@
 
 ## Who am I?
 
-My name is Slayton Nichols. I grew up in a small part of Southern Appalachia — Western North Carolina and the North Georgia Mountains. I care about music, software, and the outdoors. Read more [here](https://nicholsslayton.com).
+My name is Slayton Nichols, I grew up in a small part of Southern Appalachia that most people know as Western North Carolina/The North Georgia Mountains. I am passionate about music, development, and the outdoors. Read more [here](https://nicholsslayton.com).
 
 ## What is this Repo?
 
