@@ -8,9 +8,11 @@ tags:
   - ml
   - data-engineering
   - python
-draft: true
-pinned: true
+draft: false
+pinned: false
 ---
+
+## ML on Market Microstructure: What I Learned
 
 I've spent the past 8 months building algorithmic crypto trading systems targeting BTC/USDT perpetual futures on Bybit. Two repos, ~33,000 lines of Python, dozens of ML models trained on a billion rows of orderbook data, and multiple live deployments. This is what I learned about the intersection of machine learning and market microstructure.
 
