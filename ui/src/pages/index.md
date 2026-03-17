@@ -1,6 +1,6 @@
 ---
 title: Slayton Nichols
-summary: Software Engineer
+summary: 
 date: 2026-03-17
 ---
 
@@ -9,6 +9,10 @@ date: 2026-03-17
 ### Who am I?
 
 My name is Slayton Nichols. I grew up in a small part of Southern Appalachia — Western North Carolina and the North Georgia Mountains. I'm passionate about music, building software, and the outdoors.
+
+### What is this Website?
+
+This site is a cross between a resume, a blog, and a notepad. I use it to document projects, write up experiments, and share what I'm learning.
 
 ### What I Do
 
@@ -33,7 +37,3 @@ I build and maintain software systems, with a focus on solving ambiguous problem
 - Refactor legacy code incrementally, extracting shared patterns without blocking feature work
 - Balance shipping pressure with sustainable architecture decisions
 - Maintain backwards compatibility during migrations by running old and new paths in parallel for validation
-
-### What is this Website?
-
-This site is a cross between a resume, a blog, and a notepad. I use it to document projects, write up experiments, and share what I'm learning.
