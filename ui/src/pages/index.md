@@ -16,24 +16,26 @@ This site is a cross between a resume, a blog, and a notepad. I use it to docume
 
 ### What I Do
 
-I build and maintain software systems, with a focus on solving ambiguous problems end-to-end. My work spans backend services, data platforms, and internal tools — I care most about shipping reliable software and making complex systems easier to reason about.
+I build and maintain software systems, with a focus on solving ambiguous problems end-to-end. My work spans backend services, data platforms, and custom UIs. I care about solving business problems with technology, shipping reliable software, making complex systems easier to reason about, and using every tool available — especially AI — to multiply what a small team or solo dev can deliver.
 
-**Problem Decomposition & Systematic Debugging**
-- Own ambiguous production issues end-to-end: reproduce failures, form hypotheses, validate root causes through data analysis, and iterate on solutions
-- Build mental models for tracing data flow through distributed systems to isolate where transformations diverge from expected behavior
-- Develop repeatable debugging workflows and document investigation patterns for team knowledge sharing
+_Once you know the fundamentals, most languages and frameworks are just syntax. This section is about the stuff that actually transfers._
 
-**Cross-Functional Collaboration & Requirements Translation**
-- Partner with product and QA to translate vague business requirements into testable technical specifications
-- Lead technical implementation of multi-sprint efforts coordinating across teams, managing scope creep, and communicating blockers early
-- Bridge the gap between business domain experts and engineering by learning domain language and documenting edge cases
+**Problem Decomposition & Debugging**
+- Take something ambiguous or broken and work it down to a clear root cause — not just a fix, but an understanding of *why*
+- Build a mental model of how data and state actually move through a system, so when something goes wrong, I know where to look
+- Write down what I find or add better logs. Half of debugging is making sure nobody has to debug the same thing twice
 
-**Data Quality & Validation-First Development**
-- Apply defensive programming patterns: null handling, boundary conditions, graceful degradation when upstream data is malformed
-- Build validation and testing into development workflow rather than treating it as an afterthought
-- Champion observability by adding structured logging and metrics to surface data quality issues before they reach production
+**Translating Between Business & Systems**
+- Most requirements start vague. I'm good at turning "we need this to work differently" into something concrete enough to build and test
+- I spend time learning the domain — talking to the people closest to the problem — because the best technical solution usually comes from understanding *what they actually need*, not just what they asked for
+- Ship things that matter to the business, not just things that are technically interesting, or technically correct
 
-**Iterative Refinement & Technical Debt Management**
-- Refactor legacy code incrementally, extracting shared patterns without blocking feature work
-- Balance shipping pressure with sustainable architecture decisions
-- Maintain backwards compatibility during migrations by running old and new paths in parallel for validation
+**Building for Reliability**
+- Assume the data will be wrong, the upstream service will lie, and the edge case will happen in production on a Friday
+- Bake in visibility from the start — structured logs, metrics, health checks — so problems surface before users report them
+- Testing and validation aren't cleanup. They're part of the work
+
+**Iterating Without Breaking Things**
+- Improve systems while they're running. Refactor incrementally, extract patterns when they earn it, don't rewrite what you can evolve
+- When changing critical behavior, run the old and new paths side by side until you trust the new one
+- Every architecture decision is a tradeoff between shipping now and living with it later. I try to be honest about which one I'm choosing
