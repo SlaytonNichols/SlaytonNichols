@@ -15,12 +15,7 @@ export const createApp = ViteSSG(
     App,
     { routes },
     (ctx) => {
-        // install all modules under `modules/` (except datadog-rum which lazy-loads separately)
-        Object.values(import.meta.globEager('./modules/!(datadog-rum).ts')).map(i => (i as any).install?.(ctx))
-
-        // lazy-load DD RUM so it doesn't block page render
-        if (!import.meta.env.SSR) {
-            import('./modules/datadog-rum').then(m => m.install?.(ctx))
-        }
+        // install all modules under `modules/`
+        Object.values(import.meta.globEager('./modules/*.ts')).map(i => (i as any).install?.(ctx))
     },
 )
