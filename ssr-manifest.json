@@ -1,5 +1,209 @@
 {
   "vite/modulepreload-polyfill": [],
+  "node_modules/@datadog/browser-core/esm/tools/display.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/catchUserErrors.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/numberUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/objectUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/globalObject.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/getZoneJsOriginalValue.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/monitor.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/timer.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/queueMicrotask.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/observable.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/timeUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/functionUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/stringUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/browserDetection.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/urlPolyfill.js": [],
+  "node_modules/@datadog/browser-core/esm/browser/cookie.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/session/storeStrategies/sessionStoreStrategy.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/polyfills.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/session/sessionConstants.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/session/sessionStateValidation.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/session/sessionState.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/session/oldCookiesMigration.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/session/storeStrategies/sessionInCookie.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/session/storeStrategies/sessionInLocalStorage.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/session/sessionStoreOperations.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/session/storeStrategies/sessionInMemory.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/session/sessionStore.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/trackingConsent.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/typeUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/matchOption.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/mockable.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/extension/extensionUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/allowedTrackingOrigins.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/intakeSites.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/configuration/endpointBuilder.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/configuration/transportConfiguration.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/configuration/configuration.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/experimentalFeatures.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/stackTrace/computeStackTrace.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/stackTrace/handlingStack.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/instrumentMethod.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/byteUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/serialisation/jsonStringify.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/serialisation/sanitize.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/error/error.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/error/error.types.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/error/trackRuntimeError.js": [],
+  "node_modules/@datadog/browser-core/esm/boot/init.js": [],
+  "node_modules/@datadog/browser-core/esm/boot/displayAlreadyInitializedError.js": [],
+  "node_modules/@datadog/browser-core/esm/browser/addEventListener.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/report/reportObservable.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/tags.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/sendToExtension.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/mergeInto.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/connectivity/connectivity.js": [],
+  "node_modules/@datadog/browser-core/esm/browser/fetch.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/responseUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/transport/sendWithRetryStrategy.js": [],
+  "node_modules/@datadog/browser-core/esm/transport/httpRequest.js": [],
+  "node_modules/@datadog/browser-core/esm/transport/eventBridge.js": [],
+  "node_modules/@datadog/browser-core/esm/browser/pageMayExitObservable.js": [],
+  "node_modules/@datadog/browser-core/esm/transport/batch.js": [],
+  "node_modules/@datadog/browser-core/esm/transport/flushController.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/encoder.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/abstractHooks.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/telemetry/rawTelemetryEvent.types.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/telemetry/telemetry.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/arrayUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/valueHistory.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/synthetics/syntheticsWorkerValues.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/session/sessionManager.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/abstractLifeCycle.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/eventRateLimiter/createEventRateLimiter.js": [],
+  "node_modules/@datadog/browser-core/esm/browser/runOnReadyState.js": [],
+  "node_modules/@datadog/browser-core/esm/browser/xhrObservable.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/readBytesFromStream.js": [],
+  "node_modules/@datadog/browser-core/esm/browser/fetchObservable.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/requestIdleCallback.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/taskQueue.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/console/consoleObservable.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/boundedBuffer.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/context/contextUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/context/contextManager.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/context/defineContextMethod.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/context/storeContextManager.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/contexts/accountContext.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/contexts/globalContext.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/contexts/userContext.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/context/contextConstants.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/resourceUtils.js": [],
+  "node_modules/@datadog/browser-core/esm/domain/bufferedData.js": [],
+  "node_modules/@datadog/browser-core/esm/tools/utils/timezone.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/rawRumEvent.types.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/vital/vitalCollection.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/plugins.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/hooks.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/configuration/configuration.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/configuration/jsonPathParser.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/configuration/remoteConfiguration.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/boot/preStartRum.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/browser/domMutationObservable.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/browser/windowOpenObservable.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/internalContext.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/lifeCycle.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/viewHistory.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/resource/resourceUtils.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/sampler/sampler.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/tracing/identifier.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/tracing/tracer.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/resource/graphql.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/requestCollection.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/discardNegativeDuration.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/browser/htmlDomUtils.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/browser/firstInputPolyfill.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/browser/performanceObservable.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/waitPageActivityEnd.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/action/actionNameConstants.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/getSelectorFromElement.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/privacyConstants.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/privacy.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/trackEventCounts.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/eventTracker.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/action/clickChain.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/action/getActionNameFromElement.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/action/listenActionEvents.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/action/computeFrustration.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/action/interactionSelectorCache.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/action/isActionChildEvent.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/action/trackClickActions.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/action/trackManualActions.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/action/actionCollection.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/error/trackConsoleError.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/error/trackReportError.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/error/errorCollection.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/resource/matchRequestResourceEntry.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/tracing/getDocumentTraceId.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/browser/performanceUtils.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/resource/retrieveInitialDocumentResourceTiming.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/resource/requestRegistry.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/resource/trackManualResources.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/resource/resourceCollection.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/trackViewEventCounts.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackFirstContentfulPaint.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackFirstInput.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackNavigationTimings.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackLargestContentfulPaint.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackFirstHidden.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackInitialViewMetrics.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/getClsAttributionImpactedArea.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackCumulativeLayoutShift.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/interactionCountPolyfill.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackInteractionToNextPaint.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackLoadingTime.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/browser/scroll.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/browser/viewportObservable.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackScrollMetrics.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackCommonViewMetrics.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/bfCacheSupport.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/trackBfcacheMetrics.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/trackViews.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewCollection.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/rumSessionManager.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/transport/startRumBatch.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/transport/startRumEventBridge.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/urlContexts.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/browser/locationChangeObservable.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/featureFlagContext.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/startCustomerDataTelemetry.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/pageStateHistory.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/displayContext.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/browser/cookieObservable.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/ciVisibilityContext.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/longTask/longTaskCollection.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/syntheticsContext.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/limitModification.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/assembly.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/sessionContext.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/connectivityContext.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/defaultContext.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/trackingConsentContext.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/event/eventCollection.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/view/viewMetrics/startInitialViewMetricsTelemetry.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/contexts/sourceCodeContext.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/boot/startRum.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/boot/rumPublicApi.js": [],
+  "node_modules/@datadog/browser-rum-core/esm/domain/getSessionReplayUrl.js": [],
+  "node_modules/@datadog/browser-rum/esm/domain/replayStats.js": [],
+  "node_modules/@datadog/browser-rum/esm/domain/deflate/deflateEncoder.js": [],
+  "node_modules/@datadog/browser-rum/esm/domain/scriptLoadingError.js": [],
+  "node_modules/@datadog/browser-rum/esm/domain/deflate/deflateWorker.js": [],
+  "node_modules/@datadog/browser-rum/esm/boot/isBrowserSupported.js": [],
+  "node_modules/@datadog/browser-rum/esm/domain/getSessionReplayLink.js": [],
+  "node_modules/@datadog/browser-rum/esm/domain/startRecorderInitTelemetry.js": [],
+  "node_modules/@datadog/browser-rum/esm/boot/postStartStrategy.js": [],
+  "node_modules/@datadog/browser-rum/esm/boot/preStartStrategy.js": [],
+  "node_modules/@datadog/browser-rum/esm/boot/recorderApi.js": [],
+  "\u0000vite/preload-helper": [],
+  "node_modules/@datadog/browser-rum/esm/boot/lazyLoadRecorder.js": [],
+  "node_modules/@datadog/browser-rum/esm/domain/profiling/profilingSupported.js": [],
+  "node_modules/@datadog/browser-rum/esm/domain/profiling/profilingContext.js": [],
+  "node_modules/@datadog/browser-rum/esm/boot/lazyLoadProfiler.js": [],
+  "node_modules/@datadog/browser-rum/esm/boot/profilerApi.js": [],
+  "node_modules/@datadog/browser-rum/esm/entries/main.js": [],
+  "src/modules/datadog-rum.ts": [],
   "\u0000commonjsHelpers.js": [],
   "\u0000/home/runner/work/SlaytonNichols/SlaytonNichols/ui/node_modules/nprogress/nprogress.js?commonjs-module": [],
   "node_modules/nprogress/nprogress.js": [],
@@ -15,7 +219,6 @@
   "node_modules/vite-ssg/dist/chunks/state.mjs": [],
   "node_modules/vite-ssg/dist/chunks/ClientOnly.mjs": [],
   "node_modules/vite-ssg/dist/index.mjs": [],
-  "\u0000vite/preload-helper": [],
   "\u0000plugin-vue:export-helper": [],
   "src/components/NavItem.vue": [],
   "src/components/NavLink.vue?vue&type=script&setup=true&lang.ts": [],
@@ -36,48 +239,207 @@
   "src/main.ts": [],
   "index.html": [],
   "src/layouts/empty.vue": [
-    "/assets/empty.669ce0a2.js"
+    "/assets/empty.2dda2ea1.js"
   ],
   "~icons/mdi/arrow-left-thin": [
-    "/assets/_...all_.672196b4.js"
+    "/assets/_...all_.7f912cd8.js"
   ],
   "../../../../../../@vite-plugin-pages/route-block": [
-    "/assets/_...all_.672196b4.js"
+    "/assets/_...all_.7f912cd8.js"
   ],
   "src/pages/[...all].vue": [
-    "/assets/_...all_.672196b4.js"
+    "/assets/_...all_.7f912cd8.js"
   ],
   "~icons/mdi/chevron-right": [
-    "/assets/Index.5f02b756.js"
+    "/assets/Index.a4ca0f7c.js"
   ],
   "~icons/mdi/home": [
-    "/assets/Index.5f02b756.js"
+    "/assets/Index.a4ca0f7c.js"
   ],
   "src/components/AppBreadcrumb.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/Index.5f02b756.js"
+    "/assets/Index.a4ca0f7c.js"
   ],
   "src/pages/posts/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/Index.5f02b756.js"
+    "/assets/Index.a4ca0f7c.js"
   ],
   "src/pages/posts/Index.vue": [
-    "/assets/Index.5f02b756.js"
+    "/assets/Index.a4ca0f7c.js"
   ],
   "src/pages/posts/databricks-setup.md": [
-    "/assets/databricks-setup.efdca7c2.js"
+    "/assets/databricks-setup.5b42d94f.js"
   ],
   "src/pages/posts/employment-history.md": [
-    "/assets/employment-history.769b89b9.js"
+    "/assets/employment-history.67f77d8e.js"
   ],
   "src/pages/posts/heart-rate-dlt.md": [
-    "/assets/heart-rate-dlt.ad43b5b3.js"
+    "/assets/heart-rate-dlt.da5c2bdf.js"
   ],
   "src/pages/posts/oura-ring-hr-ingest.md": [
-    "/assets/oura-ring-hr-ingest.b77cd50d.js"
+    "/assets/oura-ring-hr-ingest.0987fafc.js"
   ],
   "src/pages/posts/todos.md": [
-    "/assets/todos.5bfa118d.js"
+    "/assets/todos.a0b978a4.js"
   ],
   "src/pages/posts/trading-bot-journey.md": [
-    "/assets/trading-bot-journey.3ff1f9b6.js"
+    "/assets/trading-bot-journey.da398819.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/types/sessionReplayConstants.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/itemIds.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/experimentalFeatures.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/insertionCursor.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializationUtils.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializeStyleSheets.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializeAttribute.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializeAttributes.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializeNode.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializationStats.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/changeEncoder.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializationTransaction.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializeFullSnapshot.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializeNodeAsChange.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializeFullSnapshotAsChange.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/assembly.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializeMutations.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/serialization/serializeMutationsAsChange.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/viewports.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/startFullSnapshots.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/recordingScope.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/elementsScrollPositions.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/eventsUtils.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/trackers/trackMove.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/trackers/trackMouseInteraction.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/trackers/trackScroll.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/trackers/trackViewportResize.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/trackers/trackMediaInteraction.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/trackers/trackStyleSheet.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/trackers/trackFocus.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/trackers/trackFrustration.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/trackers/trackViewEnd.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/trackers/trackInput.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/mutationBatch.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/trackers/trackMutation.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/shadowRootsController.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/record/record.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/segmentCollection/buildReplayPayload.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/segmentCollection/segment.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/segmentCollection/segmentCollection.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/segmentCollection/startSegmentTelemetry.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/startRecordBridge.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/boot/startRecording.js": [
+    "/assets/startRecording.c0f59979.js"
+  ],
+  "node_modules/@datadog/browser-rum-core/esm/transport/formDataTransport.js": [
+    "/assets/profiler.9bf79325.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/profiling/utils/getNumberOfSamples.js": [
+    "/assets/profiler.9bf79325.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/profiling/utils/getDefaultViewName.js": [
+    "/assets/profiler.9bf79325.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/profiling/utils/getCustomOrDefaultViewName.js": [
+    "/assets/profiler.9bf79325.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/profiling/transport/buildProfileEventAttributes.js": [
+    "/assets/profiler.9bf79325.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/profiling/transport/assembly.js": [
+    "/assets/profiler.9bf79325.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/profiling/longTaskHistory.js": [
+    "/assets/profiler.9bf79325.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/profiling/actionHistory.js": [
+    "/assets/profiler.9bf79325.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/profiling/vitalHistory.js": [
+    "/assets/profiler.9bf79325.js"
+  ],
+  "node_modules/@datadog/browser-rum/esm/domain/profiling/profiler.js": [
+    "/assets/profiler.9bf79325.js"
   ]
 }
