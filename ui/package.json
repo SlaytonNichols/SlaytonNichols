@@ -9,6 +9,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@datadog/browser-rum": "^6.31.0",
     "@vueuse/core": "^9.1.1",
     "@vueuse/head": "^0.7.9",
     "nprogress": "^0.2.0",
@@ -31,6 +32,8 @@
     "@iconify-json/octicon": "^1.1.17",
     "@iconify-json/simple-icons": "^1.1.24",
     "@iconify-json/simple-line-icons": "^1.1.2",
+    "@tailwindcss/forms": "^0.5.2",
+    "@tailwindcss/typography": "^0.5.4",
     "@types/node": "^18.7.14",
     "@types/nprogress": "^0.2.0",
     "@vitejs/plugin-vue": "^3.0.3",
@@ -51,8 +54,6 @@
     "vite-plugin-vue-layouts": "^0.7.0",
     "vite-plugin-vue-markdown": "^0.21.1",
     "vite-ssg": "^0.20.2",
-    "vue-tsc": "^0.40.5",
-    "@tailwindcss/forms": "^0.5.2",
-    "@tailwindcss/typography": "^0.5.4"
+    "vue-tsc": "^0.40.5"
   }
 }
