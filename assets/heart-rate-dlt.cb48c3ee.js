@@ -1,4 +1,4 @@
-import{m as n,o as s,i,w as l,p as o,d as e}from"./app.1bca4644.js";const h=e("div",{class:"markdown-body"},[e("h2",null,"Heart Rate Delta Live Table Pipeline"),e("pre",null,[e("code",null,`-- Databricks notebook source
+import{m as n,o as s,i,w as l,p as o,d as e}from"./app.79cf6c12.js";const h=e("div",{class:"markdown-body"},[e("h2",null,"Heart Rate Delta Live Table Pipeline"),e("pre",null,[e("code",null,`-- Databricks notebook source
 -- DBTITLE 1,Create Bronze Heart Rates Table
 CREATE OR REFRESH STREAMING LIVE TABLE heartrates_raw
 LOCATION "/mnt/bronze/heartrates_raw"
