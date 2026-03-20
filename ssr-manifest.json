@@ -37,48 +37,54 @@
   "src/main.ts": [],
   "index.html": [],
   "src/layouts/empty.vue": [
-    "/assets/empty.7f8a9c52.js"
+    "/assets/empty.5cdacb40.js"
   ],
   "~icons/mdi/arrow-left-thin": [
-    "/assets/_...all_.321179bc.js"
+    "/assets/_...all_.0b51e0aa.js"
   ],
   "../../../../../../@vite-plugin-pages/route-block": [
-    "/assets/_...all_.321179bc.js"
+    "/assets/_...all_.0b51e0aa.js"
   ],
   "src/pages/[...all].vue": [
-    "/assets/_...all_.321179bc.js"
+    "/assets/_...all_.0b51e0aa.js"
   ],
   "~icons/mdi/chevron-right": [
-    "/assets/Index.2ada235a.js"
+    "/assets/Index.204b7afe.js"
   ],
   "~icons/mdi/home": [
-    "/assets/Index.2ada235a.js"
+    "/assets/Index.204b7afe.js"
   ],
   "src/components/AppBreadcrumb.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/Index.2ada235a.js"
+    "/assets/Index.204b7afe.js"
   ],
   "src/pages/posts/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/Index.2ada235a.js"
+    "/assets/Index.204b7afe.js"
   ],
   "src/pages/posts/Index.vue": [
-    "/assets/Index.2ada235a.js"
+    "/assets/Index.204b7afe.js"
   ],
   "src/pages/posts/databricks-setup.md": [
-    "/assets/databricks-setup.6457bc78.js"
+    "/assets/databricks-setup.7ed32948.js"
+  ],
+  "src/pages/posts/debugging-training-data.md": [
+    "/assets/debugging-training-data.4c5964db.js"
   ],
   "src/pages/posts/employment-history.md": [
-    "/assets/employment-history.ecc35997.js"
+    "/assets/employment-history.1e8b2afb.js"
   ],
   "src/pages/posts/heart-rate-dlt.md": [
-    "/assets/heart-rate-dlt.1863d177.js"
+    "/assets/heart-rate-dlt.611f70fd.js"
   ],
   "src/pages/posts/oura-ring-hr-ingest.md": [
-    "/assets/oura-ring-hr-ingest.71aebca9.js"
+    "/assets/oura-ring-hr-ingest.1d91b145.js"
   ],
   "src/pages/posts/todos.md": [
-    "/assets/todos.9e4f241c.js"
+    "/assets/todos.ca293987.js"
   ],
   "src/pages/posts/trading-bot-journey.md": [
-    "/assets/trading-bot-journey.6dd04a67.js"
+    "/assets/trading-bot-journey.1e09a589.js"
+  ],
+  "src/pages/posts/websocket-recorder.md": [
+    "/assets/websocket-recorder.6cf5e116.js"
   ]
 }
