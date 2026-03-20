@@ -6,7 +6,8 @@ tags:
   - roadmap
   - projects
 draft: false
-pinned: true
+pinned: false
+hidden: true
 ---
 ### Currently Working On
 

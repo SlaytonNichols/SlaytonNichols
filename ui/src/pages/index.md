@@ -1,6 +1,6 @@
 ---
-title: Slayton Nichols
-summary: 
+title: Slayton Nichols — Software Engineer
+summary: Software engineer building backend services, data platforms, and ML pipelines.
 date: 2026-03-17
 ---
 
@@ -14,7 +14,7 @@ This site is a cross between a resume, a blog, and a notepad. I use it to docume
 
 ### What I Do
 
-I build and maintain software systems, with a focus on solving ambiguous problems end-to-end. My work spans backend services, data platforms, and custom UIs. I care about solving business problems with technology, shipping reliable software, making complex systems easier to reason about, and using every tool available — especially AI — to multiply what a small team or solo dev can deliver.
+I build and maintain software systems, with a focus on solving ambiguous problems end-to-end. My work spans backend services, data platforms, ML pipelines, and custom UIs - whatever the problem calls for. I care about solving business problems with technology, shipping reliable software, and making complex systems easier to reason about, and using every tool available — especially AI — to multiply what a small team or solo dev can deliver.
 
 _Once you know the fundamentals, most languages and frameworks are just syntax. This section is about the stuff that actually transfers._
 
@@ -24,9 +24,9 @@ _Once you know the fundamentals, most languages and frameworks are just syntax. 
 - Write down what I find or add better logs. Half of debugging is making sure nobody has to debug the same thing twice
 
 **Translating Between Business & Systems**
-- Most requirements start vague. I'm good at turning "we need this to work differently" into something concrete enough to build and test
-- I spend time learning the domain — talking to the people closest to the problem — because the best technical solution usually comes from understanding *what they actually need*, not just what they asked for
-- Ship things that matter to the business, not just things that are technically interesting, or technically correct
+- Most requirements start vague. I turn "we need this to work differently" into something concrete enough to build, test, and ship
+- Start from first principles — learn the domain, talk to the people closest to the problem — because the right technical solution usually comes from understanding what they actually need, not just what they asked for
+- Optimize for business impact, not technical novelty
 
 **Building for Reliability**
 - Assume the data will be wrong, the upstream service will lie, and the edge case will happen in production on a Friday

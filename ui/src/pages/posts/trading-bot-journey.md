@@ -9,7 +9,7 @@ tags:
   - data-engineering
   - python
 draft: false
-pinned: false
+pinned: true
 ---
 
 ## ML on Market Microstructure: What I Learned
