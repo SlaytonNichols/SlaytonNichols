@@ -4,7 +4,7 @@
       <div class="flex-shrink flex-grow-0">
         <router-link to="/">
           <div class="p-2 ml-2 cursor-pointer">
-            <img class="w-13 h-13" src="https://user-images.githubusercontent.com/45402324/88486759-ff3f6e80-cf4d-11ea-8869-cb0de304b698.png" alt="SlaytonNichols logo" />
+            <img class="w-14 h-14" width="56" height="56" src="https://user-images.githubusercontent.com/45402324/88486759-ff3f6e80-cf4d-11ea-8869-cb0de304b698.png" alt="SlaytonNichols logo" />
           </div>
         </router-link>
       </div>

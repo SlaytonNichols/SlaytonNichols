@@ -1,6 +1,6 @@
 ---
 title: "Heart Rate Delta Live Tables Pipeline"
-summary: "A brief example of a multi-hop ETL architecture using Databricks SQL."
+summary: "A multi-hop ETL pipeline built with Databricks Delta Live Tables — bronze/silver/gold layers for Oura Ring heart rate data."
 date: 2022-10-20
 tags:
   - databricks
@@ -9,11 +9,17 @@ tags:
   - data-engineering
 draft: false
 ---
-## Heart Rate Delta Live Table Pipeline
+## Heart Rate Delta Live Tables Pipeline
 
-```
--- Databricks notebook source
--- DBTITLE 1,Create Bronze Heart Rates Table
+This is a small pipeline I built to learn Delta Live Tables (DLT). It ingests heart rate data from an Oura Ring, lands it as raw JSON, and progressively refines it through three layers. The [Databricks workspace setup](/posts/databricks-setup) covers how the underlying infrastructure was provisioned.
+
+The pattern is standard medallion architecture: raw ingestion → cleaned/typed → business-ready. DLT handles the orchestration, lineage tracking, and incremental processing — you just declare the tables and transformations.
+
+---
+
+### Bronze — Raw Ingestion
+
+```sql
 CREATE OR REFRESH STREAMING LIVE TABLE heartrates_raw
 LOCATION "/mnt/bronze/heartrates_raw"
 AS SELECT *
@@ -22,10 +28,15 @@ AS SELECT *
     "json",
     map("schema", "bpm INT, source STRING, timestamp STRING")
   );
+```
 
--- COMMAND ----------
+Auto Loader (`cloud_files`) picks up new JSON files as they land in the mount. The streaming table processes incrementally — only new files on each run. No parsing, no transforms, just land the data.
 
--- DBTITLE 1,Create Silver Heart Rates Table
+---
+
+### Silver — Cleaned & Typed
+
+```sql
 CREATE OR REFRESH LIVE TABLE heartrates_cleaned
 LOCATION "/mnt/silver/heartrates_cleaned"
 AS
@@ -37,10 +48,15 @@ SELECT
 FROM LIVE.heartrates_raw h
 JOIN silver.date d on to_date(h.timestamp) = d.date
 JOIN bronze.time t on date_format(h.timestamp, "HH:mm:ss") = t.FullTime
+```
 
--- COMMAND ----------
+Split the raw timestamp into date and time components, and join against shared dimension tables. This is where malformed or orphan records get filtered out — anything that doesn't join drops silently.
 
--- DBTITLE 1,Create Gold Heart Rates Table
+---
+
+### Gold — Business-Ready
+
+```sql
 CREATE OR REFRESH LIVE TABLE heartrates_curated
 LOCATION "/mnt/gold/heartrates_curated"
 AS
@@ -52,17 +68,12 @@ SELECT
 FROM LIVE.heartrates_cleaned h
 JOIN silver.date d on h.heartrateDate = d.date
 JOIN bronze.time t on h.heartrateTime = t.FullTime
-
--- COMMAND ----------
-
-
 ```
 
-### Bronze
-The first table, heartrates_raw, is created using the CREATE OR REFRESH STREAMING LIVE TABLE statement. This table is a streaming table, which means that it is continuously updated with new data as it becomes available. The table is stored in the bronze layer of Databricks and is given the location "/mnt/bronze/heartrates_raw". The data for the table is sourced from cloud_files, which is specified in the FROM clause. The data is in JSON format, and the schema for the table is specified as "bpm INT, source STRING, timestamp STRING".
+The curated table enriches with business-friendly fields (`isWeekDay`, `AmPmString`) and drops everything a downstream consumer doesn't need. This is the table you'd point a dashboard or notebook at.
 
-### Silver
-The second table, heartrates_cleaned, is created using the CREATE OR REFRESH LIVE TABLE statement. The table is stored in the silver layer of Databricks and is given the location "/mnt/silver/heartrates_cleaned". The data for the table is sourced from the heartrates_raw table, which is specified in the FROM clause. The data is transformed using the SELECT statement, which adds two new columns to the table: heartrateDate and heartrateTime. These columns are derived from the timestamp column in the heartrates_raw table using the to_date and date_format functions, respectively. The heartrates_cleaned table also includes data from two other tables: silver.date and bronze.time. These tables are joined to the heartrates_cleaned table using the JOIN clause and the to_date and date_format functions, respectively.
+---
 
-### Gold
-The third table, heartrates_curated, is created using the CREATE OR REFRESH LIVE TABLE statement, just like the heartrates_cleaned table. This table is stored in the gold layer of Databricks with the location "/mnt/gold/heartrates_curated". The data for the table is sourced from the heartrates_cleaned table, which is specified in the FROM clause. The data is transformed using the SELECT statement, which adds two new columns to the table: date and AmPmString. These columns are derived from the heartrateDate and heartrateTime columns in the heartrates_cleaned table, respectively. The heartrates_curated table also includes data from the silver.date and bronze.time tables, which are joined to the heartrates_curated table using the JOIN clause.
+### What I Took Away
+
+DLT is convenient for small pipelines like this — you get dependency resolution, incremental processing, and lineage for free. The tradeoff is less control over execution details compared to writing Spark jobs directly. For anything more complex (like the [trading system pipeline](/posts/trading-bot-journey)), I ended up needing that control.
