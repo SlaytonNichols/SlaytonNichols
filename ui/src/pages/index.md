@@ -37,3 +37,7 @@ _Once you know the fundamentals, most languages and frameworks are just syntax. 
 - Improve systems while they're running. Refactor incrementally, extract patterns when they earn it, don't rewrite what you can evolve
 - When changing critical behavior, run the old and new paths side by side until you trust the new one
 - Every architecture decision is a tradeoff between shipping now and living with it later. I try to be honest about which one I'm choosing
+
+---
+
+_Open to interesting problems. [LinkedIn](https://linkedin.com/in/slaytonnichols)._
