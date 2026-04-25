@@ -10,7 +10,7 @@ draft: false
 hidden: true
 ---
 
-### Senior Software Engineer | InformData (formerly SJV Data), Atlanta, GA — Jun 2023 - Present
+### Senior Software Engineer | InformData (formerly SJV Data), Atlanta, GA — Jun 2023 - Apr 2026
 
 - Owned ambiguous production issues end-to-end: reproduced failures, formed hypotheses, validated root causes through data analysis, and iterated on solutions
 - Developed mental models for tracing data flow through distributed systems to isolate where transformations diverge from expected behavior
@@ -39,15 +39,17 @@ hidden: true
 - Implemented new logic in the main RESTful API, an internal content management system, and public-facing applications.
 - Maintained department and industry development standards through well-communicated and documented expectations.
 
-### Web Developer, Coded Alchemy, Seattle, WA — Feb 2018 - Feb 2019
+### Junior Web Developer, Coded Alchemy, Seattle, WA — Feb 2018 - Feb 2019
 
 - Developed custom public-facing websites in .NET utilizing the Umbraco Content Management System to give clients complete control over their content
 - Worked closely with the development team on best-in-class architectures.
 - Architected scalable systems utilizing best practices and design patterns.
 - Developed front-end using HTML, CSS, JavaScript, jQuery, and Bootstrap.
 
-### Software Developer, TQS Enterprises Inc., Hayesville, NC — Aug 2016 - Nov 2018
+### Junior Software Developer, TQS Enterprises Inc., Hayesville, NC — Aug 2016 - Nov 2018
 
-- Led requirements-gathering sessions with business owners in an extremely fast-paced environment
-- Developed a small-scale inventory management system for forecasting purchases from various distributors using, C#, ASP.NET and the MVC design pattern.
+- Led requirements gathering sessions with business owner’s in an extremely fast paced
+environment on an SMB scale.
+- Developed a small scale inventory management system for forecasting purchases from various
+distributors.
 - Created a shipping logistics application for use between TQS and Amazon's FBA program.
