@@ -1,6 +1,6 @@
 ---
-title: "Trading Bot Journey, Part 2: Killing Ideas That Don't Work"
-summary: "What happened after fixing the data pipeline. Three diagnostic experiments that killed the entire L2 direction-prediction strategy class. A strategic pivot to stat-arb. And the HMS-30 spread-momentum strategy that cleared the cost barrier."
+title: "Trading Bot Journey, Part 2: Disproving What Doesn't Work"
+summary: "What happened after fixing the data pipeline. Three diagnostic experiments that disproved the L2 direction-prediction strategy class. A strategic pivot to stat-arb. And the HMS-30 spread-momentum strategy that cleared the cost barrier."
 date: 2026-04-25
 tags:
   - trading
@@ -11,7 +11,7 @@ draft: false
 pinned: true
 ---
 
-## Trading Bot Journey, Part 2: Killing Ideas That Don't Work
+## Trading Bot Journey, Part 2: Disproving What Doesn't Work
 
 In [Part 1](/posts/trading-bot-journey), the story ended with a decision: rebuild the data pipeline correctly, retrain the V3.7 architecture on clean data, and then decide whether the L2 directional approach was salvageable.
 
@@ -189,13 +189,13 @@ This work was **not a failure**. It was a phenomenal playground for building a c
 
 1. **How to build an end-to-end ML pipeline.** Data ingestion → feature engineering → model training → backtesting → live-parity testing → deployment orchestration. Every layer uncovered new requirements. The cleanup discovered three data bugs that would have shipped to production. The parity tests revealed edge cases in execution. This pipeline is now the template for the next idea.
 
-2. **Feasibility math kills bad ideas fast.** Before training anything, I should compute: edge per trade − fees − adverse selection. If that's negative, no amount of learning-rate tuning changes it. The L2 work had a real signal (55% directional accuracy), but the problem's intrinsic edge was small and costs were tight relative to that edge: about 4 bps maker-maker in the cleanest path, higher whenever execution mixed in taker flow. So this wasn't "always impossible" on paper; it was usually too tight to be robust after slippage, adverse selection, and throughput constraints. This gate should front-load every project.
+2. **Feasibility math rules out weak ideas fast.** Before training anything, I should compute: edge per trade − fees − adverse selection. If that's negative, no amount of learning-rate tuning changes it. The L2 work had a real signal (55% directional accuracy), but the problem's intrinsic edge was small and costs were tight relative to that edge: about 4 bps maker-maker in the cleanest path, higher whenever execution mixed in taker flow. So this wasn't "always impossible" on paper; it was usually too tight to be robust after slippage, adverse selection, and throughput constraints. This gate should front-load every project.
 
 3. **Throughput is as constraining as edge.** Leg A showed the oracle could clear fees at gate=0.65 (+2.94 to +6.44 bps per trade), but the number of qualifying setups collapsed from 8.7/day to 1.3/day. A profitable signal that fires once a week doesn't move capital. This taught me to think about expected trades/day, not just edge conditional on entry.
 
 4. **Walk-forward validation is non-negotiable.** C6 hit +2.32 bps, looked great, and then failed across independent folds (median +0.93 bps). Single-period wins are false leads. This forced me to build proper train/val/test splits and stay honest about out-of-sample results.
 
-5. **Systematic rejection is the real skill.** Leg A, B, and C each took a day or two but killed entire strategy classes. Instead of 20 more model tweaks, I ran three orthogonal tests, they all returned the same conclusion, and I pivoted. This is better than 3 months of local optimization.
+5. **Systematic rejection is the real skill.** Leg A, B, and C each took a day or two but ruled out entire strategy classes. Instead of 20 more model tweaks, I ran three orthogonal tests, they all returned the same conclusion, and I pivoted. This is better than 3 months of local optimization.
 
 6. **Market microstructure is learnable.** I went in with textbook knowledge of bid/ask spreads and order flow. I exited understanding why maker-entry adverse selection can wipe out half-spread savings, why LOB features decay in predictiveness past 5s, why funding rates compress faster than spot perp basis on perps. That intuition now applies to the next venue and asset class.
 
