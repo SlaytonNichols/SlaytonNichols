@@ -14,26 +14,26 @@ This site is a cross between a resume, a blog, and a notepad. I use it to docume
 
 ### What I Do
 
-I solve ambiguous problems end-to-end. Most of my work starts the same way: something is broken, unclear, or doesn't exist yet, and I figure out what needs to be built, then build it. That usually means backend services, data platforms, or ML pipelines — but also custom UIs, tooling, or whatever the problem actually calls for. I use every tool available, especially AI, to multiply what a small team or solo dev can deliver.
+I build and maintain software systems, with a focus on solving ambiguous problems end-to-end. My work spans backend services, data platforms, ML pipelines, and custom UIs - whatever the problem calls for. I care about solving business problems with technology, shipping reliable software, and making complex systems easier to reason about, and using every tool available — especially AI — to multiply what a small team or solo dev can deliver.
 
-Here's how I think about the work:
+_Once you know the fundamentals, most languages and frameworks are just syntax. This section is about the stuff that actually transfers._
 
-**Figuring Out What to Build**
-- Most requirements start vague. I turn "we need this to work differently" into something concrete enough to build, test, and ship
-- Start from first principles — learn the domain, talk to the people closest to the problem — because the right technical solution usually comes from understanding what they actually need, not just what they asked for
-- Optimize for business impact, not technical novelty
-
-**Understanding Why Things Break**
+**Problem Decomposition & Debugging**
 - Take something ambiguous or broken and work it down to a clear root cause — not just a fix, but an understanding of *why*
 - Build a mental model of how data and state actually move through a system, so when something goes wrong, I know where to look
 - Write down what I find or add better logs. Half of debugging is making sure nobody has to debug the same thing twice
 
-**Building Things That Last**
+**Translating Between Business & Systems**
+- Most requirements start vague. I turn "we need this to work differently" into something concrete enough to build, test, and ship
+- Start from first principles — learn the domain, talk to the people closest to the problem — because the right technical solution usually comes from understanding what they actually need, not just what they asked for
+- Optimize for business impact, not technical novelty
+
+**Building for Reliability**
 - Assume the data will be wrong, the upstream service will lie, and the edge case will happen in production on a Friday
 - Bake in visibility from the start — structured logs, metrics, health checks — so problems surface before users report them
 - Testing and validation aren't cleanup. They're part of the work
 
-**Improving Without Rewriting**
+**Iterating Without Breaking Things**
 - Improve systems while they're running. Refactor incrementally, extract patterns when they earn it, don't rewrite what you can evolve
 - When changing critical behavior, run the old and new paths side by side until you trust the new one
 - Every architecture decision is a tradeoff between shipping now and living with it later. I try to be honest about which one I'm choosing
