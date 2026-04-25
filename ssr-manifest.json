@@ -37,60 +37,63 @@
   "src/main.ts": [],
   "index.html": [],
   "src/layouts/empty.vue": [
-    "/assets/empty.99657538.js"
+    "/assets/empty.228e1217.js"
   ],
   "~icons/mdi/arrow-left-thin": [
-    "/assets/_...all_.b86ee3fd.js"
+    "/assets/_...all_.1d4b411e.js"
   ],
   "../../../../../../@vite-plugin-pages/route-block": [
-    "/assets/_...all_.b86ee3fd.js"
+    "/assets/_...all_.1d4b411e.js"
   ],
   "src/pages/[...all].vue": [
-    "/assets/_...all_.b86ee3fd.js"
+    "/assets/_...all_.1d4b411e.js"
   ],
   "~icons/mdi/chevron-right": [
-    "/assets/Index.6966f027.js"
+    "/assets/Index.0c431d66.js"
   ],
   "~icons/mdi/home": [
-    "/assets/Index.6966f027.js"
+    "/assets/Index.0c431d66.js"
   ],
   "src/components/AppBreadcrumb.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/Index.6966f027.js"
+    "/assets/Index.0c431d66.js"
   ],
   "src/pages/posts/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/Index.6966f027.js"
+    "/assets/Index.0c431d66.js"
   ],
   "src/pages/posts/Index.vue": [
-    "/assets/Index.6966f027.js"
+    "/assets/Index.0c431d66.js"
   ],
   "src/pages/posts/databricks-setup.md": [
-    "/assets/databricks-setup.7a45de08.js"
+    "/assets/databricks-setup.89ea7ebe.js"
   ],
   "src/pages/posts/debugging-production-systems.md": [
-    "/assets/debugging-production-systems.e17a61d2.js"
+    "/assets/debugging-production-systems.433bec42.js"
   ],
   "src/pages/posts/debugging-training-data.md": [
-    "/assets/debugging-training-data.ffe712d9.js"
+    "/assets/debugging-training-data.ea281bcf.js"
   ],
   "src/pages/posts/employment-history.md": [
-    "/assets/employment-history.9442186a.js"
+    "/assets/employment-history.a9748cb1.js"
   ],
   "src/pages/posts/heart-rate-dlt.md": [
-    "/assets/heart-rate-dlt.83a1d430.js"
+    "/assets/heart-rate-dlt.d6f6b9f4.js"
   ],
   "src/pages/posts/how-this-site-works.md": [
-    "/assets/how-this-site-works.e6b94613.js"
+    "/assets/how-this-site-works.0f3b8c89.js"
   ],
   "src/pages/posts/oura-ring-hr-ingest.md": [
-    "/assets/oura-ring-hr-ingest.2094933f.js"
+    "/assets/oura-ring-hr-ingest.b31f6d09.js"
   ],
   "src/pages/posts/todos.md": [
-    "/assets/todos.58b1aa9b.js"
+    "/assets/todos.7d78b9ba.js"
+  ],
+  "src/pages/posts/trading-bot-journey-part-2.md": [
+    "/assets/trading-bot-journey-part-2.bb44ffac.js"
   ],
   "src/pages/posts/trading-bot-journey.md": [
-    "/assets/trading-bot-journey.ce08561f.js"
+    "/assets/trading-bot-journey.0305d558.js"
   ],
   "src/pages/posts/websocket-recorder.md": [
-    "/assets/websocket-recorder.106d4f83.js"
+    "/assets/websocket-recorder.3ca0eda3.js"
   ]
 }
