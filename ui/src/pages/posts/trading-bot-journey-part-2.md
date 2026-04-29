@@ -17,6 +17,8 @@ pinned: true
 
 A note on where I'm coming from, since it shapes the rest of this. My formal math is algebra and applied statistics — no calculus, no statistics class on the transcript. I built this project anyway, and it left me confident that I have enough math to measure the things I need to measure and to think the way the work requires. A lot of ML writing makes the math sound much harder than it is. The tools below are the ones I actually used. Most of them are simple. The leverage is in applying them with discipline.
 
+A second note on how I learned a lot of this. Working alongside AI tools throughout the project was a meaningful part of the picture — not because they wrote the code for me, but because watching a capable model reach for a particular tool in a particular situation taught me *when* to reach for it myself. It's the same thing as sitting next to a senior engineer and noticing they pull out walk-forward validation the moment the data has a time axis, or that they write the feasibility math before the training script. Seeing the move made in context, repeatedly, is how the pattern becomes yours. A good chunk of the toolkit below is mine now because I watched it get used well, then used it myself on the next problem.
+
 ---
 
 ### 1. Feasibility math, before any model math
