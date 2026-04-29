@@ -1,155 +1,110 @@
 ---
-title: "ML on Market Microstructure: What I Learned"
-summary: "What I learned building algorithmic trading systems from scratch — data engineering, model architecture, and live execution."
-date: 2026-03-17
+title: "Trading Bot Journey"
+summary: "A year building a Transformer + Mixture-of-Experts model for crypto microstructure trading on Bybit. The architecture, the training pipeline, the diagnostic experiments that ruled out the strategy class, and what I came away with."
+date: 2026-04-29
 tags:
-  - trading
-  - ai
   - ml
+  - trading
   - data-engineering
   - python
 draft: false
 pinned: true
 ---
 
-## ML on Market Microstructure: What I Learned
+## Trading Bot Journey
 
-I've spent the past 8 months building algorithmic crypto trading systems targeting BTC/USDT perpetual futures on Bybit. Two repos, ~33,000 lines of Python, dozens of ML models trained on a billion rows of orderbook data, and multiple live deployments. This is what I learned about the intersection of machine learning and market microstructure.
+This is a writeup of the machine-learning project I spent most of the last year on: an attempt to forecast short-horizon outcomes from limit-order-book data on BTC/USDT perpetual futures, using a Transformer encoder feeding a Mixture-of-Experts head. Repo here: [hyro-trader-ml-project](https://github.com/SlaytonNichols/hyro-trader-ml-project).
 
----
-
-### The Thesis
-
-The target: pass a $200K prop firm challenge and earn a funded account. The core idea was to forecast **microstructure response patterns** at the limit-order-book (L2) level — absorption, liquidity vacuums, exhaustion — rather than predicting price direction outright. Edges of a few basis points per trade, maker-only execution, high frequency.
+The trading P&L on this project was mixed. The system and the methodology I came out the other side of it with are the durable artifacts, and that's what this post is about. A companion post, [A Working Toolkit for Ambiguous, Data-Heavy Problems](/posts/trading-bot-journey-part-2), pulls the methodology pieces out of the trading context.
 
 ---
 
-### Handcrafted L2 Signals
+### The thesis
 
-The first approach came from market microstructure research. Five signals, each encoding a specific orderbook hypothesis:
+The goal was to pass a $200K prop-firm challenge. The original approach was to forecast **microstructure response patterns** at the limit-order-book (L2) level — absorption, liquidity vacuums, exhaustion — instead of trying to predict price direction directly. Edges of a few basis points per trade, maker-only execution, high frequency.
 
-- **Absorption** — detect "freeze points" where aggressive orders get absorbed without price movement, then fade the aggression
-- **Liquidity Vacuum** — model depth decay and compression zones, capture snap price expansions
-- **Pullback Continuation** — identify impulse legs followed by controlled retracements
-- **Exhaustion Reversal** — detect blowoff prints and depth inversion, enter reversals
-- **Cross-Asset Lead/Lag** — exploit BTC→ETH dynamics and volatility spillover
-
-Validated on 8-day rolling walkforwards. Three out of five showed promise. The main limitation: I was encoding my *assumptions* about which patterns matter rather than letting the data decide.
-
-Tech stack: Python on [QuantConnect LEAN](https://www.quantconnect.com/lean), Bybit WebSocket for L2 depth-50 at 100ms, and a 24/7 recorder accumulating 363M+ orderbook rows.
+I started with handcrafted L2 signals on QuantConnect LEAN, built a 24/7 Bybit WebSocket recorder that eventually accumulated 363M+ orderbook rows, and validated five signal hypotheses on rolling walk-forwards. Three of the five looked promising. The limitation was that I was encoding *my own assumptions* about which patterns mattered, rather than letting the data identify them. That pushed me toward neural networks.
 
 ---
 
-### The Neural Network: Train on Outcomes, Not Patterns
+### Train on outcomes, not on patterns
 
-The key insight that drove the pivot to neural networks: **train on outcomes, not pattern labels.** Instead of labeling data with "this is an absorption pattern," label each row with what *actually happened* — did price move favorably? By how much? Did you get adversely selected? The network discovers which patterns lead to profitable trades on its own.
+The reframing was: instead of labeling a row "this is an absorption pattern," label it with what actually happened next — did price move favorably, by how much, did you get adversely selected, did the order even fill? Then let the model learn which input patterns lead to which outcomes.
 
-**Transformer encoder + Mixture of Experts:**
-- 4-layer Transformer (8 attention heads, 512 FFN dim) → 8-expert MoE with top-2 routing
-- ~850K parameters, 89 input features (60 L2 + 14 queue dynamics + 10 temporal + 5 seasonality)
-- 7 output heads: entry probability, direction, edge (bps), MFE, MAE, adverse selection probability, fill probability
-- Trained on Databricks with V100 GPUs, ~1.5M samples at 100ms resolution
+The architecture I ran live (V3.7) is in `models/` and `training/` in the repo:
 
-Parallel architecture — **DirectionCNNGRU** — consumed raw orderbook tensors (50 timesteps × 40 price levels × 3 features) through Conv1D → GRU. ~235K parameters, <2ms CPU inference. Designed to learn directly from book shape rather than engineered features.
+- 4-layer Transformer encoder, ~850K parameters
+- 8-expert Mixture-of-Experts head with a learned gating network
+- 89 input features across L2 depth, queue dynamics, temporal, and seasonality groups (`features/`)
+- 7 output heads — entry probability, direction, expected edge in bps, MFE, MAE, adverse-selection probability, fill probability (`labels/`)
+- Trained on Databricks with V100 GPUs over ~1.5M samples at 100ms resolution
 
-#### The Cont-de Larrard Queue Model
-
-One of the more elegant technical pieces. The [Cont-de Larrard (2013)](https://doi.org/10.1007/s11579-013-0104-7) analytical model frames a limit order fill as a *race* between:
-
-1. Orders ahead draining → you reach front of queue → fill
-2. Opposite side's queue depleting → price moves away → adverse selection
-
-O(1) computation, 14 output features capturing queue health, fill probability, and adverse timing risk. These consistently ranked among the most important features across every model variant.
+It went live on January 31, 2026. Across 437 trades over six days it ran a 40.5% win rate with positive overall P&L. The most useful observation from those six days had nothing to do with the architecture: **fast fills were a warning sign.** Orders filled in under 5 seconds averaged negative P&L; slower fills, where I was actually providing liquidity, were profitable. Fast fills usually meant somebody was running through my level — adverse selection. That observation reframed the whole problem from "which way is price going" to "can I get filled in a place where I'm providing genuine liquidity instead of getting picked off."
 
 ---
 
-### Live: What the Market Teaches You
+### Then I noticed the data was wrong
 
-The V3.7 model went live on January 31, 2026. Over 437 trades across 6 days:
+While the model was live, I went back and audited the training pipeline. I found three simultaneous bugs:
 
-- **40.5% win rate** with positive overall PnL
-- **~2 second median fill time** for maker limit orders at best bid/ask
-- Average hold time of ~2 minutes, average peak MFE of 17.6 bps
+- Bid and ask were inverted on snapshots.
+- Spreads were inflated 32–118× because the pipeline was treating delta messages as full orderbook snapshots instead of statefully reconstructing the book (`data/book_parser.py` is the corrected version).
+- Book depth indexing was returning the wrong levels.
 
-The execution data revealed something important: **fast fills are a warning sign.** Orders that filled in under 5 seconds averaged negative PnL, while slower fills (where you genuinely provided liquidity) were profitable. Getting filled quickly usually means someone is running through your level — textbook adverse selection.
+The model was scoring well on validation despite all of this, because the validation data was corrupted in the same way. A model that fails obviously is easy to catch. One that looks good on flawed data ships.
 
-This reframed the problem entirely. The question isn't "which direction will price move?" It's "can I get filled in a spot where I'm providing genuine liquidity rather than getting picked off?"
+I stopped iterating on architecture and committed to three constraints I'd been working without:
 
----
+1. **No Databricks in the runtime path.** Research can use it; live execution cannot depend on it.
+2. **One feature code path.** The function that produces a feature in training is the function imported by the live runner. Same code, not a "ported" version.
+3. **Versioned model artifacts.** Every checkpoint gets a SemVer tag, with normalization stats, feature list, training config, and git SHA bundled in (see `docs/VERSIONING.md`).
 
-### What a Billion Rows of Orderbook Data Taught Me
-
-After 40+ experiments, two neural architectures, and a LightGBM classifier across 7.2M training rows:
-
-**L2 data tells you *when*, not *what*.** Every directional model converged to ~53% binary accuracy — noise level. But a LightGBM gate model (AUC 0.68, running at 40Hz) reliably identifies *favorable microstructure conditions*. The orderbook is an execution timing overlay, not a directional signal.
-
-**Fill dynamics dominate everything.** Your signal can be right 70% of the time, but if limit orders fill only when you're about to get run over, net expectancy is negative. Modeling the fill process (queue position, adverse selection probability, fill latency) matters more than modeling price direction.
-
-**Training/live parity is the hardest ML engineering problem.** Multiple deployments failed because of normalization, scaling, or data format mismatches between training and inference. The fix: one shared code path for feature computation, normalization stats saved alongside the model checkpoint, and integration tests that verify both pipelines produce identical outputs for the same input.
-
-**The most dangerous model is the one that succeeds on bad data.** At one point, three simultaneous data bugs (inverted bid/ask, 3000× spread mismatch, wrong book depth indexing) went undetected because the model trained on corrupted data still reported strong validation metrics — on test data with the same corruption. A model that fails obviously is easy to catch. One that looks great on flawed data ships to production.
+Then I rebuilt the pipeline correctly, regenerated features and labels on clean data, retrained, and asked one question: with the data fixed, does the model work?
 
 ---
 
-### After V3.7: The Pivot Spiral
+### Three diagnostic tests that ruled out the strategy class
 
-V3.7 was the most successful deployment, but it had real problems. Several output heads weren't contributing meaningfully — fill probability clustered at 0.90 and adverse selection probability at 0.10 on every tick, providing no useful gating signal. The MFE/MAE heads predicted excursions that never materialized in live (MFE=90 bps predicted vs actual peaks of ~17.6 bps), which set unrealistic take-profit and stop-loss levels. The architecture itself — Transformer + MoE — was sound, but the head-level training needed work.
+Rather than tweak the model and hope, I designed three orthogonal experiments. The point was: if all three say the same thing, the strategy class itself is the constraint, not the implementation.
 
-Rather than fixing those specific heads, I kept pivoting:
+**Leg A — oracle direction test.** Take the model's actual predictions but assume perfect direction picking. At the deployed entry threshold, the result was −0.82 bps per trade. Sweeping the threshold up, I could find a setting that returned +2.94 to +6.44 bps per trade — but the trade count collapsed from ~9/day to ~1/day. There was a profitable signal in the data, just not enough qualifying setups to deploy capital against.
 
-**V3.8** tried to address the head issues directly — removed the broken Softplus activation on the risk head, masked regression losses to exclude neutral rows, made the edge head direction-aware. Validation accuracy dropped to 86.3% (from 87.7%) but the metrics were more honest. An incremental step in the right direction, but I moved on before proving it out live.
+**Leg B — cheaper alternatives.** I tested whether the dual direction/edge heads were fighting each other (a unified signed-edge regression head) and whether the 73-feature set was too noisy (a stripped-down 15-feature order-flow-only model). Both performed worse than the baseline.
 
-**V2.0–V2.4** reverted to earlier checkpoints with different TP/SL configurations. V2.0 cut winners too early (TP=10 bps). V2.4 tried balanced class resampling in training and overfit badly — 13% win rate over 53 trades. These were parameter search when the problem was upstream data quality.
+**Leg C — substrate audit.** Before declaring L2 dead, I tested whether *any* feature combination at *any* horizon could clear the 4 bps maker-maker fee floor. Best L2 feature at best horizon: +0.44 bps. Adding tape-derived features: +0.06 bps. Resampling to 1-minute bars and testing 5/15/60-minute horizons: nothing crossed. One expanded feature set hit +2.32 bps on a single test split, then collapsed to a +0.93 bps median across five independent walk-forward folds, with two folds going negative — period-specific luck, not durable edge.
 
-**V3.0 (DirectionCNNGRU)** was a complete architecture pivot — abandon engineered features, feed raw orderbook tensors (50 timesteps × 40 levels × 3 features) through Conv1D → GRU. ~235K parameters, <2ms inference. The idea was to let the network learn its own features from book shape. The model itself was reasonable, but three simultaneous data bugs in the training pipeline (inverted bids/asks, 3000× spread normalization mismatch, wrong book depth indexing) meant it never had a fair shot. Iterating through V3.0a–V3.0c chased symptoms without fixing the root cause.
+The full writeups are in `docs/` (`LEG_A_*`, `LEG_B_*`, `LEG_C_*`, `SUBSTRATE_VERDICT_*`).
 
-**The Databricks rebuild** — stepping back from models entirely, I discovered the production feature tables themselves were corrupt. The pipeline was treating orderbook delta messages as full snapshots instead of statefully reconstructing the book, inflating spreads 32–118× (0.5–1.3 bps in training vs 0.015 bps in live). Every model trained on these features had learned distorted reality.
-
-**The LLM agent pivot** was the most radical departure — replace ML direction prediction with Claude Opus strategic reasoning via OpenClaw, relegate the orderbook to an execution timing overlay, and target longer horizons (80–500 bps) where fees don't matter.
-
-In hindsight, V3.7's architecture was the right foundation. The problems were fixable: retrain the underperforming heads, enforce feature parity between training and live, and clean up the data pipeline. Instead of iterating on what was working, I kept starting over.
+Three orthogonal tests, same conclusion. At retail latency and retail fees, the L2 substrate doesn't carry enough signal to support a price-prediction strategy. That conclusion was worth more than another quarter of architecture iteration.
 
 ---
 
-### Data Engineering: The Real Work
+### A brief detour: trading relationships instead of direction
 
-The most time-intensive part wasn't models — it was data:
+Once the L2 direction approach was off the table, the natural next question was whether some *pair* of prices has a more predictable relative move than either's absolute move. Two cointegrated perps drift around a stable spread; when the spread dislocates, you can trade the dislocation without taking a directional view on either leg.
 
-- **363M+ orderbook rows** via a 24/7 WebSocket recorder (depth-50, 100ms, ~31 msg/sec, JSONL.gz with 10-minute rotation)
-- **Databricks Delta Lake pipeline:** raw → silver (stateful book reconstruction) → features → labels
-- **Memory engineering:** The orderbook tensor (50×40×3 = 6,000 floats/row) causes OOM at scale. Spark's `ArrayType(FloatType())` creates 168KB per-row overhead — 840 GB for 5M rows. Storing as `BinaryType` with `np.frombuffer()` reconstruction dropped peak memory to ~50 MB.
-- **Stateful book reconstruction:** The raw data contains snapshots and deltas. Treating deltas as full snapshots inflated spreads 32–118×. Correct reconstruction requires maintaining book state and applying deltas incrementally.
+I built and deployed a spread-momentum system across 30 cointegrated perp pairs (z-score entries on the rolling log-spread, momentum exits). It ran on Azure Container Instances under $20/month with no GPU dependency — a cleaner deployment than V3.7 in every respect. The signal was real; under honest cost assumptions it wasn't strong enough to justify the prop-firm challenge cost against it. So I parked it.
 
----
-
-### Where It Stands Now
-
-The data pipeline has been rebuilt correctly — stateful book reconstruction produces spreads of ~0.015 bps (matching live), and the corrected silver table is validated. The blocking work right now is regenerating features and labels from this clean foundation.
-
-From here, there are a few directions worth exploring:
-
-**Revive the V3.7 architecture on clean data.** The Transformer + MoE design was marked "REPLAY" in the migration plan — worth benchmarking as a retrained model on the corrected feature set. The architecture produced a 40.5% win rate with positive PnL despite training on bad data and having multiple broken output heads. Fixing the data, retraining the heads that weren't contributing, and enforcing feature parity could be the shortest path to a working system.
-
-**Train a new model at longer horizons.** The research showed price is not a random walk (Hurst 0.64–0.99, strongly trending at all horizons). L2 signal decays to near-zero at 5+ minutes, but trend-based labeling at 180s/300s/600s horizons could work with different feature inputs — multi-timeframe trend alignment, sentiment, volume confirmation — where the target move dwarfs fees.
-
-**LLM-orchestrated trading.** The two-layer architecture (fast Sentinel for execution timing + slow LLM for strategic reasoning) is built and the skill framework is defined. This is the highest-risk, highest-optionality path — using Claude for multi-timeframe analysis across 700+ pairs rather than trying to teach a neural network to predict direction from L2 data alone.
-
-None of these paths are mutually exclusive. The gate model survives across all of them as an execution timing overlay.
+That work lives in a separate repo. The point for this post is that the diagnostic discipline from the L2 work — feasibility math first, walk-forward folds over single splits, design experiments that could prove you wrong — transferred directly and saved months.
 
 ---
 
-### Key Takeaways
+### What I came away with
 
-1. **Start with feasibility math.** Expected edge minus fees minus adverse selection minus fill slippage — is it positive? Do that calculation before writing training code.
-2. **The orderbook is an execution tool, not an alpha source.** L2 data excels at timing entries, not predicting direction.
-3. **Adverse selection is the dominant force in limit order trading.** Model it explicitly or it will eat your edge silently.
-4. **Data pipeline correctness is a prerequisite, not a feature.** Corrupt training data produces confident, wrong models... obviously.
-5. **Live markets are the only real validation.** Backtests and validation metrics exist to give you confidence to go live, not to tell you your system works.
+This was my first end-to-end ML system, and a lot of what I'd carry into the next one is engineering and methodology rather than architecture. Some of these will read as obvious — they're on the list because they were genuine lessons the first time through, and now they're things I'd build in from the start.
 
----
+1. **One feature code path across training and live.** Computing the same feature in three places — Spark notebook, local backtest, live runner — guarantees they will diverge. Pin one implementation, import it everywhere.
 
-### What's Next
+2. **Training/serving parity tests on every deploy.** Push the same raw input through the training feature path and the live feature path; assert the resulting tensors are equal. This catches an entire class of "the model worked yesterday and is broken today" before it happens.
 
-The prop firm challenge is the next milestone. The data pipeline is being rebuilt correctly, the strategy has shifted to horizons where edge significantly exceeds costs, and an LLM agent approach is being tested for strategic reasoning.
+3. **Cheap data-sanity checks before any model sees the data.** Things like "ask price should be greater than bid price" or "spread shouldn't be 100x normal" are one-line assertions. If you put them at the point where data enters the pipeline, the bad data fails loudly instead of silently corrupting training. The three bugs from this project would have all been caught by checks of this kind.
 
-Whether it works or not, I'll document it here.
+4. **Versioned, immutable model artifacts.** SemVer the checkpoint. Bundle normalization stats, feature list, training config, and git SHA into the artifact itself.
+
+5. **Test on multiple time periods, not just one.** If you only evaluate a model on one slice of data, a good result might just be luck — that particular slice happened to suit the model. The fix is to repeat the evaluation across several different time windows and look at the *spread* of results. In this project, an experiment looked great on one slice (+2.32 bps) and almost broke even when re-tested across five slices (+0.93 bps median, two of them losing money). The single-slice number was the lie. Catching that before deploying capital is much cheaper than catching it after.
+
+6. **Live as the honest evaluator.** Backtests and validation metrics exist to give you confidence to *go* live, not to certify that the system works. Adverse selection, fill latency, requote dynamics, exchange quirks — these only show up under real conditions.
+
+7. **Feasibility math at the start, not after the model.** Expected edge minus fees minus adverse selection minus slippage. If that isn't positive with margin, no amount of model tuning fixes it. The L2 work had a real signal but ~4 bps of best-case fees against a similar-magnitude per-trigger payoff. A 20-minute calculation up front sets the right expectations.
+
+The transferable version of these — pulled out of the trading context — is in [A Working Toolkit for Ambiguous, Data-Heavy Problems](/posts/trading-bot-journey-part-2).

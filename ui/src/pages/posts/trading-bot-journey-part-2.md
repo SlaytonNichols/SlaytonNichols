@@ -1,213 +1,167 @@
 ---
-title: "Trading Bot Journey, Part 2: Disproving What Doesn't Work"
-summary: "What happened after fixing the data pipeline. Three diagnostic experiments that disproved the L2 direction-prediction strategy class. A strategic pivot to stat-arb. And the HMS-30 spread-momentum strategy that cleared the cost barrier."
-date: 2026-04-25
+title: "A Working Toolkit for Ambiguous, Data-Heavy Problems"
+summary: "The transferable methodology from a year of ML trading work: feasibility math, normalization and clipping, walk-forward validation, Monte Carlo, training/serving parity, signal filtering, kill-switches, and systematic rejection."
+date: 2026-04-29
 tags:
-  - trading
-  - quant
+  - ml
+  - data-engineering
   - systems
-  - experimentation
+  - methodology
 draft: false
 pinned: true
 ---
 
-## Trading Bot Journey, Part 2: Disproving What Doesn't Work
+## A Working Toolkit for Ambiguous, Data-Heavy Problems
 
-In [Part 1](/posts/trading-bot-journey), the story ended with a decision: rebuild the data pipeline correctly, retrain the V3.7 architecture on clean data, and then decide whether the L2 directional approach was salvageable.
+[The trading bot journey](/posts/trading-bot-journey) is the project itself: a Transformer + Mixture-of-Experts model on Bybit microstructure data, the diagnostic experiments that ruled out the strategy class, and what came out of it. This post is the methodology layer — the tools I now reach for by default on any ambiguous, data-heavy problem, regardless of domain.
 
-This post is what I learned from running three systematic tests that said "no."
-
----
-
-### Part 1 recap: the data pipeline was corrupted
-
-The [previous post](/posts/trading-bot-journey) documented the V3.7 architecture (Transformer + MoE): 850K parameters, 89 features, 7 output heads. Trained on Databricks, validated on 1.5M 100ms samples from BTC/USDT orderbook data. The model showed promise in theory.
-
-Then I discovered three simultaneous data bugs:
-
-- Inverted bid/ask on snapshots
-- 32–118× spread inflation from treating delta messages as full snapshots
-- Wrong book depth indexing
-
-The model had trained on corrupted data *and still reported good metrics*. A model that fails obviously is easy to catch. One that looks great on flawed data ships to production. I rebuilt the pipeline and tried again on correct data.
+A note on where I'm coming from, since it shapes the rest of this. My formal math is algebra and applied statistics — no calculus, no statistics class on the transcript. I built this project anyway, and it left me confident that I have enough math to measure the things I need to measure and to think the way the work requires. A lot of ML writing makes the math sound much harder than it is. The tools below are the ones I actually used. Most of them are simple. The leverage is in applying them with discipline.
 
 ---
 
-### The rebuild: hyro-trader from ground zero
+### 1. Feasibility math, before any model math
 
-I started a new repo (`hyro-trader`) with three hard rules:
+Before training anything, write down the back-of-the-envelope:
 
-1. **No Databricks in the runtime path.** Research can use it; live execution cannot depend on it.
-2. **One feature code path.** The same function that produces a feature in training must be imported directly into the live runner. No re-implementations.
-3. **Versioned model artifacts.** Every model gets a SemVer tag. No "is this from last Tuesday?"
+> **expected value per decision = expected payoff − expected cost − expected slippage − adverse selection**
 
-I ported the cleaned-up local pipeline — about 8K lines running on my laptop. Then I retrained V3.7 on the corrected data and asked one question:
+If that number isn't positive *with margin*, no amount of model tuning saves it. In trading the costs are fees and adverse fills. In a content-moderation system the cost is the false-positive rate times the user-experience hit. In an internal automation it's the cost of a wrong action times the recovery time.
 
-**If the data was the entire problem, does the model work now?**
+The discipline is doing this *before* you write training code. The L2 work in Part 1 had a real signal — roughly 55% directional accuracy — but ~4 bps of best-case fees against a similar-magnitude per-trigger payoff meant the math was always tight. A 20-minute calculation up front sets the right expectations for the work that follows.
 
----
+**Transfers to:** any decision system where actions have asymmetric costs. Recommenders, classifiers with human review, automated remediation, anything with a "should we act?" gate.
 
-### The three-test framework
+**Adjacent (not used here):** *Parent area* — decision theory under uncertainty. *Siblings* — expected utility (when payoffs aren't linear in money), Kelly sizing (when you control bet size and have an edge estimate), CLV/LTV math (same EV equation, longer horizon), opportunity cost framing (when the alternative isn't "do nothing").
 
-I designed three diagnostics to isolate which constraint was binding:
-
-1. **Leg A**: Can perfect direction picking save it? (oracle test)
-2. **Leg B**: Do better features or loss functions help? (cheap alternatives)
-3. **Leg C**: Can any L2-only substrate generate an edge? (substrate audit)
-
-If all three fail, the conclusion is: **this strategy class is fundamentally constrained, not just tuned wrong.**
+**Common-sense versions:** cost-benefit analysis, break-even analysis, ROI estimation, unit economics, payback-period thinking, opportunity-cost comparisons. All variations on "write down the inputs and outputs in the same units before deciding."
 
 ---
 
-### Leg A: oracle direction test
+### 2. Normalize, clip, and clamp — defensively
 
-**Setup:** Take the deployed model's actual predictions, but assume perfect direction picking. Keep everything else (entry timing, position sizing, exit logic) from the live run.
+Three small operations that absorb most of the damage real-world data does to a model:
 
-**Direction accuracy across 6 walk-forward folds: 0.552 ± 0.01**
+- **Normalize** so features are on comparable scales. Save the normalization stats *with the model artifact*, not in a sibling config file. Drift between training stats and serving stats is one of the most common ways a "good" model produces bad predictions in production.
+- **Clip** outliers to a percentile band before they corrupt your gradients or your statistics. Real data has bad ticks, missing snapshots, exchange glitches, sensor spikes. A `np.clip(x, lo, hi)` at ingestion is often the difference between a model that trains and one that doesn't.
+- **Clamp** outputs to the range that's actually meaningful. A probability head should be `[0, 1]`. A bps prediction shouldn't be allowed to output 10,000. Cheap insurance against a single weird input torching a downstream consumer.
 
-That's noise floor. The model can't tell buy from sell.
+**Transfers to:** any pipeline where the inputs come from the real world. Sensor telemetry, log ingestion, third-party API responses, user-submitted data — all benefit from the same three-step defense at the boundary, before the rest of the system has to assume the data is sane.
 
-**Then I ran the oracle test:** assume the direction is always right, but use the model's own entry probability, exit logic, TP/SL thresholds, and fee assumptions.
+**Adjacent (not used here):** *Parent area* — feature preprocessing and data hygiene. *Siblings* — standardization vs. min-max scaling vs. robust scaling (median/IQR for heavy tails), winsorization (a softer cousin of clipping), Box-Cox / Yeo-Johnson power transforms (when distributions are skewed), quantile transforms (when shape matters more than scale), imputation strategies for missing values.
 
-**Result at the deployed entry gate (0.50): −0.82 bps per trade.**
-
-But then I swept the entry gate. At gate=0.65, the same oracle test returned **+2.94 to +6.44 bps per trade** (pessimistic to optimistic bounds). That clears the 4 bps maker-maker round-trip fee floor with margin.
-
-**The catch:** Gate=0.65 collapsed from 8.7 trades/day to 1.3 trades/day. You can catch the big, clean moves — but there are almost no big, clean moves.
-
-**Conclusion:** The direction signal is real, but starved for throughput at any profitable threshold. Even when you raise the bar high enough to be profitable per trade, the number of qualifying trades becomes so small that the strategy can't sustain capital deployment.
+**Common-sense versions:** input validation, range checks, type checking, defensive defaults, sanity assertions. All forms of "don't trust data crossing a boundary until you've verified its shape."
 
 ---
 
-### Leg B: cheaper alternatives
+### 3. Walk-forward validation, not random holdouts
 
-**B1 — signed-edge regression head.** Maybe the dual `(direction, edge)` heads were fighting each other. What if a single signed-edge regression head unified them?
+The single highest-leverage discipline for time-structured data. Random train/val/test splits leak information across time and inflate offline metrics. **Walk-forward** training trains on `[t0, t1)`, validates on `[t1, t2)`, then rolls the window forward and repeats.
 
-Result: AUC 0.518–0.532 across 3 folds (before I halted to save compute). **Worse than baseline.**
+In Part 1, an experiment called C6 hit `+2.32 bps` on a single test split. Across 5 independent walk-forward folds the median collapsed to `+0.93 bps`, with two folds going negative. The single-period number was period-specific luck. The fold distribution was the real picture.
 
-**B4 — order-flow-only features.** Maybe the 73-feature set was noisy. What if I stripped to 15 raw order-flow primitives (imbalance, queue decay, trade intensity)?
+The general rule: if your data has temporal structure (almost all real data does), validate across multiple time windows and report the *distribution* of outcomes, not the headline.
 
-Result: Still failed the walk-forward pass bar.
+**Transfers to:** any model evaluated on data that comes from a moving world. Demand forecasting where last quarter's mix isn't this quarter's. Fraud detection where attackers adapt. Churn models trained on a cohort whose behavior shifts. A/B tests interpreted as if the underlying population were stationary when it isn't.
 
-**Conclusion:** The constraint is not the loss function or feature engineering. It's the underlying prediction problem. The data doesn't carry enough signal.
+**Adjacent (not used here):** *Parent area* — model evaluation under non-stationarity. *Siblings* — expanding-window vs. rolling-window walk-forward (mine was rolling), purged k-fold with embargo (when labels overlap in time), nested cross-validation (when you're tuning hyperparameters too), blocked time-series CV, backtesting on out-of-sample regimes you've explicitly held out.
 
----
-
-### Leg C: L2 substrate audit
-
-Before declaring L2 dead, I audited whether *any* feature combination could clear the 4 bps maker-maker fee floor at any horizon.
-
-**C1b — horizon decay:** Best L2 feature (book imbalance) at best horizon and quantile: +0.44 bps per trigger. Below the fee floor.
-
-**C1c — tape-derived features:** Added taker buy/sell vol, aggressor imbalance, trade count at multiple windows. Best payoff: +0.06 bps. Tape features were weaker than L2 imbalance and showed the same mean-reversion ceiling.
-
-**C2 — multi-minute horizons:** Resampled to 1-minute bars, tested 5/15/60-minute prediction horizons. Pass bar was 6 bps (2bps fees + 50% buffer). No feature crossed it.
-
-**C4 — 100ms substrate re-audit:** The 100ms L2 data did show real signal (book imbalance at deep quantiles was sp=+0.33 at 1s horizon), but the per-trigger payoff was only +0.7–0.9 bps. Not enough to clear taker fees.
-
-**C6 — expanded features:** Added L2 deltas, realised vol, time-of-day, tape intensity. Best test result: **+2.32 bps at a deep quantile and long horizon.** This actually looked promising.
-
-**C7 — walk-forward stability check on C6:** Reran the same model on 5 independent calendar folds. Median payoff dropped to +0.93 bps. Two folds went negative. The +2.32 was period-specific luck, not durable.
-
-**Conclusion:** The L2 substrate is exhausted. There is no feature combination that will clear fees reliably.
+**Common-sense versions:** train/test splits, holdout sets, cross-validation, A/B testing, before/after comparisons. The shared idea is keeping evaluation data separate from the data the system has already seen.
 
 ---
 
-### Strategic pivot: stop asking L2 to predict price
+### 4. Monte Carlo simulation and distributions
 
-When every documented test says a strategy class doesn't work, the correct move is not to iterate harder. It's to ask a different question.
+You usually don't care about the mean. You care about the tails.
 
-**Old question:** Can I predict BTC's next-30s move from L2 data?  
-**New question:** Which *pair* of prices has a more predictable relative move than either's absolute move?
+A Monte Carlo simulation is a clean way to ask "what range of outcomes should I expect?" Take your model (or strategy, or business process), simulate it thousands of times under realistic noise, and look at the distribution of results.
 
-This opens two strategy classes:
+For the trading work: given an empirical per-trade P&L distribution and a daily trade count distribution, simulate 10,000 30-day futures. The output isn't "expected P&L is X." It's "the 5th percentile is Y, the median is Z, the 95th is W, and here's the probability of breaching the drawdown cap." That's actionable; a point estimate isn't.
 
-1. **Carry harvesting** (E10): Collect funding rate payments on perpetual swaps, hedge delta to zero. Result: 1.5% APR on BTC-USDT. Real edge, but too small.
-2. **Statistical arbitrage** (E12+): Find cointegrated perp pairs where the spread mean-reverts. Backtest on historical pairs.
+The mechanics are simple — sample with replacement, run the rules, accumulate, repeat. The hard part is the noise model. If your simulation assumes fills always work and live they don't, you've built a confident wrong answer.
 
-I implemented both. Carry was too slow. But the stat-arb approach on pairs like BTC-SOL showed traction.
+**Transfers to:** capacity planning, SLO budgeting, risk modeling, any "what does the worst case look like?" question. When a stakeholder asks for a single-number forecast, give them a distribution and let them pick the percentile.
 
----
+**Adjacent (not used here):** *Parent area* — stochastic simulation and uncertainty quantification. *Siblings* — bootstrap resampling (Monte Carlo over your actual data instead of an assumed model), block bootstrap (preserves autocorrelation), parametric Monte Carlo (when you have a fitted distribution rather than samples), Markov Chain Monte Carlo (for sampling posteriors), variance reduction techniques (antithetic variates, control variates) when sims get expensive.
 
-### E13: momentum on spreads, not mean-reversion
-
-The key insight: cointegrated pairs that *break* from their mean don't immediately snap back. They often have momentum first.
-
-**Thesis:** When a pair's log-spread exceeds 2σ, short-term participants pile into the dislocating leg. The breakout carries momentum before mean-reversion kicks in. Enter in the direction of the breakout, trail out as the z-score retraces 1.0 from the peak.
-
-On 5 seed pairs over 161 days under HyroTrader risk caps (4% daily DD, 3% per-trade SL):
-
-- Mean daily P&L: positive
-- Worst daily DD: −0.66%
-- No losing days
-- Regime split: passes independently in bull, bear, sideways
-- 3× slippage stress: still profitable
-
-I could not break it. So I scaled the pair universe.
+**Common-sense versions:** scenario analysis, what-if modeling, ranges and confidence intervals, percentile reporting, error bars, min/median/max summaries. All forms of "report a range, not a point."
 
 ---
 
-### E14: 30-pair portfolio
+### 5. Training/serving parity as an engineering problem
 
-Engle-Granger cointegration screen across all Bybit USDT-M pairs, ranked by half-life and stationarity, validated as a portfolio under HyroTrader constraints with 3.0× sizing:
+The most expensive class of bug in ML systems isn't bad model architecture; it's the same input getting transformed differently in training vs. live. This is a software engineering problem with known fixes:
 
-| Metric | Value |
-|---|---|
-| Mean daily P&L | +$11,544 |
-| Worst single trade | −1.68% |
-| Worst daily DD | −0.66% |
-| Days with breach | 0 |
+- **One feature code path.** The function that produces a feature in training is the function imported by the live runner. Same code, not a "ported" version.
+- **Stats bundled with the artifact.** Normalization means/stds, feature ordering, label encoders — all serialized into the model checkpoint, loaded together, immutable.
+- **Integration tests that compare both paths.** Take a row of raw input, push it through the training feature path and the live feature path, assert the resulting tensors are equal. Run on every deploy.
 
-**Critical difference from the L2 work:** This strategy clears the cost barrier with *order-of-magnitude margin*. The 11+ bps mean edge covers 11 bps round-trip fees and leaves real room.
+With these in place, an entire category of "the model worked yesterday and is broken today" stops happening.
 
----
+**Transfers to:** any system where the same logic runs in two places — batch vs. streaming, offline vs. online scoring, server vs. client validation.
 
-### HMS-30 deployment and live operations
+**Adjacent (not used here):** *Parent area* — ML systems / MLOps. *Siblings* — feature stores (the heavyweight version of "one feature code path"), shadow deployments (run new model alongside old, compare outputs in production), canary releases, model registries with lineage, data validation frameworks (Great Expectations, TFDV), schema evolution policies for upstream data sources.
 
-Hyro Momentum Spread 30 (HMS-30 is the proper name; legacy code still uses E13) runs on one Azure Container Instance. The strategy:
-
-- Download 1h klines for all 18 symbols (30 pairs, some symbols shared across pairs).
-- Every 1h bar, compute rolling 48-bar OLS beta for each pair.
-- Z-score the log-spread.
-- Enter when |z| > 2.0 (breakout direction); exit when z retraces 1.0 from peak.
-- All entries/exits are taker market orders. SL attached within seconds of every fill (HyroTrader compliance).
-- State persists to Azure File Share for crash recovery.
-
-Cost: under $20/month. No GPUs, no model retraining, no Databricks dependency.
-
-Initial backtest-to-live transition showed some demo-account quirks (Bybit occasionally resets demo positions), but after a fresh account + state reset:
-
-- 3 pairs open at 4.0× sizing (bumped from 3.0× after 26 hours to increase per-trade P&L)
-- 0 compliance violations
-- All SLs attached and verified hourly
+**Common-sense versions:** shared libraries, DRY, single source of truth, configuration-as-code, pinned dependencies, reproducible builds. All variations on "the same logic should not exist in two places that can drift."
 
 ---
 
-### Lessons from two months of iteration
+### 6. Filter noise to find signal
 
-This work was **not a failure**. It was a phenomenal playground for building a complete ML system in a constrained domain. Here's what I actually learned:
+Most signal-extraction work is some flavor of "make the structure visible by suppressing the things that aren't structure." A few cheap, broadly useful versions:
 
-1. **How to build an end-to-end ML pipeline.** Data ingestion → feature engineering → model training → backtesting → live-parity testing → deployment orchestration. Every layer uncovered new requirements. The cleanup discovered three data bugs that would have shipped to production. The parity tests revealed edge cases in execution. This pipeline is now the template for the next idea.
+- **Rolling statistics** (mean, std, z-score) over an appropriate window turn raw observations into context-relative ones. A 2σ event is usually more informative than an absolute threshold because it adapts to regime.
+- **Quantile binning** beats absolute thresholds when the distribution shifts. "Top decile of imbalance over the last hour" is more durable than "imbalance > 0.7."
+- **Multi-window confirmation.** A condition that's true at 1m, 5m, and 15m simultaneously is doing more work than the same condition at one window.
+- **Look at the distribution before choosing a threshold.** Histogram the raw values. If 99% are in a narrow band and you're tripping on the 1% tail, the threshold is doing all the work and the model isn't.
 
-2. **Feasibility math rules out weak ideas fast.** Before training anything, I should compute: edge per trade − fees − adverse selection. If that's negative, no amount of learning-rate tuning changes it. The L2 work had a real signal (55% directional accuracy), but the problem's intrinsic edge was small and costs were tight relative to that edge: about 4 bps maker-maker in the cleanest path, higher whenever execution mixed in taker flow. So this wasn't "always impossible" on paper; it was usually too tight to be robust after slippage, adverse selection, and throughput constraints. This gate should front-load every project.
+**Transfers to:** anomaly detection, alerting, dashboards, any "is this point unusual?" question.
 
-3. **Throughput is as constraining as edge.** Leg A showed the oracle could clear fees at gate=0.65 (+2.94 to +6.44 bps per trade), but the number of qualifying setups collapsed from 8.7/day to 1.3/day. A profitable signal that fires once a week doesn't move capital. This taught me to think about expected trades/day, not just edge conditional on entry.
+**Adjacent (not used here):** *Parent area* — signal processing and feature engineering on noisy time series. *Siblings* — EWMA / exponential smoothing (when you want recency-weighted state), Kalman filters (when you have a model of the underlying process), wavelet decomposition (when structure lives at multiple scales), CUSUM / change-point detection (when you care about regime shifts rather than point outliers), Hampel filters (robust outlier replacement).
 
-4. **Walk-forward validation is non-negotiable.** C6 hit +2.32 bps, looked great, and then failed across independent folds (median +0.93 bps). Single-period wins are false leads. This forced me to build proper train/val/test splits and stay honest about out-of-sample results.
-
-5. **Systematic rejection is the real skill.** Leg A, B, and C each took a day or two but ruled out entire strategy classes. Instead of 20 more model tweaks, I ran three orthogonal tests, they all returned the same conclusion, and I pivoted. This is better than 3 months of local optimization.
-
-6. **Market microstructure is learnable.** I went in with textbook knowledge of bid/ask spreads and order flow. I exited understanding why maker-entry adverse selection can wipe out half-spread savings, why LOB features decay in predictiveness past 5s, why funding rates compress faster than spot perp basis on perps. That intuition now applies to the next venue and asset class.
+**Common-sense versions:** moving averages, debouncing, hysteresis, deduplication, rate-limited alerts. All forms of "don't react to every individual data point; let the underlying trend declare itself."
 
 ---
 
-### What's next
+### 7. Kill-switches and risk gates
 
-As of 2026-04-25:
+Let the system make decisions inside a hard envelope it cannot cross. Concretely:
 
-- HMS-30 live on demo with 4.0× sizing
-- Decision gate: 5–7 days of clean data validates risk bounds → buy HyroTrader challenge
-- If challenge clears: funded account, then Tier 2 work (maker-first execution, LightGBM entry filter)
-- If challenge fails: postmortem, but the negative results from this phase are already the highest-value output
+- **Soft caps trip before hard caps.** If the contract says "halt at 4% daily drawdown," halt yourself at 3%. The buffer is what keeps a single bad event from becoming a fatal one.
+- **Tiered modes** — green/yellow/red, or whatever language fits. Yellow halves your risk and only allows the highest-confidence actions. Red allows nothing. Degradation is graceful instead of catastrophic.
+- **Idempotent kill-switches.** A single command should safely stop the system, and calling it twice should do the same thing as calling it once. State machines beat flags.
+- **Structured rejection logging.** Every blocked action gets a reason in a journal. "Why didn't it act?" should be one grep away, not a re-derivation.
 
-Part 3, if it comes, will be: **did live validation match the backtest?** That's the only question that matters anymore.
+This pattern shows up everywhere serious software runs: circuit breakers in service meshes, feature flags with kill paths, rate limiters with tier-based throttling. Same idea across domains.
+
+**Transfers to:** any autonomous or semi-autonomous system that takes consequential actions. Automated remediation, batch-job orchestration, billing systems, anything with a blast radius.
+
+**Adjacent (not used here):** *Parent area* — reliability engineering for systems that act on the world. *Siblings* — circuit breakers (the service-mesh form of the same idea), bulkheads (isolate failure domains), bounded retry with jitter, rate limiting / token buckets, SLO-based error budgets, dead-man switches, two-person-rule gates for irreversible actions.
+
+**Common-sense versions:** feature flags, config-driven limits, dry-run modes, manual approval steps, rollback plans, hard-coded caps. All forms of "give the system a clearly defined boundary it cannot cross without a human."
+
+---
+
+### 8. Systematic rejection over endless iteration
+
+In Part 1, three orthogonal experiments — Legs A, B, and C — each took a day or two and together ruled out an entire strategy class. The alternative, more model and feature iteration, would have been months of motion without progress.
+
+The general pattern: when something isn't working, design two or three *orthogonal* experiments whose outcomes would each independently kill or save the idea. If they all fail in the same direction, the strategy class itself is the constraint, not the implementation. The shift is from "let me try one more thing" to "let me design the experiment that would convince me to stop." That experiment is almost always cheaper to run than the one-more-thing.
+
+**Transfers to:** any debugging or research situation where you might be optimizing the wrong loss. The hardest part is being honest about what would actually change your mind.
+
+**Adjacent (not used here):** *Parent area* — experimental design and falsification. *Siblings* — ablation studies (which component is doing the work?), pre-registered hypotheses (decide the kill criterion *before* seeing the result), oracle / upper-bound analyses (Leg A is one), counterfactual analysis, sensitivity analysis (how robust is the conclusion to assumptions?), bisection-style debugging.
+
+**Common-sense versions:** time-boxing, rubber-duck debugging, hypothesis-then-test, exit criteria, stop-loss thinking. All forms of "decide what would change your mind before you start, not after you're attached to the outcome."
+
+---
+
+### Why this transfers
+
+Trading is unusually unforgiving — real counterparty, real money, real costs, tight feedback loop, no room for hand-waving. That's what makes the methodology generalize. The questions are domain-independent:
+
+- Can you measure the thing?
+- Can you simulate it under noise?
+- Can you bound the worst case?
+- Can you tell whether you've actually improved it, or whether you've just gotten lucky on one slice?
+
+The discipline to apply simple tools rigorously, the engineering to make them survive contact with real systems, and the honesty to design experiments that could prove you wrong — that's most of it.
