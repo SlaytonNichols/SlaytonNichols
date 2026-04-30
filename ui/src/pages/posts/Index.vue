@@ -4,6 +4,15 @@
       <div class="px-5 max-w-4xl w-full mt-10 mb-16">
         <AppBreadcrumb class="my-4 justify-center" name="Blog" />
 
+        <div class="max-w-2xl mx-auto text-center text-gray-500 dark:text-gray-400 mb-10">
+          <h1 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-3">Blog</h1>
+          <p>
+            Long-form posts on the projects I work on — mostly machine learning,
+            data engineering, and the tooling around them. Writeups of what I built,
+            what broke, and what I'd do differently.
+          </p>
+        </div>
+
         <div class="flex flex-wrap justify-center gap-2 mb-8">
           <button
             class="px-3 py-1 rounded-full text-sm font-medium transition-colors"
@@ -111,8 +120,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { computed, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
+
+onMounted(() => {
+  document.title = "Writing · Slayton Nichols"
+  const desc = "Long-form posts on machine learning, data engineering, and the tooling around them — by Slayton Nichols."
+  let tag = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+  if (!tag) {
+    tag = document.createElement("meta")
+    tag.setAttribute("name", "description")
+    document.head.appendChild(tag)
+  }
+  tag.setAttribute("content", desc)
+})
 
 type FrontMatter = {
   title: string
