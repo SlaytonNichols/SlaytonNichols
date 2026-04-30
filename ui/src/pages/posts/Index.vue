@@ -5,7 +5,7 @@
         <AppBreadcrumb class="my-4 justify-center" name="Blog" />
 
         <div class="max-w-2xl mx-auto text-center text-gray-500 dark:text-gray-400 mb-10">
-          <h1 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-3">Blog</h1>
+
           <p>
             Long-form posts on the projects I work on — mostly machine learning,
             data engineering, and the tooling around them. Writeups of what I built,
@@ -124,7 +124,7 @@ import { computed, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 
 onMounted(() => {
-  document.title = "Writing · Slayton Nichols"
+  document.title = "Blog · Slayton Nichols"
   const desc = "Long-form posts on machine learning, data engineering, and the tooling around them — by Slayton Nichols."
   let tag = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
   if (!tag) {
