@@ -18,6 +18,10 @@ I build and maintain software systems, with a focus on solving ambiguous problem
 
 _Once you know the fundamentals, most languages and frameworks are just syntax. This section is about the stuff that actually transfers._
 
+_Honestly, I'm still figuring out what this section should be. For the actual track record — companies, roles, and what I have worked on — see <a href="/posts/employment-history" style="text-decoration:none">employment history</a>._
+
+The bullets below are things I've learned working on software, but they don't really have to be about software... They're about how to figure out what's actually going on, how to turn a vague ask into something you can act on, how to plan for things going wrong, and how to change something important without breaking it. The same lessons would carry over to a lot of other kinds of work.
+
 **Problem Decomposition & Debugging**
 - Take something ambiguous or broken and work it down to a clear root cause — not just a fix, but an understanding of *why*
 - Build a mental model of how data and state actually move through a system, so when something goes wrong, I know where to look
