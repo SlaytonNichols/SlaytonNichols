@@ -12,18 +12,16 @@ hidden: true
 
 ### Senior Software Engineer | InformData (formerly SJV Data), Atlanta, GA — Jun 2023 - Apr 2026
 
-- Owned ambiguous production issues end-to-end: reproduced failures, formed hypotheses, validated root causes through data analysis, and iterated on solutions
-- Developed mental models for tracing data flow through distributed systems to isolate where transformations diverge from expected behavior
-- Built repeatable debugging workflows and documented investigation patterns for team knowledge sharing
-- Partnered with product and QA to translate vague business requirements into testable technical specifications
-- Led the technical implementation of a multi-sprint data provider migration effort coordinating across teams, managing scope creep, and communicating blockers early
-- Bridged gap between business rules team and engineering by learning domain language and documenting edge cases they surfaced
-- Applied defensive programming patterns: null handling, boundary conditions, graceful degradation when upstream data is malformed
-- Built validation and testing into development workflow rather than treating it as an afterthought
-- Championed observability by adding structured logging and metrics to surface data quality issues before they hit production
-- Contributed to a domain-specific language (DSL) engine — a rules execution platform that evaluates business logic against incoming records to produce filtered, classified results
-- Refactored legacy code incrementally, extracting shared patterns without blocking feature work
-- Maintained backwards compatibility during migrations by running old and new paths in parallel for validation
+- Diagnosed a vendor round-robin race condition causing duplicate assignments on internal accounts: traced the bug to a query-then-write window where uncommitted reads bypassed the rotation counter. Worked within a constraint that prevented changing the commit point, and shipped a fix that preserved intake throughput.
+- Built a personal AI development desk in VS Code (Copilot Chat, GitHub Models) with purpose-built skills for code review, DB exploration, Postman/API testing, Jira communications, Confluence documentation, and code-standards enforcement — collapsing context-switching across tools into a single chat surface and absorbing tasks that previously required a teammate's time.
+- Owned ambiguous production issues end-to-end: reproduced failures, formed hypotheses, validated root causes through data analysis, and iterated on solutions.
+- Developed mental models for tracing data flow through distributed systems to isolate where transformations diverge from expected behavior.
+- Partnered with product and QA to translate vague business requirements into testable technical specifications.
+- Led the technical implementation of a multi-sprint data provider migration effort coordinating across teams, managing scope creep, and communicating blockers early.
+- Applied defensive programming patterns: null handling, boundary conditions, graceful degradation when upstream data is malformed.
+- Championed observability by adding structured logging and metrics to surface data quality issues before they hit production.
+- Contributed to a domain-specific language (DSL) engine — a rules execution platform that evaluates business logic against incoming records to produce filtered, classified results.
+- Maintained backwards compatibility during migrations by running old and new paths in parallel for validation.
 
 ### Software Engineer, Cirrus Insight, Raleigh, NC — Nov 2021 – Jun 2023
 
